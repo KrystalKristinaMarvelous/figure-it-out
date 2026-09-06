@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { createClient, requireUser } from "@/lib/supabase/server";
-import { findCategory, findSubtype, READINESS_META } from "@/lib/schema/taxonomy";
+import { findCategory, findSubtype } from "@/lib/schema/taxonomy";
 import { Button } from "@/components/ui/button";
-import { Card, EmptyState } from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/card";
+import { Icon } from "@/components/icon";
+import { ReadinessMark } from "@/components/readiness-mark";
 import { relativeTime } from "@/lib/utils";
 import { shortDate, daysUntil } from "@/lib/format";
 import type { ProjectRow } from "@/lib/supabase/database.types";
@@ -42,22 +44,25 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
   const examples = (examplesData ?? []) as ProjectRow[];
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex rounded-[var(--radius-sm)] border border-hairline-2 bg-raised p-0.5">
-          {VIEWS.map((v) => (
-            <Link
-              key={v.key}
-              href={`/dashboard?view=${v.key}`}
-              className={`rounded-[calc(var(--radius-sm)-1px)] px-3 py-1.5 text-[12.5px] transition-colors ${
-                view === v.key
-                  ? "bg-surface font-medium text-ink shadow-[var(--shadow-sm)]"
-                  : "text-muted hover:text-ink"
-              }`}
-            >
-              {v.label}
-            </Link>
-          ))}
+    <div className="mx-auto w-full max-w-4xl px-5 py-10 sm:px-8">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="voice-lg">Your projects</h1>
+          <div className="mt-2.5 flex gap-4">
+            {VIEWS.map((v) => (
+              <Link
+                key={v.key}
+                href={`/dashboard?view=${v.key}`}
+                className={`text-[12.5px] transition-colors ${
+                  view === v.key
+                    ? "font-medium text-ink underline decoration-accent decoration-2 underline-offset-4"
+                    : "text-muted hover:text-ink"
+                }`}
+              >
+                {v.label}
+              </Link>
+            ))}
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <QuickCapture projects={projects.map((p) => ({ id: p.id, title: p.title }))} />
@@ -68,9 +73,9 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
       </div>
 
       {projects.length === 0 && view === "active" ? (
-        <div className="space-y-6">
+        <div className="space-y-8">
           <EmptyState
-            title="Start a project"
+            title="Figure it out first."
             actions={
               <Button asChild variant="primary" size="sm">
                 <Link href="/new">Start a project</Link>
@@ -82,10 +87,10 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
           </EmptyState>
           {examples.length > 0 && (
             <div>
-              <p className="mb-3 text-[12px] text-faint">Or look through an example:</p>
-              <div className="grid gap-3 sm:grid-cols-3">
+              <p className="eyebrow mb-3">Or look through an example</p>
+              <div className="hairline-x framed">
                 {examples.map((p) => (
-                  <ProjectCard key={p.id} project={p} readOnly />
+                  <ProjectRow key={p.id} project={p} readOnly />
                 ))}
               </div>
             </div>
@@ -96,9 +101,9 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
           Nothing {view === "shelved" ? "set aside" : "finished"} yet.
         </p>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="hairline-x framed">
           {projects.map((p) => (
-            <ProjectCard key={p.id} project={p} />
+            <ProjectRow key={p.id} project={p} />
           ))}
         </div>
       )}
@@ -106,36 +111,30 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
   );
 }
 
-function ProjectCard({ project: p, readOnly }: { project: ProjectRow; readOnly?: boolean }) {
+function ProjectRow({ project: p, readOnly }: { project: ProjectRow; readOnly?: boolean }) {
   const cat = findCategory(p.category);
   const sub = findSubtype(p.category, p.subtype);
-  const rm = READINESS_META[p.readiness];
   const dl = daysUntil(p.deadline);
 
   return (
-    <Link href={`/projects/${p.id}`} className="group">
-      <Card
-        interactive
-        tint={!p.one_liner && p.lifecycle === "active" ? "unresolved" : "default"}
-        className="flex h-full flex-col gap-2.5 p-4"
-      >
-        <div className="flex items-start justify-between gap-2">
-          <span className="text-[15px] leading-none">{cat?.glyph}</span>
-          <span title={rm.label} className="text-[13px]">
-            {rm.glyph}
-          </span>
+    <Link
+      href={`/projects/${p.id}`}
+      className="group flex items-start gap-4 py-4 transition-colors hover:bg-accent-wash/30"
+    >
+      <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-[var(--radius-sm)] bg-sunken text-muted">
+        <Icon name={cat?.icon ?? "Square"} size={15} />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline gap-2">
+          <h3 className="text-[13.5px] font-medium text-ink">{p.title}</h3>
+          {!readOnly && <ReadinessMark readiness={p.readiness} className="translate-y-0.5" />}
         </div>
-        <h3 className="text-[13.5px] font-semibold leading-snug text-ink group-hover:text-ink">
-          {p.title}
-        </h3>
-        <p className="voice line-clamp-3 text-[13.5px] leading-snug text-muted">
+        <p className="voice mt-0.5 line-clamp-2 text-[13.5px] leading-snug text-muted">
           {p.one_liner || (
-            <span className="text-unresolved-ink">
-              No one-line idea yet — normal this early.
-            </span>
+            <span className="text-accent-ink">No one-line idea yet — normal this early.</span>
           )}
         </p>
-        <div className="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-1 pt-2 text-[11px] text-faint">
+        <div className="mono mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[10.5px] uppercase tracking-[0.05em] text-faint">
           <span>{sub?.label ?? p.subtype}</span>
           <span aria-hidden>·</span>
           {p.lifecycle === "finished" && p.finished_at ? (
@@ -144,13 +143,16 @@ function ProjectCard({ project: p, readOnly }: { project: ProjectRow; readOnly?:
             <span>{relativeTime(p.last_touched_at)}</span>
           )}
           {dl !== null && dl >= 0 && dl <= 30 && (
-            <span className="text-unresolved">· {dl}d left</span>
+            <span className="text-accent-ink">· {dl}d left</span>
           )}
-          {readOnly && (
-            <span className="rounded-full bg-sunken px-1.5 py-0.5 text-faint">example</span>
-          )}
+          {readOnly && <span>· example</span>}
         </div>
-      </Card>
+      </div>
+      <Icon
+        name="ArrowUpRight"
+        size={15}
+        className="mt-1 shrink-0 text-faint opacity-0 transition-opacity group-hover:opacity-100"
+      />
     </Link>
   );
 }

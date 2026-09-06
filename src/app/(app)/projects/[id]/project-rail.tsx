@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Icon } from "@/components/icon";
+import { ReadinessMark, READINESS_WORD } from "@/components/readiness-mark";
+import type { Readiness } from "@/lib/schema/types";
 import { cn } from "@/lib/utils";
 
 interface Props {
   projectId: string;
   title: string;
   crumb: string;
-  readinessGlyph: string;
-  readinessLabel: string;
+  readiness: Readiness;
   openQuestions: number;
   moduleLinks: { href: string; label: string; icon: string }[];
   lifecycle: string;
@@ -24,50 +25,51 @@ export function ProjectRail(props: Props) {
 
   return (
     <>
-      {/* mobile bar */}
-      <div className="flex items-center gap-3 border-b border-hairline-2 px-4 py-3 lg:hidden">
+      <div className="flex items-center gap-3 border-b border-hairline-2 px-5 py-3 lg:hidden">
         <button
           onClick={() => setOpen((o) => !o)}
-          className="pressable grid h-8 w-8 place-items-center rounded-[var(--radius-sm)] border border-hairline bg-paper"
+          className="pressable grid h-8 w-8 place-items-center rounded-[var(--radius-sm)] border border-hairline"
           aria-label="Menu"
         >
           {open ? <X size={15} /> : <Menu size={15} />}
         </button>
         <div className="min-w-0">
-          <p className="truncate text-[13px] font-semibold text-ink">{props.title}</p>
+          <p className="voice truncate text-[15px] text-ink">{props.title}</p>
           <p className="truncate text-[11px] text-faint">{props.crumb}</p>
         </div>
       </div>
 
       <aside
         className={cn(
-          "shrink-0 border-hairline-2 bg-raised/40 lg:sticky lg:top-14 lg:block lg:h-[calc(100vh-3.5rem)] lg:w-64 lg:overflow-y-auto lg:border-r lg:py-6",
-          open ? "block border-b px-4 py-4" : "hidden",
+          "shrink-0 border-hairline-2 lg:sticky lg:top-14 lg:block lg:h-[calc(100vh-3.5rem)] lg:w-[15.5rem] lg:overflow-y-auto lg:border-r lg:py-8",
+          open ? "block border-b px-5 py-4" : "hidden",
         )}
       >
-        <div className="hidden px-5 lg:block">
-          <h1 className="voice text-[17px] font-semibold leading-tight text-ink">
-            {props.title}
-          </h1>
-          <p className="mt-1.5 text-[11.5px] text-faint">{props.crumb}</p>
-          <p className="mt-1 text-[11.5px] text-muted" title={props.readinessLabel}>
-            {props.readinessGlyph} {props.readinessLabel}
+        <div className="hidden px-6 lg:block">
+          <h1 className="voice text-[19px] leading-tight text-ink">{props.title}</h1>
+          <p className="mt-2 text-[11px] text-faint">{props.crumb}</p>
+          <p
+            className="mt-1.5 flex items-center gap-1.5 text-[11px] text-muted"
+            title={`Readiness: ${READINESS_WORD[props.readiness]}`}
+          >
+            <ReadinessMark readiness={props.readiness} />
+            {READINESS_WORD[props.readiness]}
           </p>
         </div>
 
-        <nav className="mt-0 space-y-6 lg:mt-7 lg:px-3">
+        <nav className="mt-0 space-y-7 lg:mt-8 lg:px-3">
           <Group title="Think">
-            <Item base={base} href={base} exact icon="LayoutDashboard" onNav={() => setOpen(false)}>
+            <Item base={base} href={base} exact icon="LayoutGrid" onNav={() => setOpen(false)}>
               Overview
             </Item>
             <Item
               base={base}
               href={`${base}/questions`}
-              icon="CircleHelp"
+              icon="HelpCircle"
               onNav={() => setOpen(false)}
               trailing={
                 props.openQuestions > 0 ? (
-                  <span className="tnum text-[11px] font-semibold text-unresolved">
+                  <span className="tnum mono text-[11px] text-accent-ink">
                     {props.openQuestions}
                   </span>
                 ) : null
@@ -96,15 +98,15 @@ export function ProjectRail(props: Props) {
             </Group>
           )}
 
-          <Group title="">
+          <Group>
             <Item base={base} href={`${base}/library`} icon="Plus" onNav={() => setOpen(false)}>
               Add a module
             </Item>
             <a
               href={`${base}/export?format=md`}
-              className="flex items-center gap-2.5 rounded-full px-3 py-1.5 text-[12.5px] text-muted hover:bg-accent-wash/60 hover:text-ink"
+              className="flex items-center gap-2.5 rounded-[var(--radius-sm)] px-3 py-1.5 text-[12.5px] text-muted hover:text-ink"
             >
-              <Icon name="Download" size={14} /> Export
+              <Icon name="Download" size={14} className="text-faint" /> Export
             </a>
             <Item
               base={base}
@@ -121,10 +123,10 @@ export function ProjectRail(props: Props) {
   );
 }
 
-function Group({ title, children }: { title: string; children: React.ReactNode }) {
+function Group({ title, children }: { title?: string; children: React.ReactNode }) {
   return (
     <div>
-      {title && <p className="eyebrow mb-1.5 px-2.5">{title}</p>}
+      {title && <p className="eyebrow mb-2 px-3">{title}</p>}
       <div className="space-y-0.5">{children}</div>
     </div>
   );
@@ -154,10 +156,10 @@ function Item({
       href={href}
       onClick={onNav}
       className={cn(
-        "flex items-center gap-2.5 rounded-full px-3 py-1.5 text-[12.5px] transition-colors",
+        "flex items-center gap-2.5 rounded-[var(--radius-sm)] px-3 py-1.5 text-[12.5px] transition-colors",
         active
-          ? "bg-accent-wash font-semibold text-accent-ink"
-          : "text-muted hover:bg-accent-wash/60 hover:text-ink",
+          ? "bg-accent-wash font-medium text-accent-ink"
+          : "text-muted hover:bg-accent-wash/50 hover:text-ink",
       )}
     >
       <Icon name={icon} size={14} className={active ? "text-accent" : "text-faint"} />

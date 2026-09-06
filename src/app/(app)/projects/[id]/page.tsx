@@ -3,8 +3,6 @@ import { Suspense } from "react";
 import { getProject, getPulse, getQuestionCounts, getActivity } from "@/lib/data";
 import { shortDate, daysUntil, money, targetLabel } from "@/lib/format";
 import { relativeTime } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
-import { Icon } from "@/components/icon";
 import { GapPanel } from "@/components/gap-panel";
 import { OneLinerEditor, StatusPicker } from "./overview-client";
 
@@ -19,21 +17,21 @@ export default async function Overview({ params }: PageProps<"/projects/[id]">) 
   const dl = daysUntil(project.deadline);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <Suspense fallback={null}>
         <GapPanel projectId={id} />
       </Suspense>
 
-      {/* the one-line idea — the most important field on the screen */}
+      {/* the one-line idea */}
       <section>
-        <p className="eyebrow mb-2">The idea, in one line</p>
+        <p className="eyebrow mb-3">The idea, in one line</p>
         <OneLinerEditor
           projectId={id}
           value={project.one_liner}
           original={project.original_one_liner}
           readiness={project.readiness}
         />
-        <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-muted">
+        <div className="mono mt-5 flex flex-wrap items-center gap-x-6 gap-y-1 text-[10.5px] uppercase tracking-[0.06em] text-faint">
           {project.target_type && (
             <span>
               Target{" "}
@@ -50,38 +48,34 @@ export default async function Overview({ params }: PageProps<"/projects/[id]">) 
             <span>
               Deadline <span className="text-ink-2">{shortDate(project.deadline)}</span>
               {dl !== null && dl >= 0 && dl <= 30 && (
-                <span className="text-unresolved"> · {dl}d left</span>
+                <span className="text-accent-ink"> · {dl}d left</span>
               )}
             </span>
           )}
           <span>
-            Last touched <span className="text-ink-2">{relativeTime(project.last_touched_at)}</span>
+            Touched <span className="text-ink-2">{relativeTime(project.last_touched_at)}</span>
           </span>
         </div>
       </section>
 
-      {/* progress — questions figured out */}
+      {/* progress */}
       <section>
-        <h2 className="voice-lg">
-          You&apos;ve figured out{" "}
-          <span className="tnum text-ink">{counts.resolved}</span>{" "}
-          {counts.resolved === 1 ? "thing" : "things"} about this project.
-        </h2>
-        <p className="mt-1 text-[13px] text-muted">
+        <p className="voice-lg">
+          <span className="tnum text-accent-ink">{counts.resolved}</span> figured out ·{" "}
           <span className="tnum">{counts.open}</span> still open
-          {counts.exploring ? `, ${counts.exploring} being explored` : ""}.{" "}
-          {project.readiness !== "defined" && "That's the main evidence of progress this early. "}
-          <Link
-            href={`/projects/${id}/questions`}
-            className="font-medium text-unresolved hover:underline"
-          >
+        </p>
+        <p className="mt-1.5 text-[13px] text-muted">
+          {counts.exploring ? `${counts.exploring} being explored. ` : ""}
+          {project.readiness !== "defined" &&
+            "Questions rising is the main evidence of progress this early. "}
+          <Link href={`/projects/${id}/questions`} className="link-accent">
             Open Questions →
           </Link>
         </p>
         {counts.blocking.length > 0 && (
-          <ul className="mt-3 space-y-1.5 border-l-2 border-unresolved pl-3">
+          <ul className="open-edge mt-4 space-y-2 py-1 pl-4">
             {counts.blocking.slice(0, 3).map((q) => (
-              <li key={q.id} className="voice text-[14px] text-ink">
+              <li key={q.id} className="voice text-[14.5px] text-ink">
                 {q.text}
               </li>
             ))}
@@ -91,11 +85,13 @@ export default async function Overview({ params }: PageProps<"/projects/[id]">) 
 
       {/* pulse */}
       <section>
-        <div className="mb-2.5 flex items-baseline justify-between">
-          <h2 className="screen-title">Pulse</h2>
-          <span className="text-[11.5px] text-faint">Δ last 7 days</span>
+        <div className="mb-3 flex items-baseline justify-between">
+          <p className="eyebrow">Pulse</p>
+          <span className="mono text-[10px] uppercase tracking-[0.06em] text-faint">
+            Δ 7 days
+          </span>
         </div>
-        <Card className="hairline-x overflow-hidden">
+        <div className="well hairline-x px-4">
           {pulse.map((row) => (
             <Link
               key={row.pmId}
@@ -104,19 +100,19 @@ export default async function Overview({ params }: PageProps<"/projects/[id]">) 
                   ? `/projects/${id}/questions`
                   : `/projects/${id}/m/${row.pmId}`
               }
-              className="flex items-center justify-between gap-4 px-4 py-2.5 text-[13px] transition-colors hover:bg-raised"
+              className="-mx-4 flex items-center justify-between gap-4 px-4 py-2.5 text-[13px] transition-colors hover:bg-accent-wash/30"
             >
-              <span className="text-[12px] font-medium text-muted">{row.label}</span>
+              <span className="text-[12.5px] text-muted">{row.label}</span>
               <span className="flex items-center gap-4">
-                <span className="tnum text-ink">
+                <span className="tnum mono text-[12px] text-ink">
                   {row.count}
                   {row.subLabel && (
-                    <span className="ml-2 text-[11.5px] text-faint">{row.subLabel}</span>
+                    <span className="ml-2 text-[10.5px] text-faint">{row.subLabel}</span>
                   )}
                 </span>
                 <span
-                  className={`tnum w-10 text-right text-[11.5px] ${
-                    row.delta > 0 ? "text-ink-2" : "text-faint"
+                  className={`tnum mono w-8 text-right text-[10.5px] ${
+                    row.delta > 0 ? "text-accent-ink" : "text-faint"
                   }`}
                 >
                   {row.delta > 0 ? `+${row.delta}` : "—"}
@@ -124,27 +120,28 @@ export default async function Overview({ params }: PageProps<"/projects/[id]">) 
               </span>
             </Link>
           ))}
-        </Card>
+        </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2">
-        <Card className="p-4" tint="paper">
-          <p className="eyebrow mb-2.5">Status</p>
+      <section className="grid gap-8 sm:grid-cols-2">
+        <div>
+          <p className="eyebrow mb-3">Status</p>
           <StatusPicker projectId={id} status={project.status} readiness={project.readiness} />
-        </Card>
-        <Card className="p-4" tint="paper">
-          <p className="eyebrow mb-2.5">Recent activity</p>
-          <ul className="space-y-1.5 text-[12px] text-muted">
+        </div>
+        <div>
+          <p className="eyebrow mb-3">Recent activity</p>
+          <ul className="mono space-y-1.5 text-[11px] text-muted">
             {activity.length === 0 && <li className="text-faint">Nothing yet.</li>}
             {activity.map((a) => (
-              <li key={a.id} className="flex items-center gap-2">
-                <Icon name="Dot" size={14} className="shrink-0 text-faint" />
-                <span className="flex-1 capitalize">{a.kind.replace(/_/g, " ")}</span>
+              <li key={a.id} className="flex items-baseline gap-2">
+                <span className="flex-1 uppercase tracking-[0.04em]">
+                  {a.kind.replace(/_/g, " ")}
+                </span>
                 <span className="text-faint">{relativeTime(a.created_at)}</span>
               </li>
             ))}
           </ul>
-        </Card>
+        </div>
       </section>
     </div>
   );

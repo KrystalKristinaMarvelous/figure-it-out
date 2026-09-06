@@ -5,12 +5,11 @@ import { Plus, ChevronDown } from "lucide-react";
 import type { QuestionRow } from "@/lib/supabase/database.types";
 import { createQuestion, updateQuestion, resolveQuestion } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input, Textarea } from "@/components/ui/field";
 import { Dialog, DialogContent, DialogHeader, DialogBody, DialogFooter } from "@/components/ui/dialog";
 import { relativeTime, cn } from "@/lib/utils";
 
-const PRIORITY_DOT = { blocking: "bg-unresolved", important: "bg-muted", minor: "bg-faint" } as const;
+const PRIORITY_DOT = { blocking: "bg-accent", important: "bg-muted", minor: "bg-faint" } as const;
 const PRIORITY_ORDER = { blocking: 0, important: 1, minor: 2 } as const;
 const SOURCE_LABEL: Record<string, string> = {
   brainstorm: "from a brainstorm",
@@ -81,71 +80,75 @@ export function QuestionsBoard({
         </Button>
       </form>
 
-      <div className="space-y-2.5">
+      <div>
         {open.length === 0 && (
-          <Card className="p-7 text-center" tint="paper">
-            <p className="voice text-[14px] text-muted">
-              Nothing open. Most projects start with more questions than answers — that&apos;s the
-              point.
-            </p>
-          </Card>
+          <p className="voice py-6 text-[14px] text-muted">
+            Nothing open. Most projects start with more questions than answers — that&apos;s the
+            point.
+          </p>
         )}
-        {open.map((q) => (
-          <div
-            key={q.id}
-            className={cn(
-              "unresolved-edge rounded-l-[2px] rounded-r-[var(--radius)] border border-l-2 border-hairline-2 border-l-unresolved px-4 py-3",
-              draining === q.id && "animate-drain pointer-events-none",
-            )}
-          >
-            <div className="flex items-start gap-2.5">
-              <span
-                className={cn("mt-2 h-1.5 w-1.5 shrink-0 rounded-full", PRIORITY_DOT[q.priority])}
-                title={q.priority}
-              />
-              <p className="voice flex-1 text-[15px] leading-snug text-ink">{q.text}</p>
+        <div className="hairline-x framed">
+          {open.map((q) => (
+            <div
+              key={q.id}
+              className={cn(
+                "open-edge py-3.5 pl-4",
+                draining === q.id && "animate-drain pointer-events-none",
+              )}
+            >
+              <div className="flex items-start gap-2.5">
+                <span
+                  className={cn("mt-2 h-1.5 w-1.5 shrink-0 rounded-full", PRIORITY_DOT[q.priority])}
+                  title={q.priority}
+                />
+                <p className="voice flex-1 text-[15.5px] leading-snug text-ink">{q.text}</p>
+              </div>
+              <div className="mt-2.5 flex flex-wrap items-center gap-1.5 pl-4 text-[11px]">
+                <InlineSelect
+                  value={q.priority}
+                  onChange={(v) => start(() => updateQuestion(projectId, q.id, { priority: v }).then(() => {}))}
+                  options={["blocking", "important", "minor"]}
+                />
+                <InlineSelect
+                  value={q.status}
+                  onChange={(v) => start(() => updateQuestion(projectId, q.id, { status: v }).then(() => {}))}
+                  options={["open", "exploring"]}
+                />
+                <button
+                  onClick={() => {
+                    setResolving(q);
+                    setAnswer("");
+                  }}
+                  className="pressable ml-1 text-[11px] font-medium text-accent-ink hover:underline"
+                >
+                  Resolve
+                </button>
+                {SOURCE_LABEL[q.source] && (
+                  <span className="mono text-[10px] uppercase tracking-[0.05em] text-faint">
+                    {SOURCE_LABEL[q.source]}
+                  </span>
+                )}
+                <span className="mono text-[10px] text-faint">· {relativeTime(q.created_at)}</span>
+              </div>
             </div>
-            <div className="mt-2.5 flex flex-wrap items-center gap-1.5 pl-4 text-[11.5px]">
-              <InlineSelect
-                value={q.priority}
-                onChange={(v) => start(() => updateQuestion(projectId, q.id, { priority: v }).then(() => {}))}
-                options={["blocking", "important", "minor"]}
-              />
-              <InlineSelect
-                value={q.status}
-                onChange={(v) => start(() => updateQuestion(projectId, q.id, { status: v }).then(() => {}))}
-                options={["open", "exploring"]}
-              />
-              <button
-                onClick={() => {
-                  setResolving(q);
-                  setAnswer("");
-                }}
-                className="pressable rounded-full bg-ink px-2.5 py-0.5 text-[11px] font-medium text-surface"
-              >
-                Resolve
-              </button>
-              {SOURCE_LABEL[q.source] && <span className="text-faint">{SOURCE_LABEL[q.source]}</span>}
-              <span className="text-faint">· {relativeTime(q.created_at)}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {resolved.length > 0 && (
         <details className="group">
-          <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12.5px] font-medium text-muted hover:text-ink">
-            <ChevronDown size={13} className="transition-transform group-open:rotate-180" />
+          <summary className="mono flex cursor-pointer list-none items-center gap-1.5 text-[11px] uppercase tracking-[0.06em] text-muted hover:text-ink">
+            <ChevronDown size={12} className="transition-transform group-open:rotate-180" />
             {resolved.length} resolved — the decision history
           </summary>
-          <div className="mt-3 space-y-2">
+          <div className="mt-4 hairline-x framed">
             {resolved.map((q) => (
-              <Card key={q.id} className="p-3.5" tint="paper">
-                <p className="voice text-[13px] text-faint line-through decoration-faint/50">
+              <div key={q.id} className="py-3.5">
+                <p className="voice text-[13px] text-faint line-through decoration-faint/40">
                   {q.text}
                 </p>
-                <p className="voice mt-1 text-[14px] text-ink">{q.answer}</p>
-                <p className="mt-1.5 text-[11px] text-faint">
+                <p className="voice mt-1 text-[14.5px] text-ink">{q.answer}</p>
+                <p className="mono mt-1.5 text-[10px] text-faint">
                   resolved {relativeTime(q.resolved_at)} ·{" "}
                   <button
                     className="underline hover:text-muted"
@@ -156,7 +159,7 @@ export function QuestionsBoard({
                     reopen
                   </button>
                 </p>
-              </Card>
+              </div>
             ))}
           </div>
         </details>
@@ -208,12 +211,12 @@ function InlineSelect({
 }) {
   const ref = useRef<HTMLSelectElement>(null);
   return (
-    <span className="relative inline-flex items-center rounded-full border border-hairline bg-paper px-2 py-0.5 text-muted hover:border-muted">
+    <span className="relative inline-flex items-center text-muted hover:text-ink">
       <select
         ref={ref}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="cursor-pointer appearance-none bg-transparent pr-3 text-[11px] outline-none"
+        className="mono cursor-pointer appearance-none bg-transparent pr-3.5 text-[10px] uppercase tracking-[0.05em] outline-none"
       >
         {options.map((o) => (
           <option key={o} value={o}>
@@ -221,7 +224,7 @@ function InlineSelect({
           </option>
         ))}
       </select>
-      <ChevronDown size={9} className="pointer-events-none absolute right-1.5" />
+      <ChevronDown size={9} className="pointer-events-none absolute right-0" />
     </span>
   );
 }

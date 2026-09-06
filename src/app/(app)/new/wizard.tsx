@@ -6,6 +6,8 @@ import type { CategoryDef, SubtypeDef } from "@/lib/schema/taxonomy";
 import type { Readiness } from "@/lib/schema/types";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label, CheckboxField } from "@/components/ui/field";
+import { Icon } from "@/components/icon";
+import { ReadinessMark } from "@/components/readiness-mark";
 import { createProject } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
@@ -87,7 +89,7 @@ export function Wizard({
             <span
               className={cn(
                 "h-1 rounded-full transition-all duration-300",
-                i === step ? "w-8 bg-unresolved" : i < step ? "w-4 bg-ink" : "w-4 bg-hairline",
+                i === step ? "w-8 bg-accent" : i < step ? "w-4 bg-ink-2" : "w-4 bg-hairline",
               )}
             />
           </div>
@@ -110,15 +112,17 @@ export function Wizard({
                       setSubtypeKey(c.subtypes.length === 1 ? c.subtypes[0].key : null);
                     }}
                     className={cn(
-                      "pressable flex w-full items-center gap-3 rounded-[var(--radius)] border px-3.5 py-3 text-left transition-colors",
+                      "flex w-full items-center gap-3 rounded-[var(--radius-sm)] border px-3.5 py-3 text-left transition-colors",
                       category === c.key
-                        ? "border-ink bg-raised"
-                        : "border-hairline-2 bg-paper hover:border-hairline",
+                        ? "border-accent bg-accent-wash/40"
+                        : "border-hairline hover:border-ink-2",
                     )}
                   >
-                    <span className="text-[18px] leading-none">{c.glyph}</span>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[var(--radius-sm)] bg-sunken text-muted">
+                      <Icon name={c.icon} size={15} />
+                    </span>
                     <span className="min-w-0">
-                      <span className="block text-[13.5px] font-semibold text-ink">{c.label}</span>
+                      <span className="block text-[13px] font-medium text-ink">{c.label}</span>
                       <span className="block truncate text-[12px] text-muted">{c.blurb}</span>
                     </span>
                   </button>
@@ -236,16 +240,16 @@ export function Wizard({
                     key={r}
                     onClick={() => goReadiness(r)}
                     className={cn(
-                      "pressable block w-full rounded-[var(--radius)] border p-4 text-left transition-colors",
+                      "block w-full rounded-[var(--radius-sm)] border p-4 text-left transition-colors",
                       readiness === r
-                        ? "border-ink bg-raised"
-                        : "border-hairline-2 bg-paper hover:border-hairline",
+                        ? "border-accent bg-accent-wash/40"
+                        : "border-hairline hover:border-ink-2",
                     )}
                   >
-                    <div className="text-[13.5px] font-semibold text-ink">
-                      {m.glyph} {m.label}
+                    <div className="flex items-center gap-2 text-[13px] font-medium text-ink">
+                      <ReadinessMark readiness={r} /> {m.label}
                     </div>
-                    <div className="voice mt-1 text-[13.5px] text-ink-2">{m.meaning}</div>
+                    <div className="voice mt-1.5 text-[13.5px] text-ink-2">{m.meaning}</div>
                     <div className="mt-1 text-[11.5px] text-muted">{m.emphasis}</div>
                   </button>
                 );

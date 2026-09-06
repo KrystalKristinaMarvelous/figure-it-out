@@ -16,10 +16,10 @@ export function DialogContent({
 }: React.ComponentProps<typeof D.Content> & { size?: "sm" | "md" | "lg" | "full" }) {
   return (
     <D.Portal>
-      <D.Overlay className="animate-overlay fixed inset-0 z-50 bg-ink/25 backdrop-blur-[3px]" />
+      <D.Overlay className="animate-overlay fixed inset-0 z-50 bg-ink/30 backdrop-blur-[2px]" />
       <D.Content
         className={cn(
-          "animate-pop fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[var(--radius-lg)] border border-hairline bg-raised shadow-[var(--shadow-pop)] focus:outline-none",
+          "animate-pop fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[var(--radius-lg)] border border-hairline bg-bg shadow-[var(--shadow-pop)] focus:outline-none",
           size === "sm" && "w-[92vw] max-w-sm",
           size === "md" && "w-[92vw] max-w-lg",
           size === "lg" && "w-[94vw] max-w-2xl",
@@ -30,10 +30,10 @@ export function DialogContent({
       >
         {children}
         <D.Close
-          className="pressable absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full text-muted hover:bg-accent-wash hover:text-accent-ink"
+          className="pressable absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-[var(--radius-sm)] text-muted hover:bg-accent-wash hover:text-accent-ink"
           aria-label="Close"
         >
-          <X size={16} />
+          <X size={15} />
         </D.Close>
       </D.Content>
     </D.Portal>
@@ -48,10 +48,10 @@ export function DialogHeader({
   description?: React.ReactNode;
 }) {
   return (
-    <div className="border-b border-hairline-2 px-5 pb-4 pt-[18px]">
-      <D.Title className="screen-title text-[16px]">{title}</D.Title>
+    <div className="border-b border-hairline-2 px-5 pb-3.5 pt-4">
+      <D.Title className="screen-title text-[15px]">{title}</D.Title>
       {description && (
-        <D.Description className="voice mt-1 measure text-[13.5px] text-muted">
+        <D.Description className="voice mt-1 measure text-[13px] text-muted">
           {description}
         </D.Description>
       )}
@@ -67,7 +67,7 @@ export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLD
   return (
     <div
       className={cn(
-        "flex items-center justify-end gap-2.5 border-t border-hairline-2 bg-sunken/40 px-5 py-3.5",
+        "flex items-center justify-end gap-2 border-t border-hairline-2 px-5 py-3",
         className,
       )}
       {...props}

@@ -1,5 +1,5 @@
 import { getProject, getProjectModules, getQuestionCounts } from "@/lib/data";
-import { findCategory, findSubtype, READINESS_META } from "@/lib/schema/taxonomy";
+import { findCategory, findSubtype } from "@/lib/schema/taxonomy";
 import { ProjectRail } from "./project-rail";
 
 export default async function ProjectLayout({
@@ -14,7 +14,6 @@ export default async function ProjectLayout({
   ]);
   const cat = findCategory(project.category);
   const sub = findSubtype(project.category, project.subtype);
-  const rm = READINESS_META[project.readiness];
 
   const moduleLinks = modules
     .filter((m) => !["rant_space", "open_questions", "activity_log"].includes(m.def.key))
@@ -30,14 +29,13 @@ export default async function ProjectLayout({
         projectId={id}
         title={project.title}
         crumb={`${cat?.label} · ${sub?.label ?? project.subtype}`}
-        readinessGlyph={rm.glyph}
-        readinessLabel={rm.label}
+        readiness={project.readiness}
         openQuestions={counts.open}
         moduleLinks={moduleLinks}
         lifecycle={project.lifecycle}
       />
-      <div className="min-w-0 flex-1 px-4 py-7 sm:px-10 lg:px-14">
-        <div className="max-w-2xl animate-rise">{children}</div>
+      <div className="min-w-0 flex-1 px-5 py-8 sm:px-12 lg:px-16">
+        <div className="max-w-[38rem] animate-rise">{children}</div>
       </div>
     </div>
   );

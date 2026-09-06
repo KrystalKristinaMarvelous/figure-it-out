@@ -137,24 +137,23 @@ function CardsView({
   layout,
 }: SubProps & { layout: "grid" | "list" }) {
   const imageField = schema.find((f) => f.type === "image");
-  const asNote = layout === "grid";
   return (
     <div
       className={cn(
-        layout === "grid" ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "space-y-2.5",
+        layout === "grid" ? "grid gap-3 sm:grid-cols-2" : "hairline-x framed",
       )}
     >
-      {entries.map((e, idx) => {
+      {entries.map((e) => {
         const values = e.values as EntryValues;
         const img = imageField ? (values[imageField.key] as string) : null;
         return (
           <Card
             key={e.id}
-            interactive={!asNote}
-            tint={asNote ? "note" : "default"}
+            interactive
+            tint={layout === "grid" ? "flat" : "flat"}
             className={cn(
               "group overflow-hidden p-3.5",
-              asNote && (idx % 3 === 0 ? "rotate-[-0.7deg]" : idx % 3 === 2 ? "rotate-[0.6deg]" : ""),
+              layout === "list" && "!border-0 !rounded-none",
             )}
             onClick={() => onEdit(e)}
           >

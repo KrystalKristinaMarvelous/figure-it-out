@@ -6,7 +6,7 @@ export const metadata = { title: "Get started — FIO" };
 export default function SignupPage() {
   return (
     <div className="mx-auto flex min-h-full w-full max-w-sm flex-col justify-center px-5 py-16">
-      <Link href="/" className="voice mb-10 text-[22px] italic tracking-[-0.02em] text-ink">
+      <Link href="/" className="voice mb-10 text-[20px] text-ink">
         FIO
       </Link>
       <h1 className="voice-lg">Figure it out first.</h1>

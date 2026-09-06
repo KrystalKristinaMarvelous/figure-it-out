@@ -25,7 +25,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
           <nav className="flex items-center gap-1 text-[13px]">
             <Link
               href="/dashboard"
-              className="voice mr-3 text-[22px] font-semibold leading-none tracking-[-0.02em] text-accent-ink"
+              className="voice mr-3 text-[19px] leading-none text-ink"
             >
               FIO
             </Link>

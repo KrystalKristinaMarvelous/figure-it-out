@@ -1,22 +1,28 @@
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
+/**
+ * Content sits in a recessed "well" or directly on the page — never a floating
+ * rounded card. `tint` shifts the treatment for special states.
+ */
 export const Card = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    tint?: "default" | "paper" | "sunken" | "unresolved" | "chaos" | "note";
+    tint?: "default" | "paper" | "well" | "unresolved" | "chaos" | "flat";
     interactive?: boolean;
   }
 >(({ className, tint = "default", interactive, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      tint === "note" ? "note" : "card",
-      tint === "paper" && "bg-paper",
-      tint === "sunken" && "border-hairline-2 bg-sunken shadow-none",
-      tint === "unresolved" && "open-edge",
-      tint === "chaos" && "border-l-[3px] border-l-chaos bg-chaos-wash",
-      interactive && "card-hover card-link",
+      tint === "flat"
+        ? "rounded-[var(--radius)] border border-hairline-2 bg-transparent"
+        : "well",
+      tint === "paper" && "bg-paper shadow-none border border-hairline-2",
+      tint === "unresolved" && "open-edge !rounded-l-[2px] bg-transparent shadow-none",
+      tint === "chaos" && "border-l-2 border-l-chaos bg-chaos-wash shadow-none !rounded-l-[2px]",
+      interactive &&
+        "cursor-pointer transition-colors hover:bg-[color-mix(in_srgb,var(--sunken)_60%,var(--raised))]",
       className,
     )}
     {...props}
@@ -34,11 +40,11 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
+        "mono inline-flex items-center gap-1 rounded-[4px] px-1.5 py-0.5 text-[10.5px] uppercase tracking-[0.06em]",
         tone === "neutral" && "bg-sunken text-muted",
         tone === "unresolved" && "bg-accent-wash text-accent-ink",
         tone === "chaos" && "bg-chaos-wash text-chaos",
-        tone === "ok" && "bg-sage-wash text-sage",
+        tone === "ok" && "bg-brass/12 text-brass",
         tone === "outline" && "border border-hairline text-muted",
         className,
       )}
@@ -59,14 +65,14 @@ export function EmptyState({
   actions?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border-2 border-dashed border-hairline bg-raised/50 p-7 sm:p-9">
+    <div className="well px-7 py-8 sm:px-9 sm:py-10">
       <h3 className="voice-lg">{title}</h3>
-      <p className="voice measure mt-2 text-[14.5px] text-muted">{children}</p>
+      <p className="voice measure mt-2 text-[15px] text-muted">{children}</p>
       {example && (
-        <figure className="note mt-5 max-w-md -rotate-1 p-4 text-[13px] text-ink/80">
-          <figcaption className="eyebrow mb-1.5 text-ink/40">For example</figcaption>
+        <div className="mt-5 max-w-md border-l-2 border-hairline pl-4 text-[13px] text-muted">
+          <span className="eyebrow mb-1 block">For example</span>
           {example}
-        </figure>
+        </div>
       )}
       {actions && <div className="mt-6 flex flex-wrap gap-2.5">{actions}</div>}
     </div>

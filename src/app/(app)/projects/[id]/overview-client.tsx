@@ -5,17 +5,18 @@ import { Pencil } from "lucide-react";
 import { updateProjectField, changeReadiness } from "@/lib/actions";
 import { Textarea, Select } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
+import { ReadinessMark } from "@/components/readiness-mark";
 import { READINESS_META } from "@/lib/schema/taxonomy";
 import type { Readiness } from "@/lib/schema/types";
 
-const STATUSES = [
-  ["seed", "🌱 Seed"],
-  ["developing", "🟡 Developing"],
-  ["building", "🔵 Building"],
-  ["refining", "🟠 Refining"],
-  ["done", "✅ Done"],
-  ["dormant", "💤 Dormant"],
-] as const;
+const STATUSES: [string, string, string][] = [
+  ["seed", "Seed", "var(--faint)"],
+  ["developing", "Developing", "var(--brass)"],
+  ["building", "Building", "var(--denim)"],
+  ["refining", "Refining", "var(--accent)"],
+  ["done", "Done", "var(--ok)"],
+  ["dormant", "Dormant", "var(--hairline)"],
+];
 
 export function OneLinerEditor({
   projectId,
@@ -40,7 +41,7 @@ export function OneLinerEditor({
           onChange={(e) => setDraft(e.target.value)}
           autoFocus
           rows={3}
-          className="voice-lg !text-[22px] leading-tight"
+          className="voice-lg !text-[24px] leading-tight"
           placeholder="A princess discovers that her sister's death may have been arranged by the court."
         />
         <div className="flex gap-2">
@@ -66,13 +67,11 @@ export function OneLinerEditor({
   }
 
   return (
-    <div className="group relative">
+    <div className="group">
       <button
         onClick={() => setEditing(true)}
         className={`block w-full text-left ${
-          value
-            ? "voice-lg"
-            : "voice measure text-[15px] text-unresolved-ink"
+          value ? "voice-xl" : "voice measure text-[15px] text-accent-ink"
         }`}
       >
         {value ||
@@ -81,11 +80,11 @@ export function OneLinerEditor({
             : "Write the one-line version of this idea. Being unable to is real information.")}
         <Pencil
           size={13}
-          className="ml-2 inline-block -translate-y-0.5 text-faint opacity-0 transition-opacity group-hover:opacity-100"
+          className="ml-2 inline-block -translate-y-1 text-faint opacity-0 transition-opacity group-hover:opacity-100"
         />
       </button>
       {original && value && original !== value && (
-        <p className="voice mt-2 text-[13px] italic text-faint">Started as: “{original}”</p>
+        <p className="voice mt-3 text-[13px] italic text-faint">Started as: “{original}”</p>
       )}
     </div>
   );
@@ -101,37 +100,44 @@ export function StatusPicker({
   readiness: Readiness;
 }) {
   const [pending, start] = useTransition();
+  const current = STATUSES.find(([v]) => v === status);
   return (
-    <div className="space-y-3">
-      <Select
-        value={status}
-        disabled={pending}
-        onChange={(e) =>
-          start(() => updateProjectField(projectId, { status: e.target.value }).then(() => {}))
-        }
-      >
-        {STATUSES.map(([v, l]) => (
-          <option key={v} value={v}>
-            {l}
-          </option>
-        ))}
-      </Select>
+    <div className="space-y-3.5">
+      <div className="flex items-center gap-2">
+        <span
+          className="h-2 w-2 shrink-0 rounded-full"
+          style={{ background: current?.[2] ?? "var(--faint)" }}
+        />
+        <Select
+          value={status}
+          disabled={pending}
+          onChange={(e) =>
+            start(() => updateProjectField(projectId, { status: e.target.value }).then(() => {}))
+          }
+        >
+          {STATUSES.map(([v, l]) => (
+            <option key={v} value={v}>
+              {l}
+            </option>
+          ))}
+        </Select>
+      </div>
       <div>
-        <p className="mb-1.5 text-[11.5px] text-faint">Readiness — changing only adds modules</p>
-        <div className="flex gap-1.5">
+        <p className="mb-2 text-[11px] text-faint">Readiness — changing only adds modules</p>
+        <div className="flex gap-2">
           {(["seed", "vague", "defined"] as Readiness[]).map((r) => (
             <button
               key={r}
               disabled={pending || r === readiness}
               onClick={() => start(() => changeReadiness(projectId, r).then(() => {}))}
               title={READINESS_META[r].label}
-              className={`pressable flex h-8 w-9 items-center justify-center rounded-[var(--radius-sm)] border text-[15px] transition-colors ${
+              className={`flex h-9 flex-1 items-center justify-center rounded-[var(--radius-sm)] border transition-colors ${
                 r === readiness
-                  ? "border-ink bg-raised"
-                  : "border-hairline text-muted hover:border-muted"
+                  ? "border-accent bg-accent-wash/40"
+                  : "border-hairline text-muted hover:border-ink-2"
               }`}
             >
-              {READINESS_META[r].glyph}
+              <ReadinessMark readiness={r} />
             </button>
           ))}
         </div>

@@ -2,111 +2,98 @@
 @plugin "@tailwindcss/typography";
 
 /*
-  FIO — warm studio.
-  Cream paper, warm ink, terracotta. Soft shadows, rounded corners, a little
-  spring in everything. Feels like a well-made notebook on a sunlit desk, not
-  a lab. Serif (Fraunces) is the app's voice — questions, prompts, big moments.
-  Sans (Figtree) is the quiet structure.
-
-  Colour still means something: terracotta = "not settled yet / look here",
-  sage = "done". Everything resolved goes calm and monochrome.
+  FIO — editorial.
+  Light: Ink & Oxblood — bone paper, warm black, deep burgundy.
+  Dark:  Dusk — slate, warm off-white, dusty rose (the same hue, adjusted).
+  Voice: Hedvig Letters Serif. Structure: Inter Tight. Labels: Fragment Mono.
+  Content sits in recessed wells or directly on the page — no floating cards.
+  The accent means "not settled yet"; resolved things go monochrome.
 */
 
 :root {
-  --bg: #f1e9db;          /* warm sand desk */
-  --raised: #fbf5e9;      /* card — warm ivory */
-  --paper: #fffdf7;       /* inputs, popovers — brightest */
-  --sunken: #e8ddc8;      /* wells */
-  --note: #f7e7b4;        /* sticky-note yellow */
+  --bg: #f1ede2;
+  --raised: #f7f4ea;
+  --paper: #fcfaf3;
+  --sunken: #e7e0d0;   /* the inset well */
+  --ink: #1b1712;
+  --ink-2: #4a443a;
+  --muted: #7c7566;
+  --faint: #a89f8c;
+  --hairline: #d6cdb9;
+  --hairline-2: #e5dcc8;
 
-  --ink: #2b2118;         /* warm near-black */
-  --ink-2: #574a3a;       /* warm brown */
-  --muted: #8a7c66;       /* taupe */
-  --faint: #b1a488;       /* light taupe */
-  --hairline: #ddccae;    /* warm rule */
-  --hairline-2: #ebe0c9;  /* fainter rule */
+  --accent: #8a2f38;       /* oxblood */
+  --accent-ink: #732530;
+  --accent-wash: #eee0dc;
+  --denim: #4c5f80;
+  --brass: #957440;        /* finished / seal */
+  --chaos: #363a70;        /* Chaos Mode only */
+  --chaos-wash: #e3e2ee;
 
-  --accent: #c8623c;      /* terracotta */
-  --accent-ink: #a44a29;  /* terracotta text on cream */
-  --accent-wash: #f4e2d5; /* terracotta tint */
-  --sage: #6f7f57;        /* done / resolved */
-  --sage-wash: #e6e9d9;
-  --chaos: #6a4c93;       /* grape — Chaos Mode only */
-  --chaos-wash: #ebe3f2;
-
-  /* keep spec's token aliases so screens don't need touching */
+  /* spec token aliases — screens keep using these names */
   --unresolved: var(--accent);
   --unresolved-ink: var(--accent-ink);
   --unresolved-wash: var(--accent-wash);
-  --ok: var(--sage);
+  --ok: var(--brass);
 
-  --shadow-1: 0 1px 2px rgb(80 55 30 / 0.06), 0 2px 6px -2px rgb(80 55 30 / 0.08);
-  --shadow-2: 0 2px 4px rgb(80 55 30 / 0.06), 0 8px 20px -6px rgb(80 55 30 / 0.14);
-  --shadow-pop: 0 4px 10px rgb(60 40 20 / 0.1), 0 18px 40px -10px rgb(60 40 20 / 0.28);
-  --shadow-note: 0 1px 1px rgb(120 90 30 / 0.12), 0 6px 14px -4px rgb(120 90 30 / 0.22);
+  --well-shadow: inset 0 1px 3px rgb(60 45 25 / 0.05);
+  --shadow-pop: 0 4px 12px rgb(30 20 10 / 0.1), 0 16px 44px -12px rgb(30 20 10 / 0.24);
 
-  --font-voice: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-structure: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-voice: var(--font-hedvig), "Iowan Old Style", Georgia, serif;
+  --font-structure: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-fragment-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 18px;
+  --radius-sm: 6px;
+  --radius: 14px;
+  --radius-lg: 20px;
   --measure: 60ch;
-
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease: cubic-bezier(0.4, 0, 0.1, 1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #201a13;
-    --raised: #2b2318;
-    --paper: #3a2e1b;
-    --sunken: #181309;
-    --note: #4a3d1c;
-    --ink: #f2e9d8;
-    --ink-2: #cabb9f;
-    --muted: #9a8b70;
-    --faint: #6f6350;
-    --hairline: #453a28;
-    --hairline-2: #362d1e;
-    --accent: #e07d54;
-    --accent-ink: #f0a483;
-    --accent-wash: #3a2318;
-    --sage: #97a878;
-    --sage-wash: #2b311d;
-    --chaos: #a98bd6;
-    --chaos-wash: #2c2338;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
-    --shadow-2: 0 2px 6px rgb(0 0 0 / 0.4), 0 12px 28px -8px rgb(0 0 0 / 0.55);
-    --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.5), 0 24px 50px -12px rgb(0 0 0 / 0.65);
-    --shadow-note: 0 2px 10px rgb(0 0 0 / 0.45);
+    --bg: #1e1d29;
+    --raised: #26252f;
+    --paper: #2b2937;
+    --sunken: #18171f;
+    --ink: #e9e6ee;
+    --ink-2: #bdb8c9;
+    --muted: #948fa6;
+    --faint: #6b6680;
+    --hairline: #38364c;
+    --hairline-2: #2c2b3a;
+    --accent: #d98b86;
+    --accent-ink: #e6a9a4;
+    --accent-wash: #322530;
+    --denim: #8f9bb3;
+    --brass: #b79a6a;
+    --chaos: #9091d6;
+    --chaos-wash: #2a2a3d;
+    --well-shadow: inset 0 1px 3px rgb(0 0 0 / 0.35);
+    --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.5), 0 28px 60px -14px rgb(0 0 0 / 0.6);
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #201a13;
-  --raised: #2b2318;
-  --paper: #3a2e1b;
-  --sunken: #181309;
-  --note: #4a3d1c;
-  --ink: #f2e9d8;
-  --ink-2: #cabb9f;
-  --muted: #9a8b70;
-  --faint: #6f6350;
-  --hairline: #453a28;
-  --hairline-2: #362d1e;
-  --accent: #e07d54;
-  --accent-ink: #f0a483;
-  --accent-wash: #3a2318;
-  --sage: #97a878;
-  --sage-wash: #2b311d;
-  --chaos: #a98bd6;
-  --chaos-wash: #2c2338;
-  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
-  --shadow-2: 0 2px 6px rgb(0 0 0 / 0.4), 0 12px 28px -8px rgb(0 0 0 / 0.55);
-  --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.5), 0 24px 50px -12px rgb(0 0 0 / 0.65);
-  --shadow-note: 0 2px 10px rgb(0 0 0 / 0.45);
+  --bg: #1e1d29;
+  --raised: #26252f;
+  --paper: #2b2937;
+  --sunken: #18171f;
+  --ink: #e9e6ee;
+  --ink-2: #bdb8c9;
+  --muted: #948fa6;
+  --faint: #6b6680;
+  --hairline: #38364c;
+  --hairline-2: #2c2b3a;
+  --accent: #d98b86;
+  --accent-ink: #e6a9a4;
+  --accent-wash: #322530;
+  --denim: #8f9bb3;
+  --brass: #b79a6a;
+  --chaos: #9091d6;
+  --chaos-wash: #2a2a3d;
+  --well-shadow: inset 0 1px 3px rgb(0 0 0 / 0.35);
+  --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.5), 0 28px 60px -14px rgb(0 0 0 / 0.6);
 }
 
 @theme inline {
@@ -115,7 +102,7 @@
   --color-raised: var(--raised);
   --color-paper: var(--paper);
   --color-sunken: var(--sunken);
-  --color-note: var(--note);
+  --color-well: var(--sunken);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
@@ -125,21 +112,22 @@
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --color-accent-wash: var(--accent-wash);
-  --color-sage: var(--sage);
-  --color-sage-wash: var(--sage-wash);
+  --color-denim: var(--denim);
+  --color-brass: var(--brass);
   --color-unresolved: var(--accent);
   --color-unresolved-ink: var(--accent-ink);
   --color-unresolved-wash: var(--accent-wash);
   --color-chaos: var(--chaos);
   --color-chaos-wash: var(--chaos-wash);
-  --color-ok: var(--sage);
+  --color-ok: var(--brass);
 
   --font-voice: var(--font-voice);
   --font-structure: var(--font-structure);
+  --font-mono: var(--font-mono);
 
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 18px;
+  --radius-sm: 6px;
+  --radius: 14px;
+  --radius-lg: 20px;
 }
 
 * {
@@ -157,163 +145,120 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-structure);
+  font-size: 13.5px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-size: 14px;
-  line-height: 1.55;
 }
 
-/* ── the app's voice — Fraunces, warm and a little characterful ──────────── */
+/* ── the app's voice — Hedvig Letters Serif ─────────────────────────────── */
 .voice {
   font-family: var(--font-voice);
-  font-optical-sizing: auto;
+  font-size: 1rem;
   line-height: 1.5;
-  font-size: 0.98rem;
-  letter-spacing: 0;
+  letter-spacing: -0.003em;
 }
 .voice-lg {
   font-family: var(--font-voice);
-  font-optical-sizing: auto;
-  font-weight: 460;
-  line-height: 1.32;
   font-size: 1.5rem;
-  letter-spacing: -0.008em;
+  line-height: 1.28;
+  letter-spacing: -0.012em;
   color: var(--ink);
   text-wrap: balance;
 }
 .voice-xl {
   font-family: var(--font-voice);
-  font-optical-sizing: auto;
-  font-weight: 480;
-  line-height: 1.15;
-  font-size: clamp(2.1rem, 1.3rem + 2.8vw, 3.2rem);
-  letter-spacing: -0.018em;
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
   color: var(--ink);
   text-wrap: balance;
 }
-.voice em, .voice-lg em, .voice-xl em {
-  font-style: italic;
-  font-variation-settings: "SOFT" 60;
-}
+.voice em, .voice-lg em, .voice-xl em { font-style: italic; }
 
+/* structure headings */
 .screen-title {
   font-family: var(--font-structure);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.0625rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
   color: var(--ink);
 }
 .eyebrow {
-  font-family: var(--font-structure);
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: 400;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--faint);
 }
+.mono { font-family: var(--font-mono); }
 
 .measure { max-width: var(--measure); }
 .tnum { font-variant-numeric: tabular-nums; }
 
-::selection { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); }
 
 :focus-visible {
-  outline: 2.5px solid var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
-/* ── cards & materiality ─────────────────────────────────────────────────── */
-.card {
-  background: var(--raised);
-  border: 1px solid var(--hairline-2);
+/* ── containers ─────────────────────────────────────────────────────────── */
+/* the recessed well — the chosen way to hold grouped content */
+.well {
+  background: var(--sunken);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-1);
-  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--spring),
-    border-color 0.2s var(--ease);
+  box-shadow: var(--well-shadow);
 }
-.card-hover:hover {
-  box-shadow: var(--shadow-2);
-  transform: translateY(-2px);
-  border-color: var(--hairline);
-}
-.card-link { cursor: pointer; }
-.card-link:active { transform: translateY(0) scale(0.99); }
-
-/* a warm sticky note — Ideas, Chaos, Inspiration */
-.note {
-  background: var(--note);
-  border: none;
-  border-radius: 4px 4px 10px 10px;
-  box-shadow: var(--shadow-note);
-  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
-}
-.note:hover { transform: rotate(-0.6deg) translateY(-2px); box-shadow: var(--shadow-pop); }
-
-/* terracotta spine — anything still open */
-.open-edge {
-  border-left: 3px solid var(--accent);
-  background: color-mix(in srgb, var(--accent) 5%, var(--raised));
-}
-
-.pressable { transition: transform 0.14s var(--spring); }
-.pressable:active { transform: scale(0.93); }
-
+/* content that sits directly on the page, separated by a top rule */
+.framed { border-top: 1.5px solid var(--ink); }
 .hairline-x > * + * { border-top: 1px solid var(--hairline-2); }
 
-/* ── motion — playful but not clownish ──────────────────────────────────── */
+/* the accent spine — anything unresolved */
+.open-edge { border-left: 2px solid var(--accent); }
+
+.pressable { transition: opacity 0.14s var(--ease), background-color 0.14s var(--ease); }
+.pressable:active { opacity: 0.7; }
+
+.link-accent { color: var(--accent-ink); font-weight: 500; text-decoration: none; }
+.link-accent:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── motion — calm, editorial, no bounce ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
-
-@keyframes pop-in {
-  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
-  100% { opacity: 1; transform: none; }
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
-.animate-pop { animation: pop-in 0.28s var(--spring); }
-
+.animate-rise { animation: fade-up 0.32s var(--ease) both; }
+.animate-pop { animation: fade-up 0.18s var(--ease); }
 @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
 .animate-overlay { animation: overlay-in 0.16s ease; }
 
-@keyframes rise {
+/* resolving a question — the accent drains, the row eases down */
+@keyframes drain {
+  0% { border-left-color: var(--accent); opacity: 1; }
+  100% { border-left-color: var(--hairline); opacity: 0.45; }
+}
+.animate-drain { animation: drain 0.55s var(--ease) forwards; }
+@keyframes tick {
+  from { opacity: 0; transform: translateY(0.4em); }
+  to { opacity: 1; transform: none; }
+}
+.animate-tick { animation: tick 0.34s var(--ease); }
+@keyframes deal {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
-.animate-rise { animation: rise 0.34s var(--spring) both; }
+.animate-deal { animation: deal 0.3s var(--ease); }
 
-/* resolving a question: accent drains to sage, row gives a happy little bounce */
-@keyframes settle {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.02) rotate(-0.4deg); }
-  60% { transform: scale(0.995); }
-  100% { transform: scale(1); }
-}
-.animate-settle { animation: settle 0.5s var(--spring); }
-
-@keyframes drain {
-  0% { border-left-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--raised)); }
-  100% { border-left-color: var(--sage); background: var(--sage-wash); }
-}
-.animate-drain { animation: drain 0.6s ease forwards; }
-
-@keyframes deal {
-  0% { opacity: 0; transform: translateY(16px) rotate(-2deg) scale(0.94); }
-  70% { transform: translateY(-3px) rotate(0.5deg) scale(1.01); }
-  100% { opacity: 1; transform: none; }
-}
-.animate-deal { animation: deal 0.42s var(--spring); }
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-2.5deg); }
-  75% { transform: rotate(2.5deg); }
-}
-.hover-wiggle:hover { animation: wiggle 0.4s ease; }
-
-/* ── editor ──────────────────────────────────────────────────────────────── */
+/* ── editor ─────────────────────────────────────────────────────────────── */
 .ProseMirror { outline: none; }
 .ProseMirror p { margin: 0.3em 0; }
 .ProseMirror p.is-editor-empty:first-child::before {
@@ -324,7 +269,7 @@ body {
   pointer-events: none;
 }
 
-/* ── scrollbars ──────────────────────────────────────────────────────────── */
+/* ── scrollbars ─────────────────────────────────────────────────────────── */
 .scrollbar-thin { scrollbar-width: thin; scrollbar-color: var(--hairline) transparent; }
 .scrollbar-thin::-webkit-scrollbar { width: 10px; height: 10px; }
 .scrollbar-thin::-webkit-scrollbar-thumb {
@@ -337,9 +282,9 @@ body {
 /* cmdk */
 [cmdk-group-heading] {
   padding: 0.55rem 0.6rem 0.3rem;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--faint);
 }

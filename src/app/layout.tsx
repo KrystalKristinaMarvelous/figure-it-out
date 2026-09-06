@@ -1,21 +1,26 @@
 import type { Metadata } from "next";
-import { Figtree, Fraunces } from "next/font/google";
+import { Inter_Tight, Hedvig_Letters_Serif, Fragment_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeScript } from "@/components/theme";
 
-const figtree = Figtree({
-  variable: "--font-figtree",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const hedvig = Hedvig_Letters_Serif({
+  variable: "--font-hedvig",
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
-  style: ["normal", "italic"],
-  axes: ["SOFT", "opsz"],
+});
+
+const fragmentMono = Fragment_Mono({
+  variable: "--font-fragment-mono",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${figtree.variable} ${fraunces.variable} h-full`}
+      className={`${interTight.variable} ${hedvig.variable} ${fragmentMono.variable} h-full`}
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full flex flex-col bg-bg text-ink">
