@@ -100,7 +100,7 @@ export function ProjectRail(props: Props) {
             </Item>
             <a
               href={`${base}/export?format=md`}
-              className="flex items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 py-1.5 text-[12.5px] text-muted hover:bg-raised hover:text-ink"
+              className="flex items-center gap-2.5 rounded-full px-3 py-1.5 text-[12.5px] text-muted hover:bg-accent-wash/60 hover:text-ink"
             >
               <Icon name="Download" size={14} /> Export
             </a>
@@ -152,13 +152,13 @@ function Item({
       href={href}
       onClick={onNav}
       className={cn(
-        "flex items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 py-1.5 text-[12.5px] transition-colors",
+        "flex items-center gap-2.5 rounded-full px-3 py-1.5 text-[12.5px] transition-colors",
         active
-          ? "bg-raised font-medium text-ink"
-          : "text-muted hover:bg-raised hover:text-ink",
+          ? "bg-accent-wash font-semibold text-accent-ink"
+          : "text-muted hover:bg-accent-wash/60 hover:text-ink",
       )}
     >
-      <Icon name={icon} size={14} className={active ? "text-ink" : "text-faint"} />
+      <Icon name={icon} size={14} className={active ? "text-accent" : "text-faint"} />
       <span className="flex-1 truncate">{children}</span>
       {trailing}
     </Link>

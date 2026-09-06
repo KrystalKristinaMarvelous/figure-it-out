@@ -6,13 +6,13 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const base =
-  "w-full rounded-[var(--radius-sm)] border border-hairline bg-paper px-3 py-2 text-[13.5px] text-ink placeholder:text-faint transition-colors focus:border-unresolved focus:outline-none focus:ring-2 focus:ring-unresolved/15 disabled:opacity-50";
+  "w-full rounded-[var(--radius-sm)] border border-hairline bg-paper px-3.5 py-2 text-[14px] text-ink placeholder:text-faint shadow-[inset_0_1px_2px_rgb(80_55_30/0.04)] transition-[border-color,box-shadow] focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12 disabled:opacity-50";
 
 export const Input = forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement>
 >(({ className, ...props }, ref) => (
-  <input ref={ref} className={cn(base, "h-9", className)} {...props} />
+  <input ref={ref} className={cn(base, "h-10", className)} {...props} />
 ));
 Input.displayName = "Input";
 
@@ -22,7 +22,7 @@ export const Textarea = forwardRef<
 >(({ className, ...props }, ref) => (
   <textarea
     ref={ref}
-    className={cn(base, "min-h-[4.5rem] resize-y leading-relaxed", className)}
+    className={cn(base, "min-h-[5rem] resize-y leading-relaxed", className)}
     {...props}
   />
 ));
@@ -35,17 +35,17 @@ export const Select = forwardRef<
   <div className="relative">
     <select
       ref={ref}
-      className={cn(base, "h-9 appearance-none pr-9", className)}
+      className={cn(base, "h-10 cursor-pointer appearance-none pr-9", className)}
       {...props}
     />
     <svg
-      className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted"
-      width="10"
-      height="10"
+      className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-muted"
+      width="11"
+      height="11"
       viewBox="0 0 10 10"
       fill="none"
     >
-      <path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   </div>
 ));
@@ -60,7 +60,7 @@ export function Label({
   return (
     <label
       className={cn(
-        "flex items-baseline gap-2 text-[12.5px] font-medium text-ink-2",
+        "flex items-baseline gap-2 text-[12.5px] font-semibold text-ink-2",
         className,
       )}
       {...props}
@@ -93,14 +93,14 @@ export function CheckboxField({
         id={id}
         checked={checked}
         onCheckedChange={(v) => onCheckedChange(v === true)}
-        className="pressable mt-0.5 grid h-[17px] w-[17px] shrink-0 place-items-center rounded-[4px] border border-hairline bg-paper transition-colors data-[state=checked]:border-ink data-[state=checked]:bg-ink"
+        className="pressable mt-0.5 grid h-[18px] w-[18px] shrink-0 place-items-center rounded-[6px] border-[1.5px] border-hairline bg-paper transition-colors data-[state=checked]:border-accent data-[state=checked]:bg-accent"
       >
         <Checkbox.Indicator>
-          <Check size={11} strokeWidth={3} className="text-surface" />
+          <Check size={12} strokeWidth={3.5} className="text-white" />
         </Checkbox.Indicator>
       </Checkbox.Root>
       {label && (
-        <label htmlFor={id} className="cursor-pointer text-[13.5px] leading-tight text-ink">
+        <label htmlFor={id} className="cursor-pointer text-[13.5px] leading-snug text-ink">
           {label}
         </label>
       )}

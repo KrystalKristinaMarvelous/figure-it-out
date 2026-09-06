@@ -20,12 +20,12 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <div className="flex min-h-screen flex-col bg-surface">
-      <header className="sticky top-0 z-30 border-b border-hairline-2 bg-surface/85 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-hairline-2 bg-bg/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between gap-4 px-4 py-2.5">
           <nav className="flex items-center gap-1 text-[13px]">
             <Link
               href="/dashboard"
-              className="voice mr-2 text-[19px] italic leading-none tracking-[-0.02em] text-ink"
+              className="voice mr-3 text-[22px] font-semibold leading-none tracking-[-0.02em] text-accent-ink"
             >
               FIO
             </Link>
@@ -48,7 +48,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   return (
     <Link
       href={href}
-      className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-muted transition-colors hover:bg-raised hover:text-ink"
+      className="rounded-full px-3 py-1.5 font-medium text-muted transition-colors hover:bg-accent-wash hover:text-accent-ink"
     >
       {children}
     </Link>

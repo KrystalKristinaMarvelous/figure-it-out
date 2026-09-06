@@ -62,9 +62,12 @@ export function ModuleView(props: Props) {
       )}
 
       {props.entries.length === 0 ? (
-        <Card className="p-8 text-center" tint="paper">
-          <p className="voice text-[14px] text-muted">Nothing here yet.</p>
-          <div className="mt-4 flex justify-center">{addButton}</div>
+        <Card className="p-9 text-center" tint="paper">
+          <p className="voice-lg text-ink/70">Empty page, doing its thing.</p>
+          <p className="voice mx-auto mt-1 max-w-sm text-[13.5px] text-muted">
+            This module is waiting for its first entry. It won&apos;t bite.
+          </p>
+          <div className="mt-5 flex justify-center">{addButton}</div>
         </Card>
       ) : presentation === "board" ? (
         <BoardView {...props} onEdit={setEditing} refLabels={refLabels} />
@@ -134,16 +137,25 @@ function CardsView({
   layout,
 }: SubProps & { layout: "grid" | "list" }) {
   const imageField = schema.find((f) => f.type === "image");
+  const asNote = layout === "grid";
   return (
-    <div className={cn(layout === "grid" ? "grid gap-3 sm:grid-cols-2 lg:grid-cols-3" : "space-y-2")}>
-      {entries.map((e) => {
+    <div
+      className={cn(
+        layout === "grid" ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3" : "space-y-2.5",
+      )}
+    >
+      {entries.map((e, idx) => {
         const values = e.values as EntryValues;
         const img = imageField ? (values[imageField.key] as string) : null;
         return (
           <Card
             key={e.id}
-            interactive
-            className="group overflow-hidden p-3.5"
+            interactive={!asNote}
+            tint={asNote ? "note" : "default"}
+            className={cn(
+              "group overflow-hidden p-3.5",
+              asNote && (idx % 3 === 0 ? "rotate-[-0.7deg]" : idx % 3 === 2 ? "rotate-[0.6deg]" : ""),
+            )}
             onClick={() => onEdit(e)}
           >
             {img && (

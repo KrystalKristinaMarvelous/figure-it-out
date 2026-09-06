@@ -1,22 +1,21 @@
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-/** Cards differ by border weight and background tint, not drop shadows (spec §18.4). */
 export const Card = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    tint?: "default" | "paper" | "sunken" | "unresolved" | "chaos";
+    tint?: "default" | "paper" | "sunken" | "unresolved" | "chaos" | "note";
     interactive?: boolean;
   }
 >(({ className, tint = "default", interactive, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "card",
+      tint === "note" ? "note" : "card",
       tint === "paper" && "bg-paper",
-      tint === "sunken" && "border-hairline-2 bg-sunken",
-      tint === "unresolved" && "unresolved-edge rounded-l-[2px]",
-      tint === "chaos" && "border-l-2 border-l-chaos bg-chaos-wash rounded-l-[2px]",
+      tint === "sunken" && "border-hairline-2 bg-sunken shadow-none",
+      tint === "unresolved" && "open-edge",
+      tint === "chaos" && "border-l-[3px] border-l-chaos bg-chaos-wash",
       interactive && "card-hover card-link",
       className,
     )}
@@ -35,11 +34,11 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium tracking-[-0.01em]",
+        "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold",
         tone === "neutral" && "bg-sunken text-muted",
-        tone === "unresolved" && "bg-unresolved-wash text-unresolved-ink",
+        tone === "unresolved" && "bg-accent-wash text-accent-ink",
         tone === "chaos" && "bg-chaos-wash text-chaos",
-        tone === "ok" && "bg-ok/12 text-ok",
+        tone === "ok" && "bg-sage-wash text-sage",
         tone === "outline" && "border border-hairline text-muted",
         className,
       )}
@@ -60,16 +59,16 @@ export function EmptyState({
   actions?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-dashed border-hairline bg-raised/40 p-7">
-      <h3 className="screen-title">{title}</h3>
-      <p className="voice measure mt-1.5 text-[14px] text-muted">{children}</p>
+    <div className="rounded-[var(--radius-lg)] border-2 border-dashed border-hairline bg-raised/50 p-7 sm:p-9">
+      <h3 className="voice-lg">{title}</h3>
+      <p className="voice measure mt-2 text-[14.5px] text-muted">{children}</p>
       {example && (
-        <figure className="mt-4 rounded-[var(--radius)] border border-hairline-2 bg-paper/70 p-3.5 text-[13px] text-muted">
-          <figcaption className="eyebrow mb-1.5">For example</figcaption>
+        <figure className="note mt-5 max-w-md -rotate-1 p-4 text-[13px] text-ink/80">
+          <figcaption className="eyebrow mb-1.5 text-ink/40">For example</figcaption>
           {example}
         </figure>
       )}
-      {actions && <div className="mt-5 flex flex-wrap gap-2">{actions}</div>}
+      {actions && <div className="mt-6 flex flex-wrap gap-2.5">{actions}</div>}
     </div>
   );
 }

@@ -2,119 +2,144 @@
 @plugin "@tailwindcss/typography";
 
 /*
-  FIO design system — spec §18.
-  A working studio, not an office: Scrivener's density, Milanote's materiality,
-  Obsidian's connectedness.
+  FIO — warm studio.
+  Cream paper, warm ink, terracotta. Soft shadows, rounded corners, a little
+  spring in everything. Feels like a well-made notebook on a sunlit desk, not
+  a lab. Serif (Fraunces) is the app's voice — questions, prompts, big moments.
+  Sans (Figtree) is the quiet structure.
 
-  Colour encodes uncertainty. `--unresolved` is the ONLY accent and always means
-  "not figured out yet" — open questions, empty required fields, unreviewed
-  brainstorms, live gaps. Everything settled renders monochrome, so a project
-  visibly quiets as you work it out. `--chaos` appears in Chaos Mode, nowhere else.
+  Colour still means something: terracotta = "not settled yet / look here",
+  sage = "done". Everything resolved goes calm and monochrome.
 */
 
 :root {
-  /* studio-wall greys — cool, faintly green, never paper-white */
-  --surface: #e9ecea;
-  --raised: #f3f5f4;
-  --paper: #fbfcfb;
-  --sunken: #e0e4e2;
-  --ink: #14181b;
-  --ink-2: #3f474b;
-  --muted: #6a7278;
-  --faint: #9aa1a4;
-  --hairline: #ccd2d0;
-  --hairline-2: #dbe0de;
+  --bg: #f1e9db;          /* warm sand desk */
+  --raised: #fbf5e9;      /* card — warm ivory */
+  --paper: #fffdf7;       /* inputs, popovers — brightest */
+  --sunken: #e8ddc8;      /* wells */
+  --note: #f7e7b4;        /* sticky-note yellow */
 
-  --unresolved: #bd1a7e;
-  --unresolved-ink: #9a1467;
-  --unresolved-wash: color-mix(in srgb, var(--unresolved) 4%, var(--raised));
-  --chaos: #4b34e8;
-  --chaos-wash: color-mix(in srgb, var(--chaos) 5%, var(--raised));
-  --ok: #37795a;
+  --ink: #2b2118;         /* warm near-black */
+  --ink-2: #574a3a;       /* warm brown */
+  --muted: #8a7c66;       /* taupe */
+  --faint: #b1a488;       /* light taupe */
+  --hairline: #ddccae;    /* warm rule */
+  --hairline-2: #ebe0c9;  /* fainter rule */
 
-  /* elevation — cards use borders, only chrome & overlays get real shadow */
-  --shadow-sm: 0 1px 0 rgb(20 24 27 / 0.03);
-  --shadow-pop: 0 4px 16px -4px rgb(20 24 27 / 0.14), 0 2px 6px -2px rgb(20 24 27 / 0.08);
+  --accent: #c8623c;      /* terracotta */
+  --accent-ink: #a44a29;  /* terracotta text on cream */
+  --accent-wash: #f4e2d5; /* terracotta tint */
+  --sage: #6f7f57;        /* done / resolved */
+  --sage-wash: #e6e9d9;
+  --chaos: #6a4c93;       /* grape — Chaos Mode only */
+  --chaos-wash: #ebe3f2;
 
-  --font-voice: var(--font-newsreader), Georgia, "Times New Roman", serif;
-  --font-structure: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* keep spec's token aliases so screens don't need touching */
+  --unresolved: var(--accent);
+  --unresolved-ink: var(--accent-ink);
+  --unresolved-wash: var(--accent-wash);
+  --ok: var(--sage);
 
-  --radius-sm: 5px;
-  --radius: 8px;
-  --radius-lg: 12px;
-  --measure: 62ch;
+  --shadow-1: 0 1px 2px rgb(80 55 30 / 0.06), 0 2px 6px -2px rgb(80 55 30 / 0.08);
+  --shadow-2: 0 2px 4px rgb(80 55 30 / 0.06), 0 8px 20px -6px rgb(80 55 30 / 0.14);
+  --shadow-pop: 0 4px 10px rgb(60 40 20 / 0.1), 0 18px 40px -10px rgb(60 40 20 / 0.28);
+  --shadow-note: 0 1px 1px rgb(120 90 30 / 0.12), 0 6px 14px -4px rgb(120 90 30 / 0.22);
 
+  --font-voice: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-structure: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --measure: 60ch;
+
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --surface: #15181a;
-    --raised: #22262a;
-    --paper: #2a2f34;
-    --sunken: #121517;
-    --ink: #eef1f0;
-    --ink-2: #c2c9c7;
-    --muted: #8b939a;
-    --faint: #656d72;
-    --hairline: #3a4247;
-    --hairline-2: #2d3338;
-    --unresolved: #ec5cae;
-    --unresolved-ink: #f486c4;
-    --unresolved-wash: color-mix(in srgb, var(--unresolved) 8%, var(--raised));
-    --chaos: #8b78ff;
-    --chaos-wash: color-mix(in srgb, var(--chaos) 10%, var(--raised));
-    --ok: #6ec296;
-    --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.2);
-    --shadow-pop: 0 8px 28px -6px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.4);
+    --bg: #201a13;
+    --raised: #2b2318;
+    --paper: #322817;
+    --sunken: #181309;
+    --note: #4a3d1c;
+    --ink: #f2e9d8;
+    --ink-2: #cabb9f;
+    --muted: #9a8b70;
+    --faint: #6f6350;
+    --hairline: #453a28;
+    --hairline-2: #362d1e;
+    --accent: #e07d54;
+    --accent-ink: #f0a483;
+    --accent-wash: #3a2318;
+    --sage: #97a878;
+    --sage-wash: #2b311d;
+    --chaos: #a98bd6;
+    --chaos-wash: #2c2338;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-2: 0 2px 6px rgb(0 0 0 / 0.4), 0 12px 28px -8px rgb(0 0 0 / 0.55);
+    --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.5), 0 24px 50px -12px rgb(0 0 0 / 0.65);
+    --shadow-note: 0 2px 10px rgb(0 0 0 / 0.45);
   }
 }
 
 :root[data-theme="dark"] {
-  --surface: #15181a;
-  --raised: #22262a;
-  --paper: #2a2f34;
-  --sunken: #121517;
-  --ink: #eef1f0;
-  --ink-2: #c2c9c7;
-  --muted: #8b939a;
-  --faint: #656d72;
-  --hairline: #3a4247;
-  --hairline-2: #2d3338;
-  --unresolved: #ec5cae;
-  --unresolved-ink: #f486c4;
-  --unresolved-wash: color-mix(in srgb, var(--unresolved) 8%, var(--raised));
-  --chaos: #8b78ff;
-  --chaos-wash: color-mix(in srgb, var(--chaos) 10%, var(--raised));
-  --ok: #6ec296;
-  --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.2);
-  --shadow-pop: 0 8px 28px -6px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  --bg: #201a13;
+  --raised: #2b2318;
+  --paper: #322817;
+  --sunken: #181309;
+  --note: #4a3d1c;
+  --ink: #f2e9d8;
+  --ink-2: #cabb9f;
+  --muted: #9a8b70;
+  --faint: #6f6350;
+  --hairline: #453a28;
+  --hairline-2: #362d1e;
+  --accent: #e07d54;
+  --accent-ink: #f0a483;
+  --accent-wash: #3a2318;
+  --sage: #97a878;
+  --sage-wash: #2b311d;
+  --chaos: #a98bd6;
+  --chaos-wash: #2c2338;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-2: 0 2px 6px rgb(0 0 0 / 0.4), 0 12px 28px -8px rgb(0 0 0 / 0.55);
+  --shadow-pop: 0 8px 20px rgb(0 0 0 / 0.5), 0 24px 50px -12px rgb(0 0 0 / 0.65);
+  --shadow-note: 0 2px 10px rgb(0 0 0 / 0.45);
 }
 
 @theme inline {
-  --color-surface: var(--surface);
+  --color-bg: var(--bg);
+  --color-surface: var(--bg);
   --color-raised: var(--raised);
   --color-paper: var(--paper);
   --color-sunken: var(--sunken);
+  --color-note: var(--note);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
   --color-hairline: var(--hairline);
   --color-hairline-2: var(--hairline-2);
-  --color-unresolved: var(--unresolved);
-  --color-unresolved-ink: var(--unresolved-ink);
-  --color-unresolved-wash: var(--unresolved-wash);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-wash: var(--accent-wash);
+  --color-sage: var(--sage);
+  --color-sage-wash: var(--sage-wash);
+  --color-unresolved: var(--accent);
+  --color-unresolved-ink: var(--accent-ink);
+  --color-unresolved-wash: var(--accent-wash);
   --color-chaos: var(--chaos);
   --color-chaos-wash: var(--chaos-wash);
-  --color-ok: var(--ok);
+  --color-ok: var(--sage);
 
   --font-voice: var(--font-voice);
   --font-structure: var(--font-structure);
 
-  --radius-sm: 5px;
-  --radius: 8px;
-  --radius-lg: 12px;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
 }
 
 * {
@@ -123,62 +148,66 @@
 }
 
 html {
-  background: var(--surface);
+  background: var(--bg);
   color: var(--ink);
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--surface);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--font-structure);
-  font-feature-settings: "cv05" 1, "cv08" 1, "ss01" 1;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-/* ── the app's voice ───────────────────────────────────────────────────────
-   Every prompt, question, gap finding, Chaos card, module intro. Serif,
-   generous, a person talking to you — never a form label. */
+/* ── the app's voice — Fraunces, warm and a little characterful ──────────── */
 .voice {
   font-family: var(--font-voice);
+  font-optical-sizing: auto;
   line-height: 1.5;
-  letter-spacing: -0.006em;
-  font-size: 0.9375rem;
+  font-size: 0.98rem;
+  letter-spacing: 0;
 }
 .voice-lg {
   font-family: var(--font-voice);
-  line-height: 1.4;
-  letter-spacing: -0.011em;
-  font-size: 1.375rem;
+  font-optical-sizing: auto;
+  font-weight: 460;
+  line-height: 1.32;
+  font-size: 1.5rem;
+  letter-spacing: -0.008em;
   color: var(--ink);
   text-wrap: balance;
 }
 .voice-xl {
   font-family: var(--font-voice);
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.9rem);
+  font-optical-sizing: auto;
+  font-weight: 480;
+  line-height: 1.15;
+  font-size: clamp(2.1rem, 1.3rem + 2.8vw, 3.2rem);
+  letter-spacing: -0.018em;
   color: var(--ink);
   text-wrap: balance;
 }
-.voice em,
-.voice-lg em,
-.voice-xl em { font-style: italic; }
+.voice em, .voice-lg em, .voice-xl em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 60;
+}
 
-/* structure — headings for the user's own material */
 .screen-title {
-  font-weight: 600;
+  font-family: var(--font-structure);
+  font-weight: 700;
   font-size: 1.0625rem;
-  letter-spacing: -0.014em;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
 .eyebrow {
+  font-family: var(--font-structure);
   font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--faint);
 }
@@ -186,47 +215,53 @@ body {
 .measure { max-width: var(--measure); }
 .tnum { font-variant-numeric: tabular-nums; }
 
-::selection { background: color-mix(in srgb, var(--unresolved) 24%, transparent); }
+::selection { background: color-mix(in srgb, var(--accent) 26%, transparent); }
 
 :focus-visible {
-  outline: 2px solid var(--unresolved);
+  outline: 2.5px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 3px;
+  border-radius: 6px;
 }
 
-/* ── surfaces & interaction ──────────────────────────────────────────────── */
+/* ── cards & materiality ─────────────────────────────────────────────────── */
 .card {
   background: var(--raised);
   border: 1px solid var(--hairline-2);
   border-radius: var(--radius);
-  transition: border-color 0.15s var(--ease), background 0.15s var(--ease), transform 0.15s var(--ease);
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--spring),
+    border-color 0.2s var(--ease);
 }
 .card-hover:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
   border-color: var(--hairline);
-  background: color-mix(in srgb, var(--raised) 60%, var(--paper));
 }
 .card-link { cursor: pointer; }
-.card-link:active { transform: scale(0.994); }
+.card-link:active { transform: translateY(0) scale(0.99); }
 
-/* the magenta does structural work: a spine on anything unresolved */
-.unresolved-edge {
-  border-left: 2px solid var(--unresolved);
-  background: var(--unresolved-wash);
+/* a warm sticky note — Ideas, Chaos, Inspiration */
+.note {
+  background: var(--note);
+  border: none;
+  border-radius: 4px 4px 10px 10px;
+  box-shadow: var(--shadow-note);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+.note:hover { transform: rotate(-0.6deg) translateY(-2px); box-shadow: var(--shadow-pop); }
+
+/* terracotta spine — anything still open */
+.open-edge {
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 5%, var(--raised));
 }
 
-.pressable { transition: transform 0.12s var(--ease), filter 0.12s var(--ease); }
-.pressable:active { transform: scale(0.97); }
-
-.link-quiet {
-  color: var(--muted);
-  text-decoration-color: transparent;
-  transition: color 0.12s;
-}
-.link-quiet:hover { color: var(--ink); }
+.pressable { transition: transform 0.14s var(--spring); }
+.pressable:active { transform: scale(0.93); }
 
 .hairline-x > * + * { border-top: 1px solid var(--hairline-2); }
 
-/* ── motion ──────────────────────────────────────────────────────────────── */
+/* ── motion — playful but not clownish ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -235,50 +270,52 @@ body {
 }
 
 @keyframes pop-in {
-  from { opacity: 0; transform: translateY(4px) scale(0.985); }
-  to { opacity: 1; transform: none; }
+  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: none; }
 }
-.animate-pop { animation: pop-in 0.16s var(--ease); }
+.animate-pop { animation: pop-in 0.28s var(--spring); }
 
 @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
-.animate-overlay { animation: overlay-in 0.14s ease; }
+.animate-overlay { animation: overlay-in 0.16s ease; }
 
 @keyframes rise {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
-.animate-rise { animation: rise 0.28s var(--ease) both; }
+.animate-rise { animation: rise 0.34s var(--spring) both; }
 
-/* One orchestrated moment: resolving a question (spec §18.4).
-   The accent drains, the card settles, the count ticks up. */
+/* resolving a question: accent drains to sage, row gives a happy little bounce */
 @keyframes settle {
-  0% { transform: translateY(0) scale(1); }
-  35% { transform: translateY(-3px) scale(1.008); }
-  100% { transform: translateY(0) scale(1); }
+  0% { transform: scale(1); }
+  30% { transform: scale(1.02) rotate(-0.4deg); }
+  60% { transform: scale(0.995); }
+  100% { transform: scale(1); }
 }
-.animate-settle { animation: settle 0.46s var(--ease); }
+.animate-settle { animation: settle 0.5s var(--spring); }
 
 @keyframes drain {
-  0% { border-left-color: var(--unresolved); background: var(--unresolved-wash); }
-  100% { border-left-color: var(--hairline-2); background: var(--raised); }
+  0% { border-left-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--raised)); }
+  100% { border-left-color: var(--sage); background: var(--sage-wash); }
 }
 .animate-drain { animation: drain 0.6s ease forwards; }
 
-@keyframes tick {
-  0% { transform: translateY(0.5em); opacity: 0; }
-  100% { transform: none; opacity: 1; }
+@keyframes deal {
+  0% { opacity: 0; transform: translateY(16px) rotate(-2deg) scale(0.94); }
+  70% { transform: translateY(-3px) rotate(0.5deg) scale(1.01); }
+  100% { opacity: 1; transform: none; }
 }
-.animate-tick { animation: tick 0.36s var(--ease); }
+.animate-deal { animation: deal 0.42s var(--spring); }
 
-@keyframes chaos-deal {
-  from { opacity: 0; transform: translateY(10px) rotate(-0.6deg) scale(0.97); }
-  to { opacity: 1; transform: none; }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-2.5deg); }
+  75% { transform: rotate(2.5deg); }
 }
-.animate-deal { animation: chaos-deal 0.3s var(--ease); }
+.hover-wiggle:hover { animation: wiggle 0.4s ease; }
 
 /* ── editor ──────────────────────────────────────────────────────────────── */
 .ProseMirror { outline: none; }
-.ProseMirror p { margin: 0.25em 0; }
+.ProseMirror p { margin: 0.3em 0; }
 .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   color: var(--faint);
@@ -289,23 +326,22 @@ body {
 
 /* ── scrollbars ──────────────────────────────────────────────────────────── */
 .scrollbar-thin { scrollbar-width: thin; scrollbar-color: var(--hairline) transparent; }
-.scrollbar-thin::-webkit-scrollbar { width: 9px; height: 9px; }
+.scrollbar-thin::-webkit-scrollbar { width: 10px; height: 10px; }
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: var(--hairline);
-  border-radius: 6px;
-  border: 2px solid transparent;
+  border-radius: 8px;
+  border: 3px solid transparent;
   background-clip: content-box;
 }
-.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--muted); background-clip: content-box; }
 
 /* cmdk */
 [cmdk-group-heading] {
-  padding: 0.5rem 0.5rem 0.25rem;
+  padding: 0.55rem 0.6rem 0.3rem;
   font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--faint);
 }
 [cmdk-item] { border-radius: var(--radius-sm); }
-[cmdk-item][data-selected="true"] { background: var(--sunken); }
+[cmdk-item][data-selected="true"] { background: var(--accent-wash); }
