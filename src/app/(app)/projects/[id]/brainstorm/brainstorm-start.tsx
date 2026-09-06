@@ -28,7 +28,7 @@ export function BrainstormStart({
             className={cn(
               "rounded-md border px-3 py-2 text-left text-sm",
               picked.includes(t.key)
-                ? "border-unresolved bg-unresolved-soft"
+                ? "border-unresolved bg-unresolved-wash"
                 : "border-hairline text-muted hover:text-ink",
             )}
           >

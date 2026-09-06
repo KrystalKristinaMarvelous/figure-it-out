@@ -5,8 +5,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import type { CategoryDef, SubtypeDef } from "@/lib/schema/taxonomy";
 import type { Readiness } from "@/lib/schema/types";
 import { Button } from "@/components/ui/button";
-import { Input, Textarea, Label } from "@/components/ui/field";
-import { CheckboxField } from "@/components/ui/field";
+import { Input, Textarea, Label, CheckboxField } from "@/components/ui/field";
 import { createProject } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 
@@ -48,9 +47,7 @@ export function Wizard({
 
   function goReadiness(r: Readiness) {
     setReadiness(r);
-    if (subtype) {
-      setModules(Array.from(new Set(subtype.modules[r] ?? subtype.modules.vague)));
-    }
+    if (subtype) setModules(Array.from(new Set(subtype.modules[r] ?? subtype.modules.vague)));
   }
 
   const canNext =
@@ -82,206 +79,232 @@ export function Wizard({
   }
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <ol className="mb-8 flex items-center gap-2 text-xs text-muted">
+    <div>
+      {/* progress */}
+      <div className="mb-10 flex items-center gap-1.5">
         {STEPS.map((s, i) => (
-          <li key={s} className="flex items-center gap-2">
+          <div key={s} className="flex items-center gap-1.5">
             <span
               className={cn(
-                "grid h-5 w-5 place-items-center rounded-full border text-[11px]",
-                i === step && "border-unresolved bg-unresolved text-white",
-                i < step && "border-ink bg-ink text-surface",
-                i > step && "border-hairline",
+                "h-1 rounded-full transition-all duration-300",
+                i === step ? "w-8 bg-unresolved" : i < step ? "w-4 bg-ink" : "w-4 bg-hairline",
               )}
-            >
-              {i < step ? <Check size={11} /> : i + 1}
-            </span>
-            <span className={cn(i === step && "text-ink")}>{s}</span>
-            {i < STEPS.length - 1 && <span className="text-hairline">·</span>}
-          </li>
-        ))}
-      </ol>
-
-      {step === 0 && (
-        <div className="space-y-6">
-          <h1 className="voice text-2xl text-ink">What are you making?</h1>
-          {taxonomy.map((c) => (
-            <div key={c.key}>
-              <button
-                onClick={() => {
-                  setCategory(c.key);
-                  setSubtypeKey(c.subtypes.length === 1 ? c.subtypes[0].key : null);
-                }}
-                className={cn(
-                  "flex w-full items-center gap-2 rounded-md border px-3 py-2 text-left text-sm",
-                  category === c.key ? "border-ink bg-raised" : "border-hairline",
-                )}
-              >
-                <span>{c.glyph}</span>
-                <span className="font-medium text-ink">{c.label}</span>
-                <span className="text-xs text-muted">— {c.blurb}</span>
-              </button>
-              {category === c.key && (
-                <div className="mt-2 flex flex-wrap gap-1.5 pl-3">
-                  {c.subtypes.map((s) => (
-                    <button
-                      key={s.key}
-                      onClick={() => setSubtypeKey(s.key)}
-                      className={cn(
-                        "rounded-full border px-3 py-1 text-sm",
-                        subtypeKey === s.key
-                          ? "border-unresolved bg-unresolved-soft text-unresolved"
-                          : "border-hairline text-muted hover:text-ink",
-                      )}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {step === 1 && (
-        <div className="space-y-4">
-          <h1 className="voice text-2xl text-ink">Give it a working title.</h1>
-          <p className="voice text-sm text-muted">
-            Changeable any time. Being asked to name a thing you haven&apos;t had yet is a real
-            blocker — so you can skip it.
-          </p>
-          <div className="space-y-1.5">
-            <Label htmlFor="title">Working title</Label>
-            <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} autoFocus />
-          </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              setTitle(`Untitled ${subtype?.label ?? "project"}`);
-              setStep(2);
-            }}
-          >
-            Name it later
-          </Button>
-          <div className="space-y-1.5">
-            <Label htmlFor="desc">One line of description</Label>
-            <Textarea
-              id="desc"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="What do you have in mind? (optional)"
             />
           </div>
-        </div>
-      )}
+        ))}
+        <span className="ml-2 text-[11.5px] text-faint">
+          {STEPS[step]} · {step + 1} of {STEPS.length}
+        </span>
+      </div>
 
-      {step === 2 && (
-        <div className="space-y-4">
-          <h1 className="voice text-2xl text-ink">Anything more specific?</h1>
-          <p className="voice text-sm text-muted">
-            Optional. These refine which modules load and how the prompts read.
-          </p>
-          {subtype && subtype.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {subtype.tags.map((t) => (
-                <button
-                  key={t}
-                  onClick={() =>
-                    setTags((s) => (s.includes(t) ? s.filter((x) => x !== t) : [...s, t]))
-                  }
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-sm",
-                    tags.includes(t)
-                      ? "border-ink bg-raised text-ink"
-                      : "border-hairline text-muted",
+      <div className="animate-rise" key={step}>
+        {step === 0 && (
+          <div className="space-y-6">
+            <h1 className="voice-xl">What are you making?</h1>
+            <div className="space-y-2.5">
+              {taxonomy.map((c) => (
+                <div key={c.key}>
+                  <button
+                    onClick={() => {
+                      setCategory(c.key);
+                      setSubtypeKey(c.subtypes.length === 1 ? c.subtypes[0].key : null);
+                    }}
+                    className={cn(
+                      "pressable flex w-full items-center gap-3 rounded-[var(--radius)] border px-3.5 py-3 text-left transition-colors",
+                      category === c.key
+                        ? "border-ink bg-raised"
+                        : "border-hairline-2 bg-paper hover:border-hairline",
+                    )}
+                  >
+                    <span className="text-[18px] leading-none">{c.glyph}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[13.5px] font-semibold text-ink">{c.label}</span>
+                      <span className="block truncate text-[12px] text-muted">{c.blurb}</span>
+                    </span>
+                  </button>
+                  {category === c.key && c.subtypes.length > 1 && (
+                    <div className="animate-pop mt-2 flex flex-wrap gap-1.5 pl-3">
+                      {c.subtypes.map((s) => (
+                        <button
+                          key={s.key}
+                          onClick={() => setSubtypeKey(s.key)}
+                          className={cn(
+                            "pressable rounded-full border px-3 py-1 text-[12.5px] transition-colors",
+                            subtypeKey === s.key
+                              ? "border-ink bg-ink text-surface"
+                              : "border-hairline text-muted hover:border-muted hover:text-ink",
+                          )}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
                   )}
-                >
-                  {t}
-                </button>
+                </div>
               ))}
             </div>
-          )}
-          <Textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Free text — what do you have in mind?"
-            className="min-h-[6rem]"
-          />
-        </div>
-      )}
-
-      {step === 3 && (
-        <div className="space-y-4">
-          <h1 className="voice text-2xl text-ink">Where are you with it?</h1>
-          <p className="voice text-sm text-muted">
-            Not how far along the tasks are — how well-defined the idea is. Changeable, and changing
-            it only ever adds.
-          </p>
-          {(["seed", "vague", "defined"] as Readiness[]).map((r) => {
-            const m = readinessMeta[r];
-            return (
-              <button
-                key={r}
-                onClick={() => goReadiness(r)}
-                className={cn(
-                  "block w-full rounded-md border p-3 text-left",
-                  readiness === r ? "border-ink bg-raised" : "border-hairline",
-                )}
-              >
-                <div className="text-sm font-medium text-ink">
-                  {m.glyph} {m.label}
-                </div>
-                <div className="voice mt-0.5 text-sm text-muted">{m.meaning}</div>
-                <div className="mt-1 text-xs text-muted">{m.emphasis}</div>
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {step === 4 && (
-        <div className="space-y-4">
-          <h1 className="voice text-2xl text-ink">Confirm your workspace.</h1>
-          <p className="voice text-sm text-muted">
-            These modules will be set up. Uncheck anything — modules are optional, and you can add
-            more from the library later.
-          </p>
-          <div className="space-y-1.5">
-            {suggestedModules.map((key) => {
-              const meta = moduleMeta[key];
-              if (!meta) return null;
-              const on = modules.includes(key);
-              const forced = key === "rant_space" || key === "open_questions";
-              return (
-                <div
-                  key={key}
-                  className="flex items-start gap-3 rounded-md border border-hairline px-3 py-2"
-                >
-                  <CheckboxField
-                    checked={on}
-                    onCheckedChange={(v) =>
-                      !forced &&
-                      setModules((s) => (v ? [...new Set([...s, key])] : s.filter((k) => k !== key)))
-                    }
-                    label={
-                      <span>
-                        <span className="text-sm font-medium text-ink">{meta.name}</span>
-                        {forced && <span className="ml-2 text-[11px] text-muted">always on</span>}
-                        <span className="mt-0.5 block text-xs text-muted">{meta.intro}</span>
-                      </span>
-                    }
-                  />
-                </div>
-              );
-            })}
           </div>
-          {error && <p className="text-sm text-unresolved">{error}</p>}
-        </div>
-      )}
+        )}
 
-      <div className="mt-8 flex items-center justify-between">
+        {step === 1 && (
+          <div className="space-y-5">
+            <h1 className="voice-xl">Give it a working title.</h1>
+            <p className="voice measure text-[14px] text-muted">
+              Changeable any time. Being asked to name a thing you haven&apos;t had yet is a real
+              blocker — so you can skip it.
+            </p>
+            <div className="space-y-1.5">
+              <Label htmlFor="title">Working title</Label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                autoFocus
+                className="h-11 text-[15px]"
+              />
+            </div>
+            <button
+              className="text-[12.5px] text-unresolved hover:underline"
+              onClick={() => {
+                setTitle(`Untitled ${subtype?.label ?? "project"}`);
+                setStep(2);
+              }}
+            >
+              Name it later →
+            </button>
+            <div className="space-y-1.5">
+              <Label htmlFor="desc">
+                One line of description <span className="text-faint">optional</span>
+              </Label>
+              <Textarea
+                id="desc"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="What do you have in mind?"
+              />
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div className="space-y-5">
+            <h1 className="voice-xl">Anything more specific?</h1>
+            <p className="voice measure text-[14px] text-muted">
+              Optional. These nudge which modules load and how the prompts read.
+            </p>
+            {subtype && subtype.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {subtype.tags.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() =>
+                      setTags((s) => (s.includes(t) ? s.filter((x) => x !== t) : [...s, t]))
+                    }
+                    className={cn(
+                      "pressable rounded-full border px-3 py-1 text-[12.5px] transition-colors",
+                      tags.includes(t)
+                        ? "border-ink bg-ink text-surface"
+                        : "border-hairline text-muted hover:border-muted",
+                    )}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            )}
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Free text — what do you have in mind?"
+              className="min-h-[6rem]"
+            />
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="space-y-5">
+            <h1 className="voice-xl">Where are you with it?</h1>
+            <p className="voice measure text-[14px] text-muted">
+              Not how far along the tasks are — how well-defined the <em>idea</em> is. Changeable,
+              and changing it only ever adds.
+            </p>
+            <div className="space-y-2.5">
+              {(["seed", "vague", "defined"] as Readiness[]).map((r) => {
+                const m = readinessMeta[r];
+                return (
+                  <button
+                    key={r}
+                    onClick={() => goReadiness(r)}
+                    className={cn(
+                      "pressable block w-full rounded-[var(--radius)] border p-4 text-left transition-colors",
+                      readiness === r
+                        ? "border-ink bg-raised"
+                        : "border-hairline-2 bg-paper hover:border-hairline",
+                    )}
+                  >
+                    <div className="text-[13.5px] font-semibold text-ink">
+                      {m.glyph} {m.label}
+                    </div>
+                    <div className="voice mt-1 text-[13.5px] text-ink-2">{m.meaning}</div>
+                    <div className="mt-1 text-[11.5px] text-muted">{m.emphasis}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div className="space-y-5">
+            <h1 className="voice-xl">Confirm your workspace.</h1>
+            <p className="voice measure text-[14px] text-muted">
+              These modules will be set up. Uncheck anything — modules are optional, and you can add
+              more from the library any time.
+            </p>
+            <div className="space-y-1.5">
+              {suggestedModules.map((key) => {
+                const meta = moduleMeta[key];
+                if (!meta) return null;
+                const on = modules.includes(key);
+                const forced = key === "rant_space" || key === "open_questions";
+                return (
+                  <div
+                    key={key}
+                    className={cn(
+                      "rounded-[var(--radius-sm)] border px-3.5 py-2.5 transition-colors",
+                      on ? "border-hairline bg-paper" : "border-hairline-2 opacity-70",
+                    )}
+                  >
+                    <CheckboxField
+                      checked={on}
+                      onCheckedChange={(v) =>
+                        !forced &&
+                        setModules((s) =>
+                          v ? [...new Set([...s, key])] : s.filter((k) => k !== key),
+                        )
+                      }
+                      label={
+                        <span>
+                          <span className="text-[13px] font-medium text-ink">{meta.name}</span>
+                          {forced && (
+                            <span className="ml-2 text-[10.5px] text-faint">always on</span>
+                          )}
+                          <span className="mt-0.5 block text-[11.5px] leading-snug text-muted">
+                            {meta.intro}
+                          </span>
+                        </span>
+                      }
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            {error && <p className="text-[13px] text-unresolved">{error}</p>}
+          </div>
+        )}
+      </div>
+
+      <div className="mt-10 flex items-center justify-between">
         <Button
           variant="ghost"
           size="sm"
@@ -291,17 +314,13 @@ export function Wizard({
           <ArrowLeft size={14} /> Back
         </Button>
         {step < 4 ? (
-          <Button
-            variant="primary"
-            size="sm"
-            disabled={!canNext}
-            onClick={() => setStep((s) => s + 1)}
-          >
-            Next <ArrowRight size={14} />
+          <Button variant="primary" size="md" disabled={!canNext} onClick={() => setStep((s) => s + 1)}>
+            Continue <ArrowRight size={14} />
           </Button>
         ) : (
-          <Button variant="primary" size="sm" disabled={pending || !canNext} onClick={submit}>
+          <Button variant="primary" size="md" disabled={pending || !canNext} onClick={submit}>
             {pending ? "Creating…" : "Create workspace"}
+            {!pending && <Check size={14} />}
           </Button>
         )}
       </div>

@@ -28,7 +28,7 @@ export function FinishFlow({
   if (lifecycle === "finished") {
     return (
       <Card className="p-6">
-        <h2 className="voice text-xl text-ink">This project is finished.</h2>
+        <h2 className="voice-lg">This project is finished.</h2>
         <p className="mt-1 text-sm text-muted">
           It&apos;s in your Portfolio. Everything is still browsable. Revisions happen — you can
           reopen it.
@@ -49,7 +49,7 @@ export function FinishFlow({
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="voice text-2xl text-ink">Finish {title}</h2>
+        <h2 className="voice-lg">Finish {title}</h2>
         <p className="text-sm text-muted">
           No requirement that tasks be closed or fields filled. People finish messy.
         </p>

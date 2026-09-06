@@ -11,6 +11,8 @@ export default async function NewProjectPage() {
     ALL_MODULES.map((m) => [m.key, { name: m.name, intro: m.intro, icon: m.icon }]),
   );
   return (
-    <Wizard taxonomy={TAXONOMY} readinessMeta={READINESS_META} moduleMeta={moduleMeta} />
+    <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:py-14">
+      <Wizard taxonomy={TAXONOMY} readinessMeta={READINESS_META} moduleMeta={moduleMeta} />
+    </div>
   );
 }

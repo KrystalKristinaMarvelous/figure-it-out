@@ -39,14 +39,17 @@ export async function GapPanel({
       {gaps.slice(0, max).map((g) => (
         <div
           key={g.key}
-          className="flex items-start gap-2 rounded-md border border-unresolved/30 bg-unresolved-soft px-3 py-2 text-sm"
+          className="unresolved-edge flex items-start gap-2.5 rounded-l-[2px] rounded-r-[var(--radius)] border border-l-2 border-hairline-2 border-l-unresolved px-3.5 py-2.5"
         >
-          <span className="text-unresolved">⚡</span>
+          <span className="mt-px text-[13px] text-unresolved">⚡</span>
           <div className="flex-1">
-            <p className="voice text-ink">{g.message}</p>
+            <p className="voice text-[14px] text-ink">{g.message}</p>
             {g.action && (
-              <Link href={g.action.href} className="text-xs text-unresolved underline">
-                {g.action.label}
+              <Link
+                href={g.action.href}
+                className="mt-0.5 inline-block text-[11.5px] font-medium text-unresolved hover:underline"
+              >
+                {g.action.label} →
               </Link>
             )}
           </div>
@@ -56,9 +59,9 @@ export async function GapPanel({
       {contradictions.slice(0, 2).map((c, i) => (
         <div
           key={i}
-          className="rounded-md border border-hairline bg-raised px-3 py-2 text-sm text-ink"
+          className="rounded-[var(--radius)] border border-hairline-2 bg-raised px-3.5 py-2.5 text-[13px] text-ink"
         >
-          <span className="text-muted">Check: </span>
+          <span className="font-medium text-muted">Check — </span>
           {c.message}
         </div>
       ))}

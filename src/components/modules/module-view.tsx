@@ -45,19 +45,26 @@ export function ModuleView(props: Props) {
   }
 
   const addButton = (
-    <Button variant="primary" size="sm" onClick={() => setEditing("new")}>
-      <Plus size={14} /> Add
+    <Button variant="outline" size="sm" onClick={() => setEditing("new")}>
+      <Plus size={14} /> Add {props.entries.length > 0 ? "" : "the first one"}
     </Button>
   );
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">{addButton}</div>
+      {props.entries.length > 0 && (
+        <div className="flex items-center justify-between">
+          <span className="text-[12px] text-faint tnum">
+            {props.entries.length} {props.entries.length === 1 ? "entry" : "entries"}
+          </span>
+          {addButton}
+        </div>
+      )}
 
       {props.entries.length === 0 ? (
-        <Card className="p-8 text-center text-sm text-muted">
-          Nothing here yet.
-          <div className="mt-3">{addButton}</div>
+        <Card className="p-8 text-center" tint="paper">
+          <p className="voice text-[14px] text-muted">Nothing here yet.</p>
+          <div className="mt-4 flex justify-center">{addButton}</div>
         </Card>
       ) : presentation === "board" ? (
         <BoardView {...props} onEdit={setEditing} refLabels={refLabels} />
@@ -135,20 +142,29 @@ function CardsView({
         return (
           <Card
             key={e.id}
-            className="group cursor-pointer overflow-hidden p-3 transition-colors hover:border-muted"
+            interactive
+            className="group overflow-hidden p-3.5"
             onClick={() => onEdit(e)}
           >
             {img && (
-              <img src={img} alt="" className="mb-2 -mx-3 -mt-3 h-32 w-[calc(100%+1.5rem)] object-cover" />
+              <img
+                src={img}
+                alt=""
+                className="mb-2.5 -mx-3.5 -mt-3.5 h-32 w-[calc(100%+1.75rem)] object-cover"
+              />
             )}
             <div className="flex items-start justify-between gap-2">
-              <h3 className="text-sm font-semibold text-ink">{e.title || titleFor(schema, values)}</h3>
-              <span className="flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                <Pencil size={12} className="text-muted" />
+              <h3 className="text-[13px] font-semibold leading-snug text-ink">
+                {e.title || titleFor(schema, values)}
+              </h3>
+              <span className="flex shrink-0 items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                <Pencil size={12} className="text-faint" />
                 <RowActions e={e} projectId={projectId} />
               </span>
             </div>
-            <p className="mt-1 line-clamp-3 text-xs text-muted">{summarize(schema, values)}</p>
+            <p className="voice mt-1 line-clamp-3 text-[12.5px] leading-snug text-muted">
+              {summarize(schema, values)}
+            </p>
           </Card>
         );
       })}

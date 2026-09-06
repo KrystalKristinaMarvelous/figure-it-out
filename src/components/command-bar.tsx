@@ -52,31 +52,31 @@ export function CommandBar({ projects }: { projects: ProjectLite[] }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="hidden items-center gap-2 rounded-md border border-hairline bg-raised px-2.5 py-1 text-xs text-muted hover:text-ink sm:flex"
+        className="pressable hidden items-center gap-2 rounded-[var(--radius-sm)] border border-hairline-2 bg-paper px-2.5 py-1.5 text-[12px] text-faint hover:border-hairline hover:text-muted sm:flex"
         aria-label="Command palette"
       >
-        <Search size={12} /> <span>Search…</span>
-        <kbd className="rounded bg-sunken px-1 text-[10px]">⌘K</kbd>
+        <Search size={12} /> <span>Search</span>
+        <kbd className="rounded bg-sunken px-1 py-px text-[10px] tracking-wide">⌘K</kbd>
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="top-[20%] translate-y-0 p-0" size="md">
+        <DialogContent className="top-[18%] translate-y-0 p-0" size="md">
           <Command className="overflow-hidden" loop>
-            <div className="flex items-center gap-2 border-b border-hairline px-3">
-              <Search size={14} className="text-muted" />
+            <div className="flex items-center gap-2.5 border-b border-hairline-2 px-3.5">
+              <Search size={14} className="text-faint" />
               <Command.Input
                 autoFocus
                 placeholder="Jump to a project, add a question, start a brainstorm…"
-                className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted"
+                className="h-11 w-full bg-transparent text-[13.5px] outline-none placeholder:text-faint"
               />
             </div>
-            <Command.List className="max-h-80 overflow-y-auto p-1.5">
-              <Command.Empty className="px-3 py-6 text-center text-sm text-muted">
+            <Command.List className="max-h-80 overflow-y-auto p-1.5 scrollbar-thin">
+              <Command.Empty className="px-3 py-8 text-center text-[13px] text-faint">
                 Nothing found.
               </Command.Empty>
 
               {currentProjectId && (
-                <Command.Group heading="This project" className="text-xs text-muted [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1">
+                <Command.Group heading="This project">
                   <Item onSelect={() => { setOpen(false); setCaptureProject(currentProjectId); setCapture(true); }} icon={<Mic size={14} />}>Rant / quick capture</Item>
                   <Item onSelect={() => go(`/projects/${currentProjectId}/questions`)} icon={<CircleHelp size={14} />}>Log an open question</Item>
                   <Item onSelect={() => go(`/projects/${currentProjectId}/brainstorm`)} icon={<Sparkles size={14} />}>Start a brainstorm</Item>
@@ -85,7 +85,7 @@ export function CommandBar({ projects }: { projects: ProjectLite[] }) {
                 </Command.Group>
               )}
 
-              <Command.Group heading="Go to" className="text-xs text-muted [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1">
+              <Command.Group heading="Go to">
                 <Item onSelect={() => go("/new")} icon={<Plus size={14} />}>Start a project</Item>
                 <Item onSelect={() => go("/dashboard")} icon={<FolderOpen size={14} />}>Dashboard</Item>
                 {projects.map((p) => (
@@ -160,10 +160,10 @@ function Item({
   return (
     <Command.Item
       onSelect={onSelect}
-      className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 text-sm text-ink aria-selected:bg-raised"
+      className="flex cursor-pointer items-center gap-2.5 rounded-[var(--radius-sm)] px-2.5 py-2 text-[13px] text-ink"
     >
-      <span className="text-muted">{icon}</span>
-      {children}
+      <span className="text-faint">{icon}</span>
+      <span className="truncate">{children}</span>
     </Command.Item>
   );
 }

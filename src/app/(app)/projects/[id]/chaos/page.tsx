@@ -29,7 +29,7 @@ export default async function ChaosPage({ params, searchParams }: PageProps<"/pr
   if (totalMaterial < 10) {
     return (
       <Card className="p-6">
-        <h2 className="voice text-xl text-ink">Chaos needs material to be chaotic with.</h2>
+        <h2 className="voice-lg">Chaos needs material to be chaotic with.</h2>
         <p className="mt-1 text-sm text-muted">
           You have {totalMaterial} things so far. Below about ten, a{" "}
           <Link href={`/projects/${id}/brainstorm`} className="text-unresolved underline">
@@ -54,7 +54,7 @@ export default async function ChaosPage({ params, searchParams }: PageProps<"/pr
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="voice text-2xl text-ink">Chaos Mode</h2>
+        <h2 className="voice-lg">Chaos Mode</h2>
         <p className="text-sm text-muted">
           Five provocations, recombined from what&apos;s already in your project. Every noun is
           something you wrote — it can&apos;t make things up.

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { requireUser } from "@/lib/supabase/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, requireUser } from "@/lib/supabase/server";
 import { ThemeToggle } from "@/components/theme";
 import { CommandBar } from "@/components/command-bar";
+import { AccountMenu } from "@/components/account-menu";
 
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await requireUser();
@@ -20,30 +20,37 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <div className="flex min-h-screen flex-col bg-surface">
-      <header className="sticky top-0 z-30 border-b border-hairline bg-surface/90 backdrop-blur">
-        <div className="mx-auto flex h-12 w-full max-w-6xl items-center justify-between px-4">
-          <div className="flex items-center gap-5 text-sm">
-            <Link href="/dashboard" className="voice text-lg italic text-ink">
+      <header className="sticky top-0 z-30 border-b border-hairline-2 bg-surface/85 backdrop-blur-md">
+        <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between gap-4 px-4 py-2.5">
+          <nav className="flex items-center gap-1 text-[13px]">
+            <Link
+              href="/dashboard"
+              className="voice mr-2 text-[19px] italic leading-none tracking-[-0.02em] text-ink"
+            >
               FIO
             </Link>
-            <Link href="/dashboard" className="text-muted hover:text-ink">
-              Projects
-            </Link>
-            <Link href="/portfolio" className="text-muted hover:text-ink">
-              Portfolio
-            </Link>
-          </div>
-          <div className="flex items-center gap-3">
+            <NavLink href="/dashboard">Projects</NavLink>
+            <NavLink href="/portfolio">Portfolio</NavLink>
+          </nav>
+          <div className="flex items-center gap-2">
             <CommandBar projects={projects ?? []} />
             <ThemeToggle />
-            <span className="hidden text-xs text-muted sm:inline">{name}</span>
-            <form action="/auth/signout" method="post">
-              <button className="text-xs text-muted hover:text-unresolved">Sign out</button>
-            </form>
+            <AccountMenu name={name} email={user.email ?? ""} />
           </div>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
+      <main className="flex-1">{children}</main>
     </div>
+  );
+}
+
+function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="rounded-[var(--radius-sm)] px-2.5 py-1.5 text-muted transition-colors hover:bg-raised hover:text-ink"
+    >
+      {children}
+    </Link>
   );
 }

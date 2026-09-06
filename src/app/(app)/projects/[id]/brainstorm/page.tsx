@@ -23,7 +23,7 @@ export default async function BrainstormIndex({ params }: PageProps<"/projects/[
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="voice text-2xl text-ink">What are you trying to figure out?</h2>
+        <h2 className="voice-lg">What are you trying to figure out?</h2>
         <p className="text-sm text-muted">
           One prompt at a time. Multiple answers per prompt, encouraged — one answer is a form, five
           is a brainstorm.

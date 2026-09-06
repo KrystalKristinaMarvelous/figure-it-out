@@ -16,10 +16,10 @@ export function DialogContent({
 }: React.ComponentProps<typeof D.Content> & { size?: "sm" | "md" | "lg" | "full" }) {
   return (
     <D.Portal>
-      <D.Overlay className="fixed inset-0 z-50 bg-ink/30 backdrop-blur-[2px]" />
+      <D.Overlay className="animate-overlay fixed inset-0 z-50 bg-ink/25 backdrop-blur-[3px]" />
       <D.Content
         className={cn(
-          "fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-lg border border-hairline bg-surface shadow-xl focus:outline-none",
+          "animate-pop fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[var(--radius-lg)] border border-hairline bg-surface shadow-[var(--shadow-pop)] focus:outline-none",
           size === "sm" && "w-[92vw] max-w-sm",
           size === "md" && "w-[92vw] max-w-lg",
           size === "lg" && "w-[94vw] max-w-2xl",
@@ -30,7 +30,7 @@ export function DialogContent({
       >
         {children}
         <D.Close
-          className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-md text-muted hover:bg-raised hover:text-ink"
+          className="pressable absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-[var(--radius-sm)] text-muted hover:bg-raised hover:text-ink"
           aria-label="Close"
         >
           <X size={15} />
@@ -48,10 +48,10 @@ export function DialogHeader({
   description?: React.ReactNode;
 }) {
   return (
-    <div className="border-b border-hairline px-5 py-4">
-      <D.Title className="text-base font-semibold text-ink">{title}</D.Title>
+    <div className="border-b border-hairline-2 px-5 pb-3.5 pt-4">
+      <D.Title className="screen-title">{title}</D.Title>
       {description && (
-        <D.Description className="voice mt-1 text-sm text-muted">
+        <D.Description className="voice mt-1 measure text-[13.5px] text-muted">
           {description}
         </D.Description>
       )}
@@ -67,7 +67,7 @@ export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLD
   return (
     <div
       className={cn(
-        "flex items-center justify-end gap-2 border-t border-hairline px-5 py-3",
+        "flex items-center justify-end gap-2 border-t border-hairline-2 bg-raised/40 px-5 py-3",
         className,
       )}
       {...props}

@@ -39,7 +39,7 @@ export default async function LibraryPage({ params }: PageProps<"/projects/[id]/
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="voice text-2xl text-ink">Module library</h2>
+        <h2 className="voice-lg">Module library</h2>
         <p className="text-sm text-muted">
           Any module can be added to any project — a business plan can take Three-Act Structure; a
           novelist can take the academic Sources module. Removing archives; re-adding restores.

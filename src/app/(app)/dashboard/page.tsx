@@ -3,10 +3,10 @@ import { createClient, requireUser } from "@/lib/supabase/server";
 import { findCategory, findSubtype, READINESS_META } from "@/lib/schema/taxonomy";
 import { Button } from "@/components/ui/button";
 import { Card, EmptyState } from "@/components/ui/card";
-import { QuickCapture } from "./quick-capture";
 import { relativeTime } from "@/lib/utils";
 import { shortDate, daysUntil } from "@/lib/format";
 import type { ProjectRow } from "@/lib/supabase/database.types";
+import { QuickCapture } from "./quick-capture";
 
 export const metadata = { title: "Projects — FIO" };
 
@@ -19,10 +19,14 @@ const VIEWS = [
 export default async function Dashboard({ searchParams }: PageProps<"/dashboard">) {
   await requireUser();
   const sp = await searchParams;
-  const view = (typeof sp.view === "string" ? sp.view : "active") as "active" | "shelved" | "portfolio";
+  const view = (typeof sp.view === "string" ? sp.view : "active") as
+    | "active"
+    | "shelved"
+    | "portfolio";
   const supabase = await createClient();
 
-  const lifecycle = view === "portfolio" ? "finished" : view === "shelved" ? "shelved" : "active";
+  const lifecycle =
+    view === "portfolio" ? "finished" : view === "shelved" ? "shelved" : "active";
   const { data } = await supabase
     .from("projects")
     .select("*")
@@ -38,15 +42,17 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
   const examples = (examplesData ?? []) as ProjectRow[];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex gap-1">
+    <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="inline-flex rounded-[var(--radius-sm)] border border-hairline-2 bg-raised p-0.5">
           {VIEWS.map((v) => (
             <Link
               key={v.key}
               href={`/dashboard?view=${v.key}`}
-              className={`rounded-md px-3 py-1.5 text-sm ${
-                view === v.key ? "bg-raised font-medium text-ink" : "text-muted hover:text-ink"
+              className={`rounded-[calc(var(--radius-sm)-1px)] px-3 py-1.5 text-[12.5px] transition-colors ${
+                view === v.key
+                  ? "bg-surface font-medium text-ink shadow-[var(--shadow-sm)]"
+                  : "text-muted hover:text-ink"
               }`}
             >
               {v.label}
@@ -54,9 +60,7 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <QuickCapture
-            projects={projects.map((p) => ({ id: p.id, title: p.title }))}
-          />
+          <QuickCapture projects={projects.map((p) => ({ id: p.id, title: p.title }))} />
           <Button asChild variant="primary" size="sm">
             <Link href="/new">Start a project</Link>
           </Button>
@@ -64,7 +68,7 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
       </div>
 
       {projects.length === 0 && view === "active" ? (
-        <div className="space-y-4">
+        <div className="space-y-6">
           <EmptyState
             title="Start a project"
             actions={
@@ -73,12 +77,12 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
               </Button>
             }
           >
-            You know you want to make something — a novel, a campaign, a trip, a thesis. You don&apos;t
-            have to know what it is yet. That&apos;s what this is for.
+            You know you want to make something — a novel, a campaign, a trip, a thesis. You
+            don&apos;t have to know what it is yet. That&apos;s exactly what this is for.
           </EmptyState>
           {examples.length > 0 && (
             <div>
-              <p className="mb-2 text-xs text-muted">Or look through an example:</p>
+              <p className="mb-3 text-[12px] text-faint">Or look through an example:</p>
               <div className="grid gap-3 sm:grid-cols-3">
                 {examples.map((p) => (
                   <ProjectCard key={p.id} project={p} readOnly />
@@ -88,7 +92,7 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
           )}
         </div>
       ) : projects.length === 0 ? (
-        <p className="py-12 text-center text-sm text-muted">
+        <p className="voice py-16 text-center text-[15px] text-muted">
           Nothing {view === "shelved" ? "set aside" : "finished"} yet.
         </p>
       ) : (
@@ -109,35 +113,44 @@ function ProjectCard({ project: p, readOnly }: { project: ProjectRow; readOnly?:
   const dl = daysUntil(p.deadline);
 
   return (
-    <Card
-      className="flex flex-col gap-2 p-4 transition-colors hover:border-muted"
-      tint={!p.one_liner ? "unresolved" : "default"}
-    >
-      <div className="flex items-start justify-between gap-2">
-        <Link href={`/projects/${p.id}`} className="text-sm font-semibold text-ink hover:underline">
+    <Link href={`/projects/${p.id}`} className="group">
+      <Card
+        interactive
+        tint={!p.one_liner && p.lifecycle === "active" ? "unresolved" : "default"}
+        className="flex h-full flex-col gap-2.5 p-4"
+      >
+        <div className="flex items-start justify-between gap-2">
+          <span className="text-[15px] leading-none">{cat?.glyph}</span>
+          <span title={rm.label} className="text-[13px]">
+            {rm.glyph}
+          </span>
+        </div>
+        <h3 className="text-[13.5px] font-semibold leading-snug text-ink group-hover:text-ink">
           {p.title}
-        </Link>
-        <span title={rm.label} className="shrink-0 text-sm">
-          {rm.glyph}
-        </span>
-      </div>
-      <p className="voice text-sm text-muted">
-        {p.one_liner || (
-          <span className="text-unresolved">No one-line idea yet — that&apos;s normal this early.</span>
-        )}
-      </p>
-      <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-2 text-xs text-muted">
-        <span>
-          {cat?.label} → {sub?.label ?? p.subtype}
-        </span>
-        {p.lifecycle === "finished" && p.finished_at ? (
-          <span>finished {shortDate(p.finished_at)}</span>
-        ) : (
-          <span>· {relativeTime(p.last_touched_at)}</span>
-        )}
-        {dl !== null && dl >= 0 && dl <= 30 && <span className="text-unresolved">{dl}d left</span>}
-        {readOnly && <span className="rounded bg-sunken px-1.5 py-0.5">example</span>}
-      </div>
-    </Card>
+        </h3>
+        <p className="voice line-clamp-3 text-[13.5px] leading-snug text-muted">
+          {p.one_liner || (
+            <span className="text-unresolved-ink">
+              No one-line idea yet — normal this early.
+            </span>
+          )}
+        </p>
+        <div className="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-1 pt-2 text-[11px] text-faint">
+          <span>{sub?.label ?? p.subtype}</span>
+          <span aria-hidden>·</span>
+          {p.lifecycle === "finished" && p.finished_at ? (
+            <span>finished {shortDate(p.finished_at)}</span>
+          ) : (
+            <span>{relativeTime(p.last_touched_at)}</span>
+          )}
+          {dl !== null && dl >= 0 && dl <= 30 && (
+            <span className="text-unresolved">· {dl}d left</span>
+          )}
+          {readOnly && (
+            <span className="rounded-full bg-sunken px-1.5 py-0.5 text-faint">example</span>
+          )}
+        </div>
+      </Card>
+    </Link>
   );
 }

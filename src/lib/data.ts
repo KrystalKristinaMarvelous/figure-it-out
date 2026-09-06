@@ -158,7 +158,7 @@ export const getPulse = cache(async (projectId: string): Promise<PulseRow[]> => 
         return {
           pmId: m.pm.id,
           key: m.def.key,
-          label: (m.def.plural ?? "questions").toUpperCase(),
+          label: m.def.plural ?? "questions",
           count: open,
           delta: recent,
           subLabel: `${questions.length - open} figured out`,
@@ -169,7 +169,7 @@ export const getPulse = cache(async (projectId: string): Promise<PulseRow[]> => 
       return {
         pmId: m.pm.id,
         key: m.def.key,
-        label: (m.def.plural ?? m.name).toUpperCase(),
+        label: m.def.plural ?? m.name,
         count: mine.length,
         delta: recent,
       };

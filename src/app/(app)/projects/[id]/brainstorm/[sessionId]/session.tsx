@@ -115,13 +115,19 @@ function PromptCard({
   }
 
   return (
-    <div className="mx-auto max-w-xl space-y-5 py-4">
-      <p className="text-xs text-muted">
-        {orderIndex + 1} / {total} · {prompt.topic.replace(/_/g, " ")}
-      </p>
-      <h2 className="voice text-2xl leading-snug text-ink">{question}</h2>
+    <div className="mx-auto max-w-xl space-y-6 py-6" key={prompt.key + angle}>
+      <div className="flex items-center gap-2">
+        <span className="tnum text-[11.5px] text-faint">
+          {orderIndex + 1} / {total}
+        </span>
+        <span className="h-1 w-1 rounded-full bg-hairline" />
+        <span className="text-[11.5px] capitalize text-faint">
+          {prompt.topic.replace(/_/g, " ")}
+        </span>
+      </div>
+      <h2 className="voice-xl animate-rise">{question}</h2>
       {prompt.hint && angle === 0 && (
-        <p className="voice text-sm text-muted">{prompt.hint}</p>
+        <p className="voice measure text-[14px] text-muted">{prompt.hint}</p>
       )}
 
       <div className="space-y-2">
@@ -129,20 +135,21 @@ function PromptCard({
           <Textarea
             key={i}
             value={a}
-            onChange={(e) =>
-              setAnswers((s) => s.map((x, idx) => (idx === i ? e.target.value : x)))
-            }
+            onChange={(e) => setAnswers((s) => s.map((x, idx) => (idx === i ? e.target.value : x)))}
             placeholder={i === 0 ? "One possibility…" : "Another possibility…"}
-            className="min-h-[3.5rem]"
+            className="min-h-[3.25rem] text-[14px]"
           />
         ))}
         <button
           onClick={() => setAnswers((s) => [...s, ""])}
-          className="flex items-center gap-1 text-sm text-unresolved"
+          className="flex items-center gap-1.5 text-[12.5px] text-unresolved hover:underline"
         >
           <Plus size={13} /> add another possibility
         </button>
       </div>
+      <p className="text-[11.5px] text-faint">
+        One answer is a form. Five is a brainstorm. Star a favourite later, or don&apos;t.
+      </p>
 
       <div className="flex flex-wrap gap-2">
         <Button
@@ -215,7 +222,7 @@ function Review({
 
   return (
     <div className="mx-auto max-w-xl space-y-4 py-4">
-      <h2 className="voice text-2xl text-ink">Review</h2>
+      <h2 className="voice-lg">Review</h2>
       <p className="text-sm text-muted">
         Send an answer to a module, keep it as an idea, or discard it. Nothing auto-commits.
       </p>

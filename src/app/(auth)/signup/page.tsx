@@ -6,11 +6,11 @@ export const metadata = { title: "Get started — FIO" };
 export default function SignupPage() {
   return (
     <div className="mx-auto flex min-h-full w-full max-w-sm flex-col justify-center px-5 py-16">
-      <Link href="/" className="voice mb-8 text-2xl italic text-ink">
+      <Link href="/" className="voice mb-10 text-[22px] italic tracking-[-0.02em] text-ink">
         FIO
       </Link>
-      <h1 className="text-lg font-semibold text-ink">Figure it out first</h1>
-      <p className="voice mt-1 text-sm text-muted">
+      <h1 className="voice-lg">Figure it out first.</h1>
+      <p className="voice mt-1 text-[14px] text-muted">
         A workspace for working out what a project is — before you build it.
       </p>
       <AuthForm mode="signup" next="/dashboard" />

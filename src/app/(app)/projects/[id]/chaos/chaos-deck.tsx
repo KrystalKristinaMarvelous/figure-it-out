@@ -47,9 +47,12 @@ export function ChaosDeck({
       </div>
 
       {!finished ? (
-        <Card className="border-chaos/30 bg-chaos-soft p-6">
-          <p className="voice text-xl leading-snug text-ink">{card.text}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
+        <Card
+          key={card.id}
+          className="animate-deal border-l-2 border-l-chaos bg-chaos-wash p-7"
+        >
+          <p className="voice-lg text-ink">{card.text}</p>
+          <div className="mt-6 flex flex-wrap gap-2">
             <Button
               variant="chaos"
               size="sm"

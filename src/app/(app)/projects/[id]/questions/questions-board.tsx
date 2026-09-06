@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Plus } from "lucide-react";
+import { useState, useTransition, useRef } from "react";
+import { Plus, ChevronDown } from "lucide-react";
 import type { QuestionRow } from "@/lib/supabase/database.types";
 import { createQuestion, updateQuestion, resolveQuestion } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input, Textarea } from "@/components/ui/field";
 import { Dialog, DialogContent, DialogHeader, DialogBody, DialogFooter } from "@/components/ui/dialog";
-import { relativeTime } from "@/lib/utils";
+import { relativeTime, cn } from "@/lib/utils";
 
-const PRIORITY = { blocking: "🔴", important: "🟡", minor: "🟢" } as const;
+const PRIORITY_DOT = { blocking: "bg-unresolved", important: "bg-muted", minor: "bg-faint" } as const;
 const PRIORITY_ORDER = { blocking: 0, important: 1, minor: 2 } as const;
 const SOURCE_LABEL: Record<string, string> = {
   brainstorm: "from a brainstorm",
@@ -30,6 +30,7 @@ export function QuestionsBoard({
   const [adding, setAdding] = useState("");
   const [resolving, setResolving] = useState<QuestionRow | null>(null);
   const [answer, setAnswer] = useState("");
+  const [draining, setDraining] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
   const open = questions
@@ -43,8 +44,22 @@ export function QuestionsBoard({
     .filter((q) => q.status === "resolved")
     .sort((a, b) => (b.resolved_at ?? "").localeCompare(a.resolved_at ?? ""));
 
+  function doResolve() {
+    if (!resolving) return;
+    const id = resolving.id;
+    setDraining(id);
+    setResolving(null);
+    start(async () => {
+      // let the drain animation play before the row leaves
+      await new Promise((r) => setTimeout(r, 480));
+      await resolveQuestion(projectId, id, answer);
+      setDraining(null);
+      setAnswer("");
+    });
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       <form
         className="flex gap-2"
         onSubmit={(e) => {
@@ -59,86 +74,83 @@ export function QuestionsBoard({
           value={adding}
           onChange={(e) => setAdding(e.target.value)}
           placeholder="What don't you know yet?"
+          className="h-9"
         />
         <Button type="submit" variant="primary" size="sm" disabled={pending}>
           <Plus size={14} /> Add
         </Button>
       </form>
 
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {open.length === 0 && (
-          <Card className="p-6 text-center text-sm text-muted">
-            Nothing open. Most projects start with more questions than answers — that&apos;s the point.
+          <Card className="p-7 text-center" tint="paper">
+            <p className="voice text-[14px] text-muted">
+              Nothing open. Most projects start with more questions than answers — that&apos;s the
+              point.
+            </p>
           </Card>
         )}
         {open.map((q) => (
-          <Card key={q.id} className="p-3" tint="unresolved">
-            <div className="flex items-start justify-between gap-3">
-              <p className="text-sm text-ink">{q.text}</p>
-              <span className="shrink-0 text-sm">{PRIORITY[q.priority]}</span>
+          <div
+            key={q.id}
+            className={cn(
+              "unresolved-edge rounded-l-[2px] rounded-r-[var(--radius)] border border-l-2 border-hairline-2 border-l-unresolved px-4 py-3",
+              draining === q.id && "animate-drain pointer-events-none",
+            )}
+          >
+            <div className="flex items-start gap-2.5">
+              <span
+                className={cn("mt-2 h-1.5 w-1.5 shrink-0 rounded-full", PRIORITY_DOT[q.priority])}
+                title={q.priority}
+              />
+              <p className="voice flex-1 text-[15px] leading-snug text-ink">{q.text}</p>
             </div>
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-              <select
+            <div className="mt-2.5 flex flex-wrap items-center gap-1.5 pl-4 text-[11.5px]">
+              <InlineSelect
                 value={q.priority}
-                onChange={(e) =>
-                  start(() =>
-                    updateQuestion(projectId, q.id, { priority: e.target.value }).then(() => {}),
-                  )
-                }
-                className="rounded border border-hairline bg-raised px-1.5 py-0.5"
-              >
-                <option value="blocking">blocking</option>
-                <option value="important">important</option>
-                <option value="minor">minor</option>
-              </select>
-              <select
+                onChange={(v) => start(() => updateQuestion(projectId, q.id, { priority: v }).then(() => {}))}
+                options={["blocking", "important", "minor"]}
+              />
+              <InlineSelect
                 value={q.status}
-                onChange={(e) =>
-                  start(() =>
-                    updateQuestion(projectId, q.id, { status: e.target.value }).then(() => {}),
-                  )
-                }
-                className="rounded border border-hairline bg-raised px-1.5 py-0.5"
-              >
-                <option value="open">open</option>
-                <option value="exploring">exploring</option>
-              </select>
+                onChange={(v) => start(() => updateQuestion(projectId, q.id, { status: v }).then(() => {}))}
+                options={["open", "exploring"]}
+              />
               <button
                 onClick={() => {
                   setResolving(q);
                   setAnswer("");
                 }}
-                className="rounded bg-ink px-2 py-0.5 text-surface"
+                className="pressable rounded-full bg-ink px-2.5 py-0.5 text-[11px] font-medium text-surface"
               >
                 Resolve
               </button>
-              {SOURCE_LABEL[q.source] && (
-                <span className="text-muted">{SOURCE_LABEL[q.source]}</span>
-              )}
-              <span className="text-muted">· {relativeTime(q.created_at)}</span>
+              {SOURCE_LABEL[q.source] && <span className="text-faint">{SOURCE_LABEL[q.source]}</span>}
+              <span className="text-faint">· {relativeTime(q.created_at)}</span>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {resolved.length > 0 && (
-        <details>
-          <summary className="cursor-pointer text-sm font-medium text-muted">
+        <details className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-1.5 text-[12.5px] font-medium text-muted hover:text-ink">
+            <ChevronDown size={13} className="transition-transform group-open:rotate-180" />
             {resolved.length} resolved — the decision history
           </summary>
           <div className="mt-3 space-y-2">
             {resolved.map((q) => (
-              <Card key={q.id} className="p-3 text-sm">
-                <p className="text-muted line-through decoration-muted/40">{q.text}</p>
-                <p className="mt-1 text-ink">{q.answer}</p>
-                <p className="mt-1 text-xs text-muted">
+              <Card key={q.id} className="p-3.5" tint="paper">
+                <p className="voice text-[13px] text-faint line-through decoration-faint/50">
+                  {q.text}
+                </p>
+                <p className="voice mt-1 text-[14px] text-ink">{q.answer}</p>
+                <p className="mt-1.5 text-[11px] text-faint">
                   resolved {relativeTime(q.resolved_at)} ·{" "}
                   <button
-                    className="underline"
+                    className="underline hover:text-muted"
                     onClick={() =>
-                      start(() =>
-                        updateQuestion(projectId, q.id, { status: "open" }).then(() => {}),
-                      )
+                      start(() => updateQuestion(projectId, q.id, { status: "open" }).then(() => {}))
                     }
                   >
                     reopen
@@ -157,12 +169,13 @@ export function QuestionsBoard({
             description="Marking it solved requires writing the answer. The record of what you decided is worth more than the checkbox."
           />
           <DialogBody>
-            <p className="mb-2 text-sm text-ink">{resolving?.text}</p>
+            <p className="voice mb-3 text-[15px] text-ink">{resolving?.text}</p>
             <Textarea
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="What did you decide?"
               autoFocus
+              className="min-h-[6rem]"
             />
           </DialogBody>
           <DialogFooter>
@@ -170,21 +183,45 @@ export function QuestionsBoard({
               Cancel
             </Button>
             <Button
-              variant="primary"
+              variant="unresolved"
               size="sm"
               disabled={pending || !answer.trim()}
-              onClick={() =>
-                start(async () => {
-                  if (resolving) await resolveQuestion(projectId, resolving.id, answer);
-                  setResolving(null);
-                })
-              }
+              onClick={doResolve}
             >
-              Resolve
+              Resolve it
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+function InlineSelect({
+  value,
+  onChange,
+  options,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+}) {
+  const ref = useRef<HTMLSelectElement>(null);
+  return (
+    <span className="relative inline-flex items-center rounded-full border border-hairline bg-paper px-2 py-0.5 text-muted hover:border-muted">
+      <select
+        ref={ref}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="cursor-pointer appearance-none bg-transparent pr-3 text-[11px] outline-none"
+      >
+        {options.map((o) => (
+          <option key={o} value={o}>
+            {o}
+          </option>
+        ))}
+      </select>
+      <ChevronDown size={9} className="pointer-events-none absolute right-1.5" />
+    </span>
   );
 }

@@ -34,19 +34,20 @@ export default async function ModulePage({ params }: PageProps<"/projects/[id]/m
   });
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-start justify-between gap-4">
+    <div className="space-y-5">
+      <header className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="flex items-center gap-2 text-lg font-semibold text-ink">
-            <Icon name={mod.def.icon} size={16} /> {mod.name}
-          </h2>
-          <p className="voice mt-1 max-w-prose text-sm text-muted">{mod.def.intro}</p>
+          <h1 className="flex items-center gap-2 screen-title text-[17px]">
+            <Icon name={mod.def.icon} size={16} className="text-muted" />
+            {mod.name}
+          </h1>
+          <p className="voice measure mt-1.5 text-[13.5px] text-muted">{mod.def.intro}</p>
         </div>
         {!mod.def.universal && <ArchiveModuleButton projectId={id} pmId={pmId} />}
-      </div>
+      </header>
 
       {mod.pm.status === "archived" && (
-        <p className="rounded-md border border-hairline bg-raised px-3 py-2 text-sm text-muted">
+        <p className="rounded-[var(--radius-sm)] border border-hairline-2 bg-raised px-3 py-2 text-[12.5px] text-muted">
           This module is archived. Its data is kept — re-add it from the library to restore.
         </p>
       )}

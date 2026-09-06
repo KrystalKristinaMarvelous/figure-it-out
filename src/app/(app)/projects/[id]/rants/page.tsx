@@ -18,7 +18,7 @@ export default async function RantsPage({ params }: PageProps<"/projects/[id]/ra
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="voice text-2xl text-ink">Rant Space</h2>
+        <h2 className="voice-lg">Rant Space</h2>
         <p className="text-sm text-muted">
           Everything in your head about {project.title}, in the order you thought it. No structure,
           no decisions. Mine it later.

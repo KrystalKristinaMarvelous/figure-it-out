@@ -27,10 +27,10 @@ export default async function Portfolio() {
   finished.forEach((p) => (byCat[p.category] = (byCat[p.category] ?? 0) + 1));
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-5xl space-y-6 px-4 py-8 sm:px-6">
       <div>
-        <h1 className="voice text-2xl text-ink">Portfolio</h1>
-        <p className="text-sm text-muted">
+        <h1 className="voice-lg">Portfolio</h1>
+        <p className="mt-1 text-[13px] text-muted">
           Everything you&apos;ve made — and the process behind it, which no file folder can keep.
         </p>
       </div>

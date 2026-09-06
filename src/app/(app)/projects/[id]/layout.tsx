@@ -1,13 +1,17 @@
-import { getProject, getProjectModules } from "@/lib/data";
+import { getProject, getProjectModules, getQuestionCounts } from "@/lib/data";
 import { findCategory, findSubtype, READINESS_META } from "@/lib/schema/taxonomy";
-import { ProjectNav } from "./project-nav";
+import { ProjectRail } from "./project-rail";
 
 export default async function ProjectLayout({
   params,
   children,
 }: LayoutProps<"/projects/[id]">) {
   const { id } = await params;
-  const [project, modules] = await Promise.all([getProject(id), getProjectModules(id)]);
+  const [project, modules, counts] = await Promise.all([
+    getProject(id),
+    getProjectModules(id),
+    getQuestionCounts(id),
+  ]);
   const cat = findCategory(project.category);
   const sub = findSubtype(project.category, project.subtype);
   const rm = READINESS_META[project.readiness];
@@ -21,17 +25,20 @@ export default async function ProjectLayout({
     }));
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <div>
-          <h1 className="text-xl font-semibold text-ink">{project.title}</h1>
-          <p className="text-xs text-muted">
-            {cat?.label} → {sub?.label ?? project.subtype} · <span title={rm.label}>{rm.glyph} {rm.label}</span>
-          </p>
-        </div>
+    <div className="mx-auto flex w-full max-w-[1400px] flex-col lg:flex-row">
+      <ProjectRail
+        projectId={id}
+        title={project.title}
+        crumb={`${cat?.label} · ${sub?.label ?? project.subtype}`}
+        readinessGlyph={rm.glyph}
+        readinessLabel={rm.label}
+        openQuestions={counts.open}
+        moduleLinks={moduleLinks}
+        lifecycle={project.lifecycle}
+      />
+      <div className="min-w-0 flex-1 px-4 py-6 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-3xl animate-rise">{children}</div>
       </div>
-      <ProjectNav projectId={id} moduleLinks={moduleLinks} />
-      {children}
     </div>
   );
 }
