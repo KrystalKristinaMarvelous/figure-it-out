@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getUser } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme";
+import { Logo } from "@/components/logo";
 
 export default async function Landing() {
   const user = await getUser();
@@ -11,7 +12,7 @@ export default async function Landing() {
   return (
     <main className="mx-auto w-full max-w-3xl px-6 pb-24 pt-6">
       <header className="flex items-center justify-between">
-        <span className="voice text-[20px] text-ink">FIO</span>
+        <Logo markSize={20} />
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Button asChild variant="ghost" size="sm">

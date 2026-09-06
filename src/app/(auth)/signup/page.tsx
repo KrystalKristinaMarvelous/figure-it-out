@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { AuthForm } from "../auth-form";
+import { Logo } from "@/components/logo";
 
 export const metadata = { title: "Get started — FIO" };
 
 export default function SignupPage() {
   return (
     <div className="mx-auto flex min-h-full w-full max-w-sm flex-col justify-center px-5 py-16">
-      <Link href="/" className="voice mb-10 text-[20px] text-ink">
-        FIO
+      <Link href="/" className="mb-10">
+        <Logo markSize={22} />
       </Link>
       <h1 className="voice-lg">Figure it out first.</h1>
       <p className="voice mt-1 text-[14px] text-muted">

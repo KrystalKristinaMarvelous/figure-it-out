@@ -3,6 +3,7 @@ import { createClient, requireUser } from "@/lib/supabase/server";
 import { ThemeToggle } from "@/components/theme";
 import { CommandBar } from "@/components/command-bar";
 import { AccountMenu } from "@/components/account-menu";
+import { Logo } from "@/components/logo";
 
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await requireUser();
@@ -23,11 +24,8 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       <header className="sticky top-0 z-30 border-b border-hairline-2 bg-bg/80 backdrop-blur-md">
         <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center justify-between gap-4 px-4 py-2.5">
           <nav className="flex items-center gap-1 text-[13px]">
-            <Link
-              href="/dashboard"
-              className="voice mr-3 text-[19px] leading-none text-ink"
-            >
-              FIO
+            <Link href="/dashboard" className="mr-3">
+              <Logo />
             </Link>
             <NavLink href="/dashboard">Projects</NavLink>
             <NavLink href="/portfolio">Portfolio</NavLink>
