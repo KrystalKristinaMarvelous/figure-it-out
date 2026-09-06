@@ -36,8 +36,8 @@ export default async function ProjectLayout({
         moduleLinks={moduleLinks}
         lifecycle={project.lifecycle}
       />
-      <div className="min-w-0 flex-1 px-4 py-6 sm:px-8 lg:px-10">
-        <div className="mx-auto max-w-3xl animate-rise">{children}</div>
+      <div className="min-w-0 flex-1 px-4 py-7 sm:px-10 lg:px-14">
+        <div className="max-w-2xl animate-rise">{children}</div>
       </div>
     </div>
   );

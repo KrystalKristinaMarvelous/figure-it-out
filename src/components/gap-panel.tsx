@@ -39,7 +39,7 @@ export async function GapPanel({
       {gaps.slice(0, max).map((g) => (
         <div
           key={g.key}
-          className="unresolved-edge flex items-start gap-2.5 rounded-l-[2px] rounded-r-[var(--radius)] border border-l-2 border-hairline-2 border-l-unresolved px-3.5 py-2.5"
+          className="flex items-start gap-2.5 rounded-l-[2px] rounded-r-[var(--radius)] border border-l-2 border-hairline-2 border-l-unresolved bg-raised px-3.5 py-2.5"
         >
           <span className="mt-px text-[13px] text-unresolved">⚡</span>
           <div className="flex-1">

@@ -27,9 +27,9 @@
 
   --unresolved: #bd1a7e;
   --unresolved-ink: #9a1467;
-  --unresolved-wash: color-mix(in srgb, var(--unresolved) 6%, var(--raised));
+  --unresolved-wash: color-mix(in srgb, var(--unresolved) 4%, var(--raised));
   --chaos: #4b34e8;
-  --chaos-wash: color-mix(in srgb, var(--chaos) 7%, var(--raised));
+  --chaos-wash: color-mix(in srgb, var(--chaos) 5%, var(--raised));
   --ok: #37795a;
 
   /* elevation — cards use borders, only chrome & overlays get real shadow */
@@ -50,20 +50,20 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --surface: #15181a;
-    --raised: #1d2124;
-    --paper: #23282b;
-    --sunken: #101315;
+    --raised: #22262a;
+    --paper: #2a2f34;
+    --sunken: #121517;
     --ink: #eef1f0;
     --ink-2: #c2c9c7;
     --muted: #8b939a;
     --faint: #656d72;
-    --hairline: #2e3438;
-    --hairline-2: #262b2e;
+    --hairline: #3a4247;
+    --hairline-2: #2d3338;
     --unresolved: #ec5cae;
     --unresolved-ink: #f486c4;
-    --unresolved-wash: color-mix(in srgb, var(--unresolved) 12%, var(--raised));
+    --unresolved-wash: color-mix(in srgb, var(--unresolved) 8%, var(--raised));
     --chaos: #8b78ff;
-    --chaos-wash: color-mix(in srgb, var(--chaos) 15%, var(--raised));
+    --chaos-wash: color-mix(in srgb, var(--chaos) 10%, var(--raised));
     --ok: #6ec296;
     --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.2);
     --shadow-pop: 0 8px 28px -6px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.4);
@@ -72,20 +72,20 @@
 
 :root[data-theme="dark"] {
   --surface: #15181a;
-  --raised: #1d2124;
-  --paper: #23282b;
-  --sunken: #101315;
+  --raised: #22262a;
+  --paper: #2a2f34;
+  --sunken: #121517;
   --ink: #eef1f0;
   --ink-2: #c2c9c7;
   --muted: #8b939a;
   --faint: #656d72;
-  --hairline: #2e3438;
-  --hairline-2: #262b2e;
+  --hairline: #3a4247;
+  --hairline-2: #2d3338;
   --unresolved: #ec5cae;
   --unresolved-ink: #f486c4;
-  --unresolved-wash: color-mix(in srgb, var(--unresolved) 12%, var(--raised));
+  --unresolved-wash: color-mix(in srgb, var(--unresolved) 8%, var(--raised));
   --chaos: #8b78ff;
-  --chaos-wash: color-mix(in srgb, var(--chaos) 15%, var(--raised));
+  --chaos-wash: color-mix(in srgb, var(--chaos) 10%, var(--raised));
   --ok: #6ec296;
   --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.2);
   --shadow-pop: 0 8px 28px -6px rgb(0 0 0 / 0.55), 0 2px 8px -2px rgb(0 0 0 / 0.4);
