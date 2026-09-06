@@ -68,8 +68,16 @@
 ## Deferred (Phase 2+, per spec §20)
 Freeform Canvas (tldraw) · Tier 2 semantic AI (gaps, contradictions, Ask Project) · generated provocations · rant recurrence · custom modules · public portfolio pages · PDF/DOCX export · secondary-world calendars · offline PWA
 
-## Verified
-- `npm run typecheck` clean · `npm run build` clean (Next 16 / Turbopack)
-- `npm run validate:sql` — all 6 migrations apply cleanly against real Postgres (pglite),
-  seeding 102 modules / 57 prompts / 72 chaos templates / 3 example projects.
-- Not yet exercised against a live Supabase (Auth/Storage schemas stubbed for the pglite run).
+## Deployed & verified live
+- **Live:** https://figure-it-out-two.vercel.app · Supabase project `jntbqzcjtamwpfqsumec` · Vercel `figure-it-out`
+- All 6 migrations applied to the hosted DB (102 modules / 57 prompts / 72 chaos / 3 example projects).
+- Auth: email confirmation OFF (autoconfirm), site URL + redirect allow-list set.
+- End-to-end verified on the live stack: signup → `handle_new_user` trigger → dashboard →
+  wizard render; project + project_module insert under RLS; `log_activity` trigger fires.
+- `npm run typecheck` / `build` / `validate:sql` all clean.
+
+### Deploy gotchas hit (fixed)
+- Supabase→Vercel integration created `NEXT_PUBLIC_SUPABASE_*` as **Sensitive** vars →
+  undefined at build time → every route 500'd. Recreated as encrypted; `src/lib/supabase/env.ts`
+  now also accepts the integration's `SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` names.
+- `proxy.ts` + `getUser()` hardened to fail soft instead of 500 when config is missing.
