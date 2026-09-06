@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "./database.types";
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./env";
 
 const PUBLIC_PATHS = ["/", "/login", "/signup", "/auth", "/api/health"];
 
@@ -8,21 +9,16 @@ const PUBLIC_PATHS = ["/", "/login", "/signup", "/auth", "/api/health"];
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
   // Misconfigured env — don't 500 every route. Let the request through; the
   // page-level Supabase calls will surface a clearer error.
-  if (!url || !anon) {
-    console.error(
-      "[proxy] Missing NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY",
-    );
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error("[proxy] Supabase env vars are not set");
     return response;
   }
 
   let user = null;
   try {
-    const supabase = createServerClient<Database>(url, anon, {
+    const supabase = createServerClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
       cookies: {
         getAll() {
           return request.cookies.getAll();

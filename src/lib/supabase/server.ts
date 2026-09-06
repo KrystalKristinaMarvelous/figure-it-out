@@ -4,6 +4,12 @@ import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { cache } from "react";
 import type { Database } from "./database.types";
+import {
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_SERVICE_ROLE_KEY,
+  supabaseConfigured,
+} from "./env";
 
 /**
  * Supabase client for Server Components, Server Actions and Route Handlers.
@@ -12,10 +18,7 @@ import type { Database } from "./database.types";
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  return createServerClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
       cookies: {
         getAll() {
           return cookieStore.getAll();
@@ -38,20 +41,23 @@ export async function createClient() {
 /** Admin client — service role, bypasses RLS. Server-only, never expose. */
 export function createAdminClient() {
   const { createClient: createSbClient } = require("@supabase/supabase-js") as typeof import("@supabase/supabase-js");
-  return createSbClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false, autoRefreshToken: false } },
-  );
+  return createSbClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
 }
 
 /** Cached per-request: the signed-in user, or null. */
 export const getUser = cache(async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
+  if (!supabaseConfigured) return null;
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user;
+  } catch {
+    return null;
+  }
 });
 
 export async function requireUser() {
