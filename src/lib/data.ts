@@ -194,6 +194,30 @@ export const getDashboardProjects = cache(async () => {
   return { mine: mine ?? [], examples: examples ?? [], hasAny: (mine ?? []).length > 0 };
 });
 
+export const getGapContext = cache(async (projectId: string) => {
+  const supabase = await createClient();
+  const [modules, project, questions, dismissedRes, entriesRes] = await Promise.all([
+    getProjectModules(projectId),
+    getProject(projectId),
+    getQuestions(projectId),
+    supabase.from("gap_dismissals").select("gap_key").eq("project_id", projectId),
+    supabase.from("entries").select("*").eq("project_id", projectId),
+  ]);
+  const entriesByPm = new Map<string, EntryRow[]>();
+  for (const e of (entriesRes.data ?? []) as EntryRow[]) {
+    const arr = entriesByPm.get(e.project_module_id) ?? [];
+    arr.push(e);
+    entriesByPm.set(e.project_module_id, arr);
+  }
+  return {
+    modules,
+    project,
+    questions,
+    entriesByPm,
+    dismissed: new Set((dismissedRes.data ?? []).map((d) => d.gap_key)),
+  };
+});
+
 export const getQuestionCounts = cache(async (projectId: string) => {
   const questions = await getQuestions(projectId);
   return {

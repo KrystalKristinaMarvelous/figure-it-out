@@ -16,8 +16,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -30,8 +29,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -44,8 +42,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -58,8 +55,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -72,8 +68,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -86,8 +81,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -100,8 +94,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -114,8 +107,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -128,8 +120,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -142,8 +133,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -156,8 +146,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -170,8 +159,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -184,8 +172,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -198,8 +185,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -212,8 +198,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -226,8 +211,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -240,8 +224,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -254,8 +237,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -268,8 +250,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -282,8 +263,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -296,8 +276,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -310,8 +289,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -324,8 +302,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -338,8 +315,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -352,8 +328,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -366,8 +341,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -380,8 +354,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -394,8 +367,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -408,8 +380,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -422,8 +393,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -436,8 +406,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -450,8 +419,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -464,8 +432,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -478,8 +445,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -492,8 +458,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -506,8 +471,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -520,8 +484,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -534,8 +497,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -548,8 +510,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -562,8 +523,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -576,8 +536,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -590,8 +549,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -604,8 +562,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -618,8 +575,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -632,8 +588,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -646,8 +601,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -660,8 +614,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -674,8 +627,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -688,8 +640,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -702,8 +653,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -716,8 +666,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -730,8 +679,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -744,8 +692,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -758,8 +705,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -772,8 +718,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -786,8 +731,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -800,8 +744,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -814,8 +757,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -828,8 +770,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -842,8 +783,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -856,8 +796,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -870,8 +809,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -884,8 +822,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -898,8 +835,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -912,8 +848,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -926,8 +861,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -940,8 +874,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -954,8 +887,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -968,8 +900,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -982,8 +913,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -996,8 +926,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1010,8 +939,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1024,8 +952,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1038,8 +965,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1052,8 +978,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1066,8 +991,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1080,8 +1004,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1094,8 +1017,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1108,8 +1030,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1122,8 +1043,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1136,8 +1056,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1150,8 +1069,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1164,8 +1082,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1178,8 +1095,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1192,8 +1108,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1206,8 +1121,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1220,8 +1134,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1234,8 +1147,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1248,8 +1160,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1262,8 +1173,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1276,8 +1186,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1290,8 +1199,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1304,8 +1212,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1318,8 +1225,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1332,8 +1238,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1346,8 +1251,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1360,8 +1264,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1374,8 +1277,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1388,8 +1290,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1402,8 +1303,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1416,8 +1316,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 insert into public.module_definitions
   (id, key, name, icon, presentation, intro, entry_schema, gap_rules,
    category_affinity, suggested_with, is_universal, author_id, is_public, version)
@@ -1430,8 +1329,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;
 
 -- prompt_library ----------------------------------------------------------
 insert into public.prompt_library (key, topic, categories, subtypes, question, hint, alternates, followup_rules, order_index)

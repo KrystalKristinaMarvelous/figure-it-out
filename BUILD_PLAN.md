@@ -34,7 +34,7 @@
 - [x] Empty state with example-project cards
 - [x] Two-axis creation wizard — all 5 steps, "name it later", tag chips, module checklist
 - [x] Module library browser — search, add / remove, cross-category modules
-- [~] Quick Capture from dashboard (server action exists; dashboard button pending)
+- [x] Quick Capture from dashboard + from the command palette
 
 ## Milestone 3 — Workspace surfaces
 - [x] Project Overview — editable one-liner (+ "started as"), Pulse with weekly deltas, status/readiness, activity
@@ -50,13 +50,14 @@
 - [x] Tasks & Milestones — via the universal modules (board / timeline presentations)
 
 ### Milestone 3 — remaining polish
-- [ ] Command palette (⌘K) + global capture hotkey
-- [ ] Gap findings surfaced on the module pages & Overview (engine done, UI not wired in)
+- [x] Command palette (⌘K) + global capture hotkey (⌘⇧Space)
+- [x] Gap findings surfaced on module pages & Overview (dismissible)
+- [x] Markdown / JSON export (`/projects/[id]/export`)
+- [x] Seed example projects — 3, read-only, on the dashboard empty state
 - [ ] Dedicated full-text search UI across entries/rants/questions (tsvectors exist)
 - [ ] Milestone "requires entries" completion logic
-- [ ] Markdown / JSON export
-- [ ] Seed example projects (dashboard empty-state reads `is_example` rows — none seeded yet)
 - [ ] Chaos templates 72 → 100+ ; brainstorm follow-up branching rules
+- [ ] Craft pass on lighter-depth module sets (non-flagship subtypes)
 
 ## Content at launch
 - [x] Universal set (14) · Creative/Novel (full) · Academic/Science project (full) · Professional/Campaign (full) · Personal/Trip (full) · Custom
@@ -69,4 +70,6 @@ Freeform Canvas (tldraw) · Tier 2 semantic AI (gaps, contradictions, Ask Projec
 
 ## Verified
 - `npm run typecheck` clean · `npm run build` clean (Next 16 / Turbopack)
-- SQL migrations authored but **not yet run against a live Postgres** — first `supabase db push` during deploy is the real test.
+- `npm run validate:sql` — all 6 migrations apply cleanly against real Postgres (pglite),
+  seeding 102 modules / 57 prompts / 72 chaos templates / 3 example projects.
+- Not yet exercised against a live Supabase (Auth/Storage schemas stubbed for the pglite run).

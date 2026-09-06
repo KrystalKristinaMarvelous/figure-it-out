@@ -39,8 +39,7 @@ on conflict (id) do update set
   name = excluded.name, icon = excluded.icon, presentation = excluded.presentation,
   intro = excluded.intro, entry_schema = excluded.entry_schema,
   gap_rules = excluded.gap_rules, category_affinity = excluded.category_affinity,
-  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal,
-  version = public.module_definitions.version + 1;`,
+  suggested_with = excluded.suggested_with, is_universal = excluded.is_universal;`,
   );
 }
 

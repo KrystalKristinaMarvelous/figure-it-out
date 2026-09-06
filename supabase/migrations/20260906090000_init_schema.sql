@@ -76,7 +76,7 @@ create unique index module_definitions_user_key_idx
 -- ─────────────────────────────────────────────────────────────────────────────
 create table public.projects (
   id                 uuid primary key default gen_random_uuid(),
-  user_id            uuid not null references public.users (id) on delete cascade,
+  user_id            uuid references public.users (id) on delete cascade,
   title              text not null,
   one_liner          text,
   original_one_liner text,
@@ -97,7 +97,8 @@ create table public.projects (
   is_example         boolean not null default false,
   created_at         timestamptz not null default now(),
   updated_at         timestamptz not null default now(),
-  last_touched_at    timestamptz not null default now()
+  last_touched_at    timestamptz not null default now(),
+  constraint projects_owner_or_example check (user_id is not null or is_example)
 );
 create index projects_user_idx on public.projects (user_id, lifecycle, last_touched_at desc);
 

@@ -3,7 +3,9 @@ import { getProject, getPulse, getQuestionCounts, getActivity } from "@/lib/data
 import { findSubtype } from "@/lib/schema/taxonomy";
 import { shortDate, daysUntil, money, targetLabel } from "@/lib/format";
 import { relativeTime } from "@/lib/utils";
+import { Suspense } from "react";
 import { Card } from "@/components/ui/card";
+import { GapPanel } from "@/components/gap-panel";
 import { OneLinerEditor, StatusPicker } from "./overview-client";
 
 export default async function Overview({ params }: PageProps<"/projects/[id]"> ) {
@@ -20,6 +22,9 @@ export default async function Overview({ params }: PageProps<"/projects/[id]"> )
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_18rem]">
       <div className="space-y-6">
+        <Suspense fallback={null}>
+          <GapPanel projectId={id} />
+        </Suspense>
         <Card className="p-5" tint={project.one_liner ? "default" : "unresolved"}>
           <OneLinerEditor
             projectId={id}
@@ -129,6 +134,17 @@ export default async function Overview({ params }: PageProps<"/projects/[id]"> )
             <Link href={`/projects/${id}/finish`} className="text-unresolved hover:underline">
               Mark it finished →
             </Link>
+          </div>
+        </Card>
+        <Card className="p-4">
+          <h3 className="mb-1 text-xs font-semibold text-muted">Export</h3>
+          <div className="flex gap-3 text-sm">
+            <a href={`/projects/${id}/export?format=md`} className="text-unresolved hover:underline">
+              Markdown
+            </a>
+            <a href={`/projects/${id}/export?format=json`} className="text-unresolved hover:underline">
+              JSON
+            </a>
           </div>
         </Card>
       </aside>

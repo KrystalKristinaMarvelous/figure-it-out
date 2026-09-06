@@ -596,6 +596,14 @@ export async function closeBrainstorm(projectId: string, sessionId: string) {
   redirect(`/projects/${projectId}/brainstorm`);
 }
 
+export async function dismissGap(projectId: string, gapKey: string) {
+  const { supabase } = await assertOwnsProject(projectId);
+  await supabase
+    .from("gap_dismissals")
+    .upsert({ project_id: projectId, gap_key: gapKey }, { onConflict: "project_id,gap_key" });
+  revalidatePath(`/projects/${projectId}`, "layout");
+}
+
 // ── chaos ────────────────────────────────────────────────────────────────
 export async function chaosKeepAsQuestion(projectId: string, text: string) {
   const { supabase } = await assertOwnsProject(projectId);

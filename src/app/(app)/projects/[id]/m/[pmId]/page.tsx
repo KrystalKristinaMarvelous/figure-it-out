@@ -2,7 +2,9 @@ import { getModuleByPmId, getEntries, getAllEntries } from "@/lib/data";
 import { ModuleView } from "@/components/modules/module-view";
 import type { RefOption } from "@/components/fields/entry-form";
 import type { EntryValues } from "@/lib/schema/types";
+import { Suspense } from "react";
 import { Icon } from "@/components/icon";
+import { GapPanel } from "@/components/gap-panel";
 import { ArchiveModuleButton } from "./archive-button";
 
 export default async function ModulePage({ params }: PageProps<"/projects/[id]/m/[pmId]">) {
@@ -48,6 +50,10 @@ export default async function ModulePage({ params }: PageProps<"/projects/[id]/m
           This module is archived. Its data is kept — re-add it from the library to restore.
         </p>
       )}
+
+      <Suspense fallback={null}>
+        <GapPanel projectId={id} moduleKey={mod.def.key} />
+      </Suspense>
 
       <ModuleView
         projectId={id}

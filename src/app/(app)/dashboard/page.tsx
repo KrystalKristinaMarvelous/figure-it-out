@@ -3,6 +3,7 @@ import { createClient, requireUser } from "@/lib/supabase/server";
 import { findCategory, findSubtype, READINESS_META } from "@/lib/schema/taxonomy";
 import { Button } from "@/components/ui/button";
 import { Card, EmptyState } from "@/components/ui/card";
+import { QuickCapture } from "./quick-capture";
 import { relativeTime } from "@/lib/utils";
 import { shortDate, daysUntil } from "@/lib/format";
 import type { ProjectRow } from "@/lib/supabase/database.types";
@@ -52,9 +53,14 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
             </Link>
           ))}
         </div>
-        <Button asChild variant="primary" size="sm">
-          <Link href="/new">Start a project</Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <QuickCapture
+            projects={projects.map((p) => ({ id: p.id, title: p.title }))}
+          />
+          <Button asChild variant="primary" size="sm">
+            <Link href="/new">Start a project</Link>
+          </Button>
+        </div>
       </div>
 
       {projects.length === 0 && view === "active" ? (
