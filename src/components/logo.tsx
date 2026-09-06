@@ -20,13 +20,15 @@ export function LogoMark({
       className={className}
       aria-hidden
     >
-      <path
-        d="M22.6 8.2 A10 10 0 1 1 9.4 8.2"
-        stroke="currentColor"
-        strokeWidth="3.2"
-        strokeLinecap="round"
-      />
-      <circle cx="22.6" cy="8.2" r="2.1" className="fill-accent" />
+      <g transform="rotate(52 16 16)">
+        <path
+          d="M22.6 8.2 A10 10 0 1 1 9.4 8.2"
+          stroke="currentColor"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+        />
+        <circle cx="22.6" cy="8.2" r="2.1" className="fill-accent" />
+      </g>
     </svg>
   );
 }
