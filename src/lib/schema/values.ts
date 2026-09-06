@@ -63,6 +63,36 @@ export function completeness(schema: FieldDef[], values: EntryValues) {
   return { filled, total: relevant.length };
 }
 
+/** Render one entry as copy-pastable plain text (title, then Label: value lines). */
+export function entryToText(
+  schema: FieldDef[],
+  values: EntryValues,
+  fallbackTitle = "Untitled",
+): string {
+  const titleField = schema.find((f) => f.isTitle) ?? schema[0];
+  const lines: string[] = [];
+  const title = titleField ? plainText(values[titleField.key]) : "";
+  lines.push(title || fallbackTitle);
+  lines.push("");
+  for (const f of schema) {
+    if (f === titleField) continue;
+    const v = values[f.key];
+    if (isFieldEmpty(f, v)) continue;
+    if (f.type === "longtext" && f.repeatable && Array.isArray(v)) {
+      lines.push(`${f.label}:`);
+      for (const r of v as RepeatableText[]) if (r.value) lines.push(`  - ${r.value}`);
+    } else if (f.type === "checklist" && Array.isArray(v)) {
+      lines.push(`${f.label}:`);
+      for (const it of v as ChecklistItem[])
+        lines.push(`  [${it.done ? "x" : " "}] ${it.text}`);
+    } else {
+      const text = plainText(v).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      if (text) lines.push(`${f.label}: ${text}`);
+    }
+  }
+  return lines.join("\n").trim();
+}
+
 export function plainText(value: unknown): string {
   if (value == null) return "";
   if (typeof value === "string") return value;

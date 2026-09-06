@@ -4,12 +4,13 @@ import { useMemo, useState, useTransition } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import type { FieldDef, EntryValues, Presentation } from "@/lib/schema/types";
 import type { EntryRow } from "@/lib/supabase/database.types";
-import { titleFor } from "@/lib/schema/values";
+import { titleFor, entryToText } from "@/lib/schema/values";
 import { shortDate } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogBody } from "@/components/ui/dialog";
 import { EntryForm, type RefOption } from "@/components/fields/entry-form";
+import { CopyButton } from "@/components/copy-button";
 import { FieldValue, summarize } from "./entry-value";
 import { createEntry, updateEntry, deleteEntry, setEntryStatus } from "@/lib/actions";
 import { cn } from "@/lib/utils";
@@ -54,8 +55,18 @@ export function ModuleView(props: Props) {
     <div className="space-y-4">
       {props.entries.length > 0 && (
         <div className="flex items-center justify-between">
-          <span className="text-[12px] text-faint tnum">
+          <span className="flex items-center gap-3 text-[12px] text-faint tnum">
             {props.entries.length} {props.entries.length === 1 ? "entry" : "entries"}
+            {(presentation === "sheet" || presentation === "slots") && (
+              <CopyButton
+                label="Copy all"
+                text={() =>
+                  props.entries
+                    .map((e) => entryToText(props.schema, e.values as EntryValues))
+                    .join("\n\n———\n\n")
+                }
+              />
+            )}
           </span>
           {addButton}
         </div>
@@ -296,21 +307,25 @@ function BoardView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
 
 function SheetView({ entries, schema, onEdit, refLabels, projectId }: SubProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {entries.map((e) => {
         const values = e.values as EntryValues;
         return (
-          <Card key={e.id} className="p-4">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-base font-semibold text-ink">{e.title || "Untitled"}</h3>
+          <div key={e.id} className="well px-5 py-4">
+            <div className="mb-3.5 flex items-center justify-between gap-3 border-b border-hairline-2 pb-2.5">
+              <h3 className="voice text-[17px] text-ink">{e.title || "Untitled"}</h3>
               <div className="flex items-center gap-3">
-                <button onClick={() => onEdit(e)} className="text-muted hover:text-ink">
+                <CopyButton
+                  label="Copy"
+                  text={() => entryToText(schema, values, e.title ?? "Untitled")}
+                />
+                <button onClick={() => onEdit(e)} className="text-faint hover:text-ink">
                   <Pencil size={13} />
                 </button>
                 <RowActions e={e} projectId={projectId} />
               </div>
             </div>
-            <dl className="grid gap-x-6 gap-y-2 sm:grid-cols-[10rem_1fr]">
+            <dl className="grid gap-x-6 gap-y-2.5 sm:grid-cols-[9rem_1fr]">
               {schema
                 .filter((f) => !f.isTitle)
                 .map((f) => {
@@ -320,20 +335,20 @@ function SheetView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
                     <div key={f.key} className="contents">
                       <dt
                         className={cn(
-                          "text-[13px] font-medium",
-                          empty && f.required ? "text-unresolved" : "text-muted",
+                          "text-[12px] font-medium",
+                          empty && f.required ? "text-accent-ink" : "text-muted",
                         )}
                       >
                         {f.label}
                       </dt>
-                      <dd className="text-sm text-ink">
+                      <dd className="voice text-[14px] text-ink">
                         <FieldValue field={f} value={v} refLabels={refLabels} />
                       </dd>
                     </div>
                   );
                 })}
             </dl>
-          </Card>
+          </div>
         );
       })}
     </div>
