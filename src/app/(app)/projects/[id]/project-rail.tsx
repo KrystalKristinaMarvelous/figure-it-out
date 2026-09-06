@@ -41,19 +41,21 @@ export function ProjectRail(props: Props) {
 
       <aside
         className={cn(
-          "shrink-0 border-hairline-2 lg:sticky lg:top-14 lg:block lg:h-[calc(100vh-3.5rem)] lg:w-60 lg:overflow-y-auto lg:border-r lg:py-6",
+          "shrink-0 border-hairline-2 bg-raised/40 lg:sticky lg:top-14 lg:block lg:h-[calc(100vh-3.5rem)] lg:w-64 lg:overflow-y-auto lg:border-r lg:py-6",
           open ? "block border-b px-4 py-4" : "hidden",
         )}
       >
-        <div className="hidden px-4 lg:block">
-          <h1 className="screen-title leading-snug">{props.title}</h1>
-          <p className="mt-1 text-[11.5px] text-faint">{props.crumb}</p>
-          <p className="mt-1.5 text-[11.5px] text-muted" title={props.readinessLabel}>
+        <div className="hidden px-5 lg:block">
+          <h1 className="voice text-[17px] font-semibold leading-tight text-ink">
+            {props.title}
+          </h1>
+          <p className="mt-1.5 text-[11.5px] text-faint">{props.crumb}</p>
+          <p className="mt-1 text-[11.5px] text-muted" title={props.readinessLabel}>
             {props.readinessGlyph} {props.readinessLabel}
           </p>
         </div>
 
-        <nav className="mt-0 space-y-5 lg:mt-6 lg:px-2">
+        <nav className="mt-0 space-y-6 lg:mt-7 lg:px-3">
           <Group title="Think">
             <Item base={base} href={base} exact icon="LayoutDashboard" onNav={() => setOpen(false)}>
               Overview
