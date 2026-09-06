@@ -1,0 +1,156 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+  FIO design tokens — spec §18.
+  Colour encodes uncertainty: `unresolved` is the ONLY accent and means state,
+  never decoration. `chaos` appears in Chaos Mode and nowhere else.
+  A cool green-grey base — a studio wall, not paper.
+*/
+
+:root {
+  --surface: #e7eae9;
+  --raised: #f2f4f3;
+  --sunken: #dfe3e2;
+  --ink: #14171a;
+  --muted: #697178;
+  --hairline: #c9cfce;
+  --unresolved: #b8177a;
+  --unresolved-soft: #f7e3ee;
+  --chaos: #4b34e8;
+  --chaos-soft: #e7e3fb;
+  --ok: #3c7d5b;
+  --shadow: 0 1px 2px rgb(20 23 26 / 0.04);
+
+  --font-voice: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-structure: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius: 6px;
+  --measure: 66ch;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #16191b;
+    --raised: #1e2225;
+    --sunken: #101315;
+    --ink: #e9edec;
+    --muted: #8a9299;
+    --hairline: #2c3134;
+    --unresolved: #e24ba4;
+    --unresolved-soft: #33141f;
+    --chaos: #7c68ff;
+    --chaos-soft: #1c1836;
+    --ok: #6bbd8f;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  --surface: #16191b;
+  --raised: #1e2225;
+  --sunken: #101315;
+  --ink: #e9edec;
+  --muted: #8a9299;
+  --hairline: #2c3134;
+  --unresolved: #e24ba4;
+  --unresolved-soft: #33141f;
+  --chaos: #7c68ff;
+  --chaos-soft: #1c1836;
+  --ok: #6bbd8f;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-hairline: var(--hairline);
+  --color-unresolved: var(--unresolved);
+  --color-unresolved-soft: var(--unresolved-soft);
+  --color-chaos: var(--chaos);
+  --color-chaos-soft: var(--chaos-soft);
+  --color-ok: var(--ok);
+
+  --font-voice: var(--font-voice);
+  --font-structure: var(--font-structure);
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+* {
+  border-color: var(--hairline);
+}
+
+html {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-structure);
+  font-feature-settings: "cv05", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The app's voice — every prompt, question, gap finding, Chaos card. */
+.voice {
+  font-family: var(--font-voice);
+  line-height: 1.55;
+  letter-spacing: -0.003em;
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--unresolved) 22%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--unresolved);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* One orchestrated motion moment: resolving a question (spec §18.4). */
+@keyframes settle {
+  0% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-2px) scale(1.006); }
+  100% { transform: translateY(0) scale(1); }
+}
+.animate-settle { animation: settle 420ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+@keyframes drain {
+  from { color: var(--unresolved); border-color: var(--unresolved); }
+  to { color: var(--muted); border-color: var(--hairline); }
+}
+.animate-drain { animation: drain 520ms ease forwards; }
+
+/* Tiptap / longtext editor */
+.ProseMirror { outline: none; min-height: 6rem; }
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 4px; }
