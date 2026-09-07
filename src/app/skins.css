@@ -70,10 +70,19 @@
   --denim:#9ac4f0; --brass:#f0cd7a; --chaos:#c3a8f0; --chaos-wash:#2f2742;
 }
 [data-skin="sorbet"][data-theme="light"] body {
-  background: linear-gradient(172deg, #fff6dd 0%, #ffe6ef 40%, #e6efff 100%) fixed;
+  background:
+    radial-gradient(60% 45% at 12% 8%, rgb(255 236 179 / 0.55), transparent 70%),
+    radial-gradient(55% 40% at 92% 22%, rgb(198 224 255 / 0.55), transparent 70%),
+    radial-gradient(60% 50% at 78% 96%, rgb(216 199 245 / 0.45), transparent 70%),
+    linear-gradient(158deg, #fff4d6 0%, #ffe1ee 38%, #f7e5f6 60%, #e2ecff 100%);
+  background-attachment: fixed;
 }
 [data-skin="sorbet"][data-theme="dark"] body {
-  background: linear-gradient(172deg, #2b2338 0%, #322533 45%, #232b3c 100%) fixed;
+  background:
+    radial-gradient(55% 45% at 10% 8%, rgb(120 90 60 / 0.35), transparent 70%),
+    radial-gradient(55% 40% at 92% 20%, rgb(70 100 150 / 0.35), transparent 70%),
+    linear-gradient(158deg, #2c2237 0%, #33262f 45%, #232a3c 100%);
+  background-attachment: fixed;
 }
 /* candy stripe across the very top */
 [data-skin="sorbet"] body::before {
