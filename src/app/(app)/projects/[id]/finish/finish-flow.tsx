@@ -6,6 +6,7 @@ import { finishProject, shelveProject, reopenProject, addArtifact } from "@/lib/
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input, Textarea, Label } from "@/components/ui/field";
+import { DeleteProject } from "./delete-project";
 
 export function FinishFlow({
   projectId,
@@ -27,22 +28,30 @@ export function FinishFlow({
 
   if (lifecycle === "finished") {
     return (
-      <Card className="p-6">
-        <h2 className="voice-lg">This project is finished.</h2>
-        <p className="mt-1 text-sm text-muted">
-          It&apos;s in your Portfolio. Everything is still browsable. Revisions happen — you can
-          reopen it.
-        </p>
-        <Button
-          className="mt-4"
-          variant="outline"
-          size="sm"
-          disabled={pending}
-          onClick={() => start(async () => { await reopenProject(projectId); router.push(`/projects/${projectId}`); })}
-        >
-          Reopen
-        </Button>
-      </Card>
+      <div>
+        <Card className="p-6">
+          <h2 className="voice-lg">This project is finished.</h2>
+          <p className="mt-1 text-sm text-muted">
+            It&apos;s in your Portfolio. Everything is still browsable. Revisions happen — you can
+            reopen it.
+          </p>
+          <Button
+            className="mt-4"
+            variant="outline"
+            size="sm"
+            disabled={pending}
+            onClick={() =>
+              start(async () => {
+                await reopenProject(projectId);
+                router.push(`/projects/${projectId}`);
+              })
+            }
+          >
+            Reopen
+          </Button>
+        </Card>
+        <DeleteProject projectId={projectId} title={title} />
+      </div>
     );
   }
 
@@ -118,6 +127,8 @@ export function FinishFlow({
       <p className="text-xs text-muted">
         Setting aside is not a failure — it&apos;s kept, searchable, and revivable with one tap.
       </p>
+
+      <DeleteProject projectId={projectId} title={title} />
     </div>
   );
 }

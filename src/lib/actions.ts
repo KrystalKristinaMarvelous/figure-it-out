@@ -419,6 +419,22 @@ export async function shelveProject(projectId: string) {
   redirect("/dashboard");
 }
 
+export async function deleteProject(projectId: string, confirmTitle: string) {
+  const { supabase } = await assertOwnsProject(projectId);
+  const { data: project } = await supabase
+    .from("projects")
+    .select("title")
+    .eq("id", projectId)
+    .single();
+  if (!project) throw new Error("Not found");
+  if (confirmTitle !== project.title) {
+    throw new Error("The name doesn't match — deletion cancelled.");
+  }
+  await supabase.from("projects").delete().eq("id", projectId);
+  revalidatePath("/dashboard");
+  redirect("/dashboard");
+}
+
 export async function reopenProject(projectId: string) {
   const { supabase } = await assertOwnsProject(projectId);
   await supabase
