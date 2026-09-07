@@ -713,6 +713,53 @@ export async function deletePortfolioItem(id: string) {
   revalidatePath("/me");
 }
 
+// ── social ───────────────────────────────────────────────────────────────
+export async function follow(userId: string) {
+  const user = await requireUser();
+  if (userId === user.id) return;
+  const supabase = await createClient();
+  await supabase
+    .from("follows")
+    .upsert({ follower_id: user.id, following_id: userId }, { onConflict: "follower_id,following_id" });
+  revalidatePath("/people");
+  revalidatePath(`/u/${userId}`);
+}
+
+export async function unfollow(userId: string) {
+  const user = await requireUser();
+  const supabase = await createClient();
+  await supabase
+    .from("follows")
+    .delete()
+    .eq("follower_id", user.id)
+    .eq("following_id", userId);
+  revalidatePath("/people");
+  revalidatePath(`/u/${userId}`);
+}
+
+export async function sendMessage(recipientId: string, body: string) {
+  const user = await requireUser();
+  const text = body.trim();
+  if (!text || recipientId === user.id) return;
+  const supabase = await createClient();
+  await supabase
+    .from("messages")
+    .insert({ sender_id: user.id, recipient_id: recipientId, body: text.slice(0, 4000) });
+  revalidatePath("/messages", "layout");
+}
+
+export async function markThreadRead(otherId: string) {
+  const user = await requireUser();
+  const supabase = await createClient();
+  await supabase
+    .from("messages")
+    .update({ read_at: new Date().toISOString() })
+    .eq("recipient_id", user.id)
+    .eq("sender_id", otherId)
+    .is("read_at", null);
+  revalidatePath("/messages", "layout");
+}
+
 export async function saveThemePref(pref: { theme?: string; skin?: string }) {
   const user = await requireUser();
   const supabase = await createClient();

@@ -57,9 +57,25 @@ export type ProjectRow = {
   completion_count: number;
   is_example: boolean;
   show_on_profile: boolean;
+  resolved_count: number;
   created_at: Ts;
   updated_at: Ts;
   last_touched_at: Ts;
+}
+
+export type FollowRow = {
+  follower_id: string;
+  following_id: string;
+  created_at: Ts;
+};
+
+export type MessageRow = {
+  id: string;
+  sender_id: string;
+  recipient_id: string;
+  body: string;
+  read_at: Ts | null;
+  created_at: Ts;
 }
 
 export type ProfileRow = {
@@ -262,6 +278,8 @@ export type Database = {
       users: Table<UserRow>;
       profiles: Table<ProfileRow>;
       portfolio_items: Table<PortfolioItemRow>;
+      follows: Table<FollowRow>;
+      messages: Table<MessageRow>;
       projects: Table<ProjectRow>;
       module_definitions: Table<ModuleDefinitionRow>;
       project_modules: Table<
