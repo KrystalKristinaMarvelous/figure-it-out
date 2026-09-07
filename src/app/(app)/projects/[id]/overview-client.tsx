@@ -2,8 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { Pencil } from "lucide-react";
-import { updateProjectField, changeReadiness } from "@/lib/actions";
-import { Textarea, Select } from "@/components/ui/field";
+import { updateProjectField, changeReadiness, toggleShowOnProfile } from "@/lib/actions";
+import { Textarea, Select, CheckboxField } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { ReadinessMark } from "@/components/readiness-mark";
 import { READINESS_META } from "@/lib/schema/taxonomy";
@@ -94,12 +94,15 @@ export function StatusPicker({
   projectId,
   status,
   readiness,
+  showOnProfile,
 }: {
   projectId: string;
   status: string;
   readiness: Readiness;
+  showOnProfile: boolean;
 }) {
   const [pending, start] = useTransition();
+  const [featured, setFeatured] = useState(showOnProfile);
   const current = STATUSES.find(([v]) => v === status);
   return (
     <div className="space-y-3.5">
@@ -141,6 +144,17 @@ export function StatusPicker({
             </button>
           ))}
         </div>
+      </div>
+      <div className="border-t border-hairline-2 pt-3.5">
+        <CheckboxField
+          id="feature"
+          checked={featured}
+          onCheckedChange={(v) => {
+            setFeatured(v);
+            start(() => toggleShowOnProfile(projectId, v).then(() => {}));
+          }}
+          label={<span className="text-[12.5px]">Feature on my profile</span>}
+        />
       </div>
     </div>
   );

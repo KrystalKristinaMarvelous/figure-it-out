@@ -126,7 +126,12 @@ export default async function Overview({ params }: PageProps<"/projects/[id]">) 
       <section className="grid gap-8 sm:grid-cols-2">
         <div>
           <p className="eyebrow mb-3">Status</p>
-          <StatusPicker projectId={id} status={project.status} readiness={project.readiness} />
+          <StatusPicker
+            projectId={id}
+            status={project.status}
+            readiness={project.readiness}
+            showOnProfile={project.show_on_profile}
+          />
         </div>
         <div>
           <p className="eyebrow mb-3">Recent activity</p>

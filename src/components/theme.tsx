@@ -6,41 +6,100 @@ import { cn } from "@/lib/utils";
 
 type Mode = "light" | "dark" | "system";
 
-const KEY = "fio-theme";
+const MODE_KEY = "fio-theme";
+const SKIN_KEY = "fio-skin";
 
-/** Inline, runs before paint — avoids a flash of the wrong theme. */
+export const SKINS = [
+  { id: "editorial", name: "Editorial", blurb: "Bone paper, oxblood, a literary serif. The default." },
+  { id: "warm", name: "Warm", blurb: "Cream and terracotta. A sunlit desk." },
+  { id: "playground", name: "Playground", blurb: "Bright, cohesive, softly rounded." },
+  { id: "paper", name: "Paper", blurb: "A book. Serif throughout, almost no colour." },
+  { id: "bare", name: "Bare", blurb: "Brutalist. Black on white, system type, no radius." },
+  { id: "terminal", name: "Terminal", blurb: "CRT. Monospace, phosphor green." },
+  { id: "midnight", name: "Midnight", blurb: "Deep navy, cyan and violet, high contrast." },
+] as const;
+
+export type SkinId = (typeof SKINS)[number]["id"];
+export const DEFAULT_SKIN: SkinId = "editorial";
+
+/** Inline, runs before paint — no flash of the wrong theme. */
 export function ThemeScript() {
-  const js = `(function(){try{var m=localStorage.getItem('${KEY}')||'system';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`;
+  const js = `(function(){try{
+    var m=localStorage.getItem('${MODE_KEY}')||'system';
+    var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);
+    var s=localStorage.getItem('${SKIN_KEY}')||'${DEFAULT_SKIN}';
+    var r=document.documentElement;
+    r.setAttribute('data-theme',d?'dark':'light');
+    r.setAttribute('data-skin',s);
+  }catch(e){}})();`;
   return <script dangerouslySetInnerHTML={{ __html: js }} />;
 }
 
-export function applyTheme(mode: Mode) {
-  const dark =
-    mode === "dark" ||
-    (mode === "system" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches);
-  document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+/** On a fresh device localStorage is empty — adopt the server-saved prefs. */
+export function PrefSync({ theme, skin }: { theme?: string | null; skin?: string | null }) {
+  useEffect(() => {
+    try {
+      if (theme && !localStorage.getItem(MODE_KEY)) {
+        localStorage.setItem(MODE_KEY, theme);
+        applyTheme(theme as Mode);
+      }
+      if (skin && !localStorage.getItem(SKIN_KEY)) {
+        localStorage.setItem(SKIN_KEY, skin);
+        applySkin(skin);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [theme, skin]);
+  return null;
 }
 
-export function ThemeToggle({ className }: { className?: string }) {
-  const [mode, setMode] = useState<Mode>("system");
+function resolveDark(mode: Mode) {
+  return (
+    mode === "dark" ||
+    (mode === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  );
+}
+
+export function applyTheme(mode: Mode) {
+  document.documentElement.setAttribute("data-theme", resolveDark(mode) ? "dark" : "light");
+}
+
+export function applySkin(skin: string) {
+  document.documentElement.setAttribute("data-skin", skin);
+}
+
+/** Read the current stored preferences (client only). */
+export function usePrefs() {
+  const [mode, setModeState] = useState<Mode>("system");
+  const [skin, setSkinState] = useState<string>(DEFAULT_SKIN);
 
   useEffect(() => {
-    const stored = (localStorage.getItem(KEY) as Mode) || "system";
-    setMode(stored);
+    setModeState((localStorage.getItem(MODE_KEY) as Mode) || "system");
+    setSkinState(localStorage.getItem(SKIN_KEY) || DEFAULT_SKIN);
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => {
-      if ((localStorage.getItem(KEY) as Mode) === "system") applyTheme("system");
+      if ((localStorage.getItem(MODE_KEY) as Mode) === "system") applyTheme("system");
     };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  function set(next: Mode) {
-    setMode(next);
-    localStorage.setItem(KEY, next);
-    applyTheme(next);
-  }
+  const setMode = (m: Mode) => {
+    setModeState(m);
+    localStorage.setItem(MODE_KEY, m);
+    applyTheme(m);
+  };
+  const setSkin = (s: string) => {
+    setSkinState(s);
+    localStorage.setItem(SKIN_KEY, s);
+    applySkin(s);
+  };
+  return { mode, skin, setMode, setSkin };
+}
+
+export function ThemeToggle({ className }: { className?: string }) {
+  const { mode, setMode } = usePrefs();
 
   const opts: { m: Mode; icon: typeof Sun; label: string }[] = [
     { m: "light", icon: Sun, label: "Light" },
@@ -51,7 +110,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-md border border-hairline bg-raised p-0.5",
+        "inline-flex items-center gap-0.5 rounded-[var(--radius-sm)] border border-hairline bg-paper p-0.5",
         className,
       )}
     >
@@ -61,10 +120,10 @@ export function ThemeToggle({ className }: { className?: string }) {
           type="button"
           aria-label={label}
           aria-pressed={mode === m}
-          onClick={() => set(m)}
+          onClick={() => setMode(m)}
           className={cn(
-            "grid h-6 w-6 place-items-center rounded-sm text-muted transition-colors",
-            mode === m && "bg-surface text-ink shadow-[var(--shadow)]",
+            "grid h-6 w-6 place-items-center rounded-[calc(var(--radius-sm)-2px)] text-muted transition-colors",
+            mode === m && "bg-sunken text-ink",
           )}
         >
           <Icon size={13} />

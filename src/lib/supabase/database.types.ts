@@ -56,10 +56,36 @@ export type ProjectRow = {
   reflection: Json | null;
   completion_count: number;
   is_example: boolean;
+  show_on_profile: boolean;
   created_at: Ts;
   updated_at: Ts;
   last_touched_at: Ts;
 }
+
+export type ProfileRow = {
+  id: string;
+  username: string | null;
+  display_name: string | null;
+  headline: string | null;
+  bio: string | null;
+  avatar_url: string | null;
+  created_at: Ts;
+  updated_at: Ts;
+};
+
+export type PortfolioItemRow = {
+  id: string;
+  user_id: string;
+  title: string;
+  kind: string | null;
+  year: number | null;
+  blurb: string | null;
+  link_url: string | null;
+  image_url: string | null;
+  from_project_id: string | null;
+  order_index: number;
+  created_at: Ts;
+};
 
 export type ModuleDefinitionRow = {
   id: string;
@@ -234,6 +260,8 @@ export type Database = {
   public: {
     Tables: {
       users: Table<UserRow>;
+      profiles: Table<ProfileRow>;
+      portfolio_items: Table<PortfolioItemRow>;
       projects: Table<ProjectRow>;
       module_definitions: Table<ModuleDefinitionRow>;
       project_modules: Table<

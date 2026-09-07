@@ -1,0 +1,135 @@
+/*
+  FIO skins. ThemeScript always resolves data-theme to light|dark and sets
+  data-skin, so every skin defines both [data-theme="light"] and [dark].
+  Editorial is the default (its tokens live in globals.css :root).
+  Each skin overrides colour, radius and — where it has a point of view — fonts.
+*/
+
+/* ── editorial (explicit, = the :root default) ─────────────────────────── */
+:root[data-skin="editorial"] { color-scheme: light; }
+:root[data-skin="editorial"][data-theme="dark"] { color-scheme: dark; }
+
+/* ── warm — cream & terracotta ────────────────────────────────────────── */
+:root[data-skin="warm"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#f3ecdd; --raised:#faf4e7; --paper:#fffdf6; --sunken:#e9dfc9; --note:#f6e6b8;
+  --ink:#2b2117; --ink-2:#5a4a38; --muted:#8b7a63; --faint:#b3a284;
+  --hairline:#ddccae; --hairline-2:#ebe0c9;
+  --accent:#bd5735; --accent-ink:#9c4526; --accent-wash:#f4e2d6;
+  --denim:#6a7f5c; --brass:#9a7b45; --chaos:#5a4a8f; --chaos-wash:#e9e4f2;
+}
+:root[data-skin="warm"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#211a12; --raised:#2b2318; --paper:#332a1a; --sunken:#181209; --note:#4a3d1c;
+  --ink:#f2e8d6; --ink-2:#cbbb9d; --muted:#9c8b70; --faint:#6f6350;
+  --hairline:#463a28; --hairline-2:#372e1e;
+  --accent:#e0895f; --accent-ink:#eda884; --accent-wash:#3a2519;
+  --denim:#94a882; --brass:#c39a5e; --chaos:#a390d8; --chaos-wash:#2b2338;
+}
+
+/* ── playground — bright, cohesive, rounder (no chunky fonts) ──────────── */
+:root[data-skin="playground"] { --radius-sm:12px; --radius:20px; --radius-lg:28px; }
+:root[data-skin="playground"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#f5f3ff; --raised:#fdfcff; --paper:#ffffff; --sunken:#ece8ff; --note:#ffe9a8;
+  --ink:#1d1a3a; --ink-2:#4a4570; --muted:#7a749e; --faint:#a9a4c6;
+  --hairline:#e0dbf5; --hairline-2:#ece9fb;
+  --accent:#6b52e6; --accent-ink:#5236d6; --accent-wash:#e9e4fd;
+  --denim:#0ea5a0; --brass:#f0912f; --chaos:#e0489a; --chaos-wash:#fce1ef;
+}
+:root[data-skin="playground"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#131228; --raised:#1c1a37; --paper:#232043; --sunken:#0d0c1e; --note:#3f3a1c;
+  --ink:#ece9fb; --ink-2:#bdb7e0; --muted:#8f89b8; --faint:#615c85;
+  --hairline:#312d54; --hairline-2:#26234440;
+  --accent:#9179ff; --accent-ink:#ab98ff; --accent-wash:#2a2350;
+  --denim:#2dd4bf; --brass:#ffb454; --chaos:#ff6fb3; --chaos-wash:#3a1f33;
+}
+
+/* ── paper — a book. serif everywhere, almost no colour ───────────────── */
+:root[data-skin="paper"] {
+  --font-voice: var(--font-newsreader), Georgia, serif;
+  --font-structure: var(--font-newsreader), Georgia, serif;
+  --radius-sm:3px; --radius:5px; --radius-lg:8px;
+}
+:root[data-skin="paper"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#fbfaf5; --raised:#fdfcf8; --paper:#ffffff; --sunken:#f0eee5; --note:#f3ebcf;
+  --ink:#24231d; --ink-2:#4d4b41; --muted:#807d70; --faint:#a8a596;
+  --hairline:#e3e0d3; --hairline-2:#eeece2;
+  --accent:#6a6a4c; --accent-ink:#55553b; --accent-wash:#eeeee3;
+  --denim:#5c6b7a; --brass:#8a7346; --chaos:#4d4d66; --chaos-wash:#e9e9ee;
+}
+:root[data-skin="paper"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#1a1a16; --raised:#211f1b; --paper:#242320; --sunken:#131310; --note:#3a3524;
+  --ink:#e9e6db; --ink-2:#c0bdb0; --muted:#928f82; --faint:#66645a;
+  --hairline:#35342c; --hairline-2:#2a2921;
+  --accent:#b6b689; --accent-ink:#c8c89e; --accent-wash:#2e2e22;
+  --denim:#8aa0b3; --brass:#c2a878; --chaos:#9a9ac0; --chaos-wash:#26262f;
+}
+
+/* ── bare — brutalist. black on white, system font, no colour, no radius ─ */
+:root[data-skin="bare"] {
+  --font-voice: ui-sans-serif, system-ui, sans-serif;
+  --font-structure: ui-sans-serif, system-ui, sans-serif;
+  --radius-sm:0px; --radius:0px; --radius-lg:0px;
+  --well-shadow: none;
+}
+:root[data-skin="bare"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#ffffff; --raised:#ffffff; --paper:#ffffff; --sunken:#f4f4f4; --note:#fff7cc;
+  --ink:#0c0c0c; --ink-2:#333333; --muted:#666666; --faint:#a0a0a0;
+  --hairline:#111111; --hairline-2:#dddddd;
+  --accent:#0c0c0c; --accent-ink:#0c0c0c; --accent-wash:#efefef;
+  --denim:#333333; --brass:#333333; --chaos:#0c0c0c; --chaos-wash:#efefef;
+}
+:root[data-skin="bare"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#0a0a0a; --raised:#0a0a0a; --paper:#0a0a0a; --sunken:#151515; --note:#3a3620;
+  --ink:#f2f2f2; --ink-2:#c8c8c8; --muted:#8f8f8f; --faint:#5a5a5a;
+  --hairline:#f2f2f2; --hairline-2:#262626;
+  --accent:#f2f2f2; --accent-ink:#f2f2f2; --accent-wash:#1c1c1c;
+  --denim:#c8c8c8; --brass:#c8c8c8; --chaos:#f2f2f2; --chaos-wash:#1c1c1c;
+}
+
+/* ── terminal — CRT. mono everywhere, phosphor + amber ────────────────── */
+:root[data-skin="terminal"] {
+  --font-voice: var(--font-fragment-mono), ui-monospace, monospace;
+  --font-structure: var(--font-fragment-mono), ui-monospace, monospace;
+  --radius-sm:2px; --radius:3px; --radius-lg:4px;
+}
+:root[data-skin="terminal"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#eef2ea; --raised:#f5f8f2; --paper:#fbfdf9; --sunken:#e2e8dd; --note:#e8e6c0;
+  --ink:#14231a; --ink-2:#3a5142; --muted:#5f7a67; --faint:#93a998;
+  --hairline:#cbd8c8; --hairline-2:#dde6da;
+  --accent:#1c7a3e; --accent-ink:#155e30; --accent-wash:#dcecdf;
+  --denim:#8a6d2a; --brass:#8a6d2a; --chaos:#3f5f8a; --chaos-wash:#dfe6ef;
+}
+:root[data-skin="terminal"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#0b0f0c; --raised:#111611; --paper:#0e130f; --sunken:#070a08; --note:#2a2a12;
+  --ink:#c6e8cd; --ink-2:#8fc79c; --muted:#5f9a6d; --faint:#3f6b4a;
+  --hairline:#1e3222; --hairline-2:#16241a;
+  --accent:#4ade80; --accent-ink:#74e79c; --accent-wash:#123020;
+  --denim:#fbbf24; --brass:#fbbf24; --chaos:#7aa2ff; --chaos-wash:#1a2438;
+}
+
+/* ── midnight — deep navy, cyan/violet, high contrast ─────────────────── */
+:root[data-skin="midnight"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#f3f5fc; --raised:#fbfcff; --paper:#ffffff; --sunken:#e8ecf9; --note:#fdeeb0;
+  --ink:#101430; --ink-2:#3b4066; --muted:#6c7196; --faint:#a2a6c4;
+  --hairline:#dde1f2; --hairline-2:#eaedf9;
+  --accent:#0e7490; --accent-ink:#0b5a70; --accent-wash:#dcedf2;
+  --denim:#7c5cff; --brass:#c08a2e; --chaos:#7c3aed; --chaos-wash:#ece2fb;
+}
+:root[data-skin="midnight"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#0d1026; --raised:#161a37; --paper:#1c2044; --sunken:#080a1c; --note:#3a3418;
+  --ink:#e2e6ff; --ink-2:#b3b8e0; --muted:#8489b6; --faint:#585d88;
+  --hairline:#2a3057; --hairline-2:#1e2344;
+  --accent:#4dd0e1; --accent-ink:#7ee0ec; --accent-wash:#123039;
+  --denim:#a78bfa; --brass:#e0b45e; --chaos:#c084fc; --chaos-wash:#2a1f45;
+}

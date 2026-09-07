@@ -621,3 +621,86 @@ export async function quickCapture(projectId: string, text: string) {
   if (!text.trim()) return;
   await createRant(projectId, { mode: "text", body_text: text });
 }
+
+// ── profile & preferences ────────────────────────────────────────────────
+const ProfilePatch = z.object({
+  display_name: z.string().trim().max(80).optional(),
+  username: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .regex(/^[a-z0-9_]{3,30}$/, "3–30 chars, letters/numbers/underscore")
+    .optional()
+    .or(z.literal("")),
+  headline: z.string().trim().max(120).optional(),
+  bio: z.string().trim().max(600).optional(),
+});
+
+export async function updateProfile(input: z.infer<typeof ProfilePatch>) {
+  const user = await requireUser();
+  const supabase = await createClient();
+  const p = ProfilePatch.parse(input);
+  const patch: Record<string, unknown> = { ...p };
+  if (p.username === "") patch.username = null;
+
+  const { error } = await supabase
+    .from("profiles")
+    .update(patch as never)
+    .eq("id", user.id);
+  if (error) {
+    if (error.code === "23505") throw new Error("That username is taken.");
+    throw new Error(error.message);
+  }
+  if (p.display_name) {
+    await supabase.from("users").update({ display_name: p.display_name }).eq("id", user.id);
+  }
+  revalidatePath("/settings");
+  revalidatePath("/dashboard", "layout");
+}
+
+export async function toggleShowOnProfile(projectId: string, show: boolean) {
+  const { supabase } = await assertOwnsProject(projectId);
+  await supabase.from("projects").update({ show_on_profile: show }).eq("id", projectId);
+  revalidatePath(`/projects/${projectId}`, "layout");
+  revalidatePath("/me");
+}
+
+const PortfolioItem = z.object({
+  title: z.string().trim().min(1).max(160),
+  kind: z.string().trim().max(40).optional(),
+  year: z.coerce.number().int().min(1900).max(2100).optional().or(z.literal("")),
+  blurb: z.string().trim().max(400).optional(),
+  link_url: z.string().trim().url().optional().or(z.literal("")),
+});
+
+export async function addPortfolioItem(input: z.input<typeof PortfolioItem>) {
+  const user = await requireUser();
+  const supabase = await createClient();
+  const p = PortfolioItem.parse(input);
+  await supabase.from("portfolio_items").insert({
+    user_id: user.id,
+    title: p.title,
+    kind: p.kind || null,
+    year: p.year === "" || p.year === undefined ? null : Number(p.year),
+    blurb: p.blurb || null,
+    link_url: p.link_url || null,
+  });
+  revalidatePath("/settings");
+  revalidatePath("/me");
+}
+
+export async function deletePortfolioItem(id: string) {
+  const user = await requireUser();
+  const supabase = await createClient();
+  await supabase.from("portfolio_items").delete().eq("id", id).eq("user_id", user.id);
+  revalidatePath("/settings");
+  revalidatePath("/me");
+}
+
+export async function saveThemePref(pref: { theme?: string; skin?: string }) {
+  const user = await requireUser();
+  const supabase = await createClient();
+  const { data } = await supabase.from("users").select("settings").eq("id", user.id).single();
+  const settings = { ...(data?.settings as Record<string, unknown> | null), ...pref };
+  await supabase.from("users").update({ settings: settings as never }).eq("id", user.id);
+}
