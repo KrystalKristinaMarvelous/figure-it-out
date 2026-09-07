@@ -42,7 +42,7 @@
 }
 
 /* ── playground — bright, cohesive, rounder (no chunky fonts) ──────────── */
-[data-skin="playground"] { --radius-sm:12px; --radius:20px; --radius-lg:28px; }
+:root[data-skin="playground"] { --radius-sm:12px; --radius:20px; --radius-lg:28px; }
 [data-skin="playground"][data-theme="light"] {
   color-scheme: light;
   --bg:#f5f3ff; --raised:#fdfcff; --paper:#ffffff; --sunken:#ece8ff; --note:#ffe9a8;
@@ -61,7 +61,7 @@
 }
 
 /* ── paper — a book. serif everywhere, almost no colour ───────────────── */
-[data-skin="paper"] {
+:root[data-skin="paper"] {
   --font-voice: var(--font-newsreader), Georgia, serif;
   --font-structure: var(--font-newsreader), Georgia, serif;
   --radius-sm:3px; --radius:5px; --radius-lg:8px;
@@ -84,7 +84,7 @@
 }
 
 /* ── bare — brutalist. black on white, system font, no colour, no radius ─ */
-[data-skin="bare"] {
+:root[data-skin="bare"] {
   --font-voice: ui-sans-serif, system-ui, sans-serif;
   --font-structure: ui-sans-serif, system-ui, sans-serif;
   --radius-sm:0px; --radius:0px; --radius-lg:0px;
@@ -108,7 +108,7 @@
 }
 
 /* ── terminal — CRT. mono everywhere, phosphor + amber ────────────────── */
-[data-skin="terminal"] {
+:root[data-skin="terminal"] {
   --font-voice: var(--font-fragment-mono), ui-monospace, monospace;
   --font-structure: var(--font-fragment-mono), ui-monospace, monospace;
   --radius-sm:2px; --radius:3px; --radius-lg:4px;
