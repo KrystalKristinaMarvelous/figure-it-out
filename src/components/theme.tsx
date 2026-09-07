@@ -11,8 +11,8 @@ const SKIN_KEY = "fio-skin";
 
 export const SKINS = [
   { id: "editorial", name: "Editorial", blurb: "Bone paper, oxblood, a literary serif. The default.", kind: "palette" },
-  { id: "warm", name: "Warm", blurb: "Cream and terracotta. Same layout, sunlit.", kind: "palette" },
   { id: "midnight", name: "Midnight", blurb: "Deep navy, cyan and violet. Same layout, after dark.", kind: "palette" },
+  { id: "sorbet", name: "Sorbet", blurb: "Pastel gradients, a candy stripe, frosted-glass panels.", kind: "theme" },
   { id: "paper", name: "Paper", blurb: "A manuscript. Serif everywhere, no boxes, narrow column.", kind: "theme" },
   { id: "cards", name: "Cards", blurb: "A soft product UI — floating panels, pills, more air.", kind: "theme" },
   { id: "bare", name: "Bare", blurb: "Brutalist. Hard boxes, bold grotesque, uppercase, no radius.", kind: "theme" },

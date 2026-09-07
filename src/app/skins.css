@@ -28,24 +28,6 @@
   --denim:#8f9bb3; --brass:#b79a6a; --chaos:#9091d6; --chaos-wash:#2a2a3d;
 }
 
-/* warm — cream & terracotta */
-[data-skin="warm"][data-theme="light"] {
-  color-scheme: light;
-  --bg:#f3ecdd; --raised:#faf4e7; --paper:#fffdf6; --sunken:#e9dfc9;
-  --ink:#2b2117; --ink-2:#5a4a38; --muted:#8b7a63; --faint:#b3a284;
-  --hairline:#ddccae; --hairline-2:#ebe0c9;
-  --accent:#bd5735; --accent-ink:#9c4526; --accent-wash:#f4e2d6;
-  --denim:#6a7f5c; --brass:#9a7b45; --chaos:#5a4a8f; --chaos-wash:#e9e4f2;
-}
-[data-skin="warm"][data-theme="dark"] {
-  color-scheme: dark;
-  --bg:#211a12; --raised:#2b2318; --paper:#332a1a; --sunken:#181209;
-  --ink:#f2e8d6; --ink-2:#cbbb9d; --muted:#9c8b70; --faint:#6f6350;
-  --hairline:#463a28; --hairline-2:#372e1e;
-  --accent:#e0895f; --accent-ink:#eda884; --accent-wash:#3a2519;
-  --denim:#94a882; --brass:#c39a5e; --chaos:#a390d8; --chaos-wash:#2b2338;
-}
-
 /* midnight — deep navy, cyan & violet */
 [data-skin="midnight"][data-theme="light"] {
   color-scheme: light;
@@ -64,6 +46,83 @@
   --denim:#a78bfa; --brass:#e0b45e; --chaos:#c084fc; --chaos-wash:#2a1f45;
 }
 [data-skin="midnight"] .open-edge { box-shadow: -10px 0 22px -12px var(--accent); }
+
+
+/* ═══ SORBET — pastel. gradients, candy stripes, frosted glass ═════════ */
+:root[data-skin="sorbet"] {
+  --radius-sm:10px; --radius:16px; --radius-lg:24px;
+  --well-shadow: 0 10px 30px -14px rgb(180 120 170 / 0.28);
+}
+[data-skin="sorbet"][data-theme="light"] {
+  color-scheme: light;
+  --bg:#fdf5ef; --raised:#ffffff; --paper:#ffffff; --sunken:#fdeef6;
+  --ink:#3c3143; --ink-2:#6d5f74; --muted:#9c8ea3; --faint:#c6b9ca;
+  --hairline:#f3e4ee; --hairline-2:#f9f0f6;
+  --accent:#e46ea6; --accent-ink:#c04680; --accent-wash:#fdeaf3;
+  --denim:#6aa7e0; --brass:#e6b64c; --chaos:#a385e0; --chaos-wash:#f0e9fb;
+}
+[data-skin="sorbet"][data-theme="dark"] {
+  color-scheme: dark;
+  --bg:#241f2f; --raised:#2f2840; --paper:#352d47; --sunken:#1d1826;
+  --ink:#f3ebf3; --ink-2:#ccc0d2; --muted:#9b8fa4; --faint:#6a6076;
+  --hairline:#3e3550; --hairline-2:#322a42;
+  --accent:#f5a3c7; --accent-ink:#f8bcd6; --accent-wash:#3a2a3b;
+  --denim:#9ac4f0; --brass:#f0cd7a; --chaos:#c3a8f0; --chaos-wash:#2f2742;
+}
+[data-skin="sorbet"][data-theme="light"] body {
+  background: linear-gradient(172deg, #fff6dd 0%, #ffe6ef 40%, #e6efff 100%) fixed;
+}
+[data-skin="sorbet"][data-theme="dark"] body {
+  background: linear-gradient(172deg, #2b2338 0%, #322533 45%, #232b3c 100%) fixed;
+}
+/* candy stripe across the very top */
+[data-skin="sorbet"] body::before {
+  content: ""; position: fixed; inset: 0 0 auto 0; height: 4px; z-index: 60;
+  background: repeating-linear-gradient(90deg,
+    #ffd6a5 0 22px, #ffadad 22px 44px, #a0c4ff 44px 66px, #bdb2ff 66px 88px, #caffbf 88px 110px);
+}
+[data-skin="sorbet"] .well {
+  background: color-mix(in srgb, var(--raised) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--raised) 90%, transparent);
+  box-shadow: var(--well-shadow); border-radius: var(--radius-lg);
+  backdrop-filter: blur(6px);
+}
+[data-skin="sorbet"] .card {
+  background: color-mix(in srgb, var(--raised) 82%, transparent) !important;
+  border: 1px solid var(--hairline-2) !important;
+  box-shadow: var(--well-shadow) !important; border-radius: var(--radius) !important;
+  backdrop-filter: blur(6px);
+}
+[data-skin="sorbet"] .framed {
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #ffd6a5, #ffadad, #a0c4ff, #bdb2ff) 1;
+}
+[data-skin="sorbet"] .eyebrow { color: var(--accent-ink); }
+[data-skin="sorbet"] .voice em, [data-skin="sorbet"] .voice-lg em, [data-skin="sorbet"] .voice-xl em {
+  background: linear-gradient(120deg, var(--accent), var(--denim));
+  -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic;
+}
+[data-skin="sorbet"] .open-edge { border-left: 0; padding-left: 0.95rem; position: relative; }
+[data-skin="sorbet"] .open-edge::before {
+  content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; border-radius: 3px;
+  background: linear-gradient(#ffadad, #a0c4ff);
+}
+[data-skin="sorbet"] .fio-btn.bg-accent {
+  background: linear-gradient(120deg, #ff9ec7, #ffc8a2); border: 0; color: #6d2f52;
+}
+[data-skin="sorbet"][data-theme="dark"] .fio-btn.bg-accent { color: #2b1a26; }
+[data-skin="sorbet"] .fio-field { background: var(--paper); border-color: var(--hairline); }
+[data-skin="sorbet"] .fio-rail {
+  background: color-mix(in srgb, var(--raised) 55%, transparent) !important;
+  backdrop-filter: blur(8px);
+}
+[data-skin="sorbet"] .fio-navitem { border-radius: 999px; }
+[data-skin="sorbet"] .fio-navitem-on {
+  background: linear-gradient(120deg, #ffe0ec, #e3efff); color: var(--accent-ink);
+}
+[data-skin="sorbet"][data-theme="dark"] .fio-navitem-on {
+  background: linear-gradient(120deg, #4a3340, #33384f);
+}
 
 
 /* ═══ PAPER — a manuscript. serif throughout, no containers ═════════════ */
