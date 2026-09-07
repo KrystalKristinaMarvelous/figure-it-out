@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const base =
-  "w-full rounded-[var(--radius-sm)] border border-hairline bg-paper px-3 py-2 text-[13.5px] text-ink placeholder:text-faint transition-colors focus:border-accent focus:outline-none disabled:opacity-50";
+  "fio-field w-full rounded-[var(--radius-sm)] border border-hairline bg-paper px-3 py-2 text-[13.5px] text-ink placeholder:text-faint transition-colors focus:border-accent focus:outline-none disabled:opacity-50";
 
 export const Input = forwardRef<
   HTMLInputElement,

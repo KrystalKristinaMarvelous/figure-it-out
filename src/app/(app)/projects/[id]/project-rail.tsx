@@ -41,7 +41,7 @@ export function ProjectRail(props: Props) {
 
       <aside
         className={cn(
-          "shrink-0 border-hairline-2 lg:sticky lg:top-14 lg:block lg:h-[calc(100vh-3.5rem)] lg:w-[15.5rem] lg:overflow-y-auto lg:border-r lg:py-8",
+          "fio-rail shrink-0 border-hairline-2 lg:sticky lg:top-14 lg:block lg:h-[calc(100vh-3.5rem)] lg:w-[15.5rem] lg:overflow-y-auto lg:border-r lg:py-8",
           open ? "block border-b px-5 py-4" : "hidden",
         )}
       >
@@ -156,13 +156,13 @@ function Item({
       href={href}
       onClick={onNav}
       className={cn(
-        "flex items-center gap-2.5 rounded-[var(--radius-sm)] px-3 py-1.5 text-[12.5px] transition-colors",
+        "fio-navitem flex items-center gap-2.5 rounded-[var(--radius-sm)] px-3 py-1.5 text-[12.5px] transition-colors",
         active
-          ? "bg-accent-wash font-medium text-accent-ink"
+          ? "fio-navitem-on bg-accent-wash font-medium text-accent-ink"
           : "text-muted hover:bg-accent-wash/50 hover:text-ink",
       )}
     >
-      <Icon name={icon} size={14} className={active ? "text-accent" : "text-faint"} />
+      <Icon name={icon} size={14} className={cn("fio-navicon", active ? "text-accent" : "text-faint")} />
       <span className="flex-1 truncate">{children}</span>
       {trailing}
     </Link>

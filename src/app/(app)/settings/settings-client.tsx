@@ -140,62 +140,76 @@ function ThemeSection() {
         ))}
       </div>
 
+      <div className="mb-2 mt-6 text-[11px] text-faint">Palette — the editorial layout, recoloured</div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        {SKINS.filter((s) => s.kind === "palette").map((s) => (
+          <SkinCard key={s.id} s={s} active={skin === s.id} onPick={() => pick(s.id)} />
+        ))}
+      </div>
+
+      <div className="mb-2 mt-7 text-[11px] text-faint">
+        Themes — different type, elements and rhythm
+      </div>
       <div className="grid gap-3 sm:grid-cols-2">
-        {SKINS.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => pick(s.id)}
-            className={cn(
-              "group relative overflow-hidden rounded-[var(--radius)] border p-4 text-left transition-colors",
-              skin === s.id ? "border-accent" : "border-hairline hover:border-ink-2",
-            )}
-          >
-            <SkinSwatch id={s.id} />
-            <div className="mt-3 flex items-center justify-between">
-              <span className="text-[13px] font-medium text-ink">{s.name}</span>
-              {skin === s.id && (
-                <span className="grid h-4 w-4 place-items-center rounded-full bg-accent text-white">
-                  <Check size={10} strokeWidth={3} />
-                </span>
-              )}
-            </div>
-            <p className="voice mt-0.5 text-[12px] leading-snug text-muted">{s.blurb}</p>
-          </button>
+        {SKINS.filter((s) => s.kind === "theme").map((s) => (
+          <SkinCard key={s.id} s={s} active={skin === s.id} onPick={() => pick(s.id)} />
         ))}
       </div>
     </section>
   );
 }
 
-/** A tiny preview strip using the skin's own tokens, forced via data-skin. */
+function SkinCard({
+  s,
+  active,
+  onPick,
+}: {
+  s: { id: string; name: string; blurb: string };
+  active: boolean;
+  onPick: () => void;
+}) {
+  return (
+    <button
+      onClick={onPick}
+      className={cn(
+        "group overflow-hidden rounded-[var(--radius)] border p-3.5 text-left transition-colors",
+        active ? "border-accent ring-1 ring-accent" : "border-hairline hover:border-ink-2",
+      )}
+    >
+      <SkinSwatch id={s.id} />
+      <div className="mt-3 flex items-center justify-between">
+        <span className="text-[13px] font-medium text-ink">{s.name}</span>
+        {active && (
+          <span className="grid h-4 w-4 place-items-center rounded-full bg-accent text-white">
+            <Check size={10} strokeWidth={3} />
+          </span>
+        )}
+      </div>
+      <p className="mt-0.5 text-[11.5px] leading-snug text-muted">{s.blurb}</p>
+    </button>
+  );
+}
+
+/** A tiny mock rendered with the skin's own tokens + structural rules. */
 function SkinSwatch({ id }: { id: string }) {
-  const ref = (el: HTMLDivElement | null) => {
-    if (el) el.setAttribute("data-skin", id);
-  };
   return (
     <div
-      ref={ref}
+      data-skin={id}
       data-theme="light"
-      className="flex h-12 overflow-hidden rounded-[var(--radius-sm)] border border-hairline-2"
+      className="pointer-events-none flex h-20 select-none flex-col gap-1.5 overflow-hidden rounded-[var(--radius-sm)] border border-hairline-2 p-2.5"
+      style={{ background: "var(--bg)", color: "var(--ink)" }}
     >
-      <div className="w-1/2" style={{ background: "var(--bg)" }}>
-        <div
-          className="m-2 h-2 w-8 rounded-full"
-          style={{ background: "var(--ink)" }}
-        />
-        <div
-          className="mx-2 h-2 w-5 rounded-full"
-          style={{ background: "var(--accent)" }}
-        />
-      </div>
-      <div
-        className="w-1/2"
-        data-theme="dark"
-        style={{ background: "var(--bg)" }}
+      <span className="eyebrow text-[7px]">Overview</span>
+      <span className="voice-lg text-[11px] leading-tight">A princess discovers…</span>
+      <span className="open-edge mt-auto pl-1.5 text-[8px]" style={{ color: "var(--ink)" }}>
+        How does the succession work?
+      </span>
+      <span
+        className="fio-btn mt-1 inline-flex w-fit items-center px-1.5 py-0.5 text-[7px]"
+        style={{ background: "var(--accent)", color: "#fff" }}
       >
-        <div className="m-2 h-2 w-8 rounded-full" style={{ background: "var(--ink)" }} />
-        <div className="mx-2 h-2 w-5 rounded-full" style={{ background: "var(--accent)" }} />
-      </div>
+        Resolve
+      </span>
     </div>
   );
 }

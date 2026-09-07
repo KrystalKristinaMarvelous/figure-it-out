@@ -10,13 +10,13 @@ const MODE_KEY = "fio-theme";
 const SKIN_KEY = "fio-skin";
 
 export const SKINS = [
-  { id: "editorial", name: "Editorial", blurb: "Bone paper, oxblood, a literary serif. The default." },
-  { id: "warm", name: "Warm", blurb: "Cream and terracotta. A sunlit desk." },
-  { id: "playground", name: "Playground", blurb: "Bright, cohesive, softly rounded." },
-  { id: "paper", name: "Paper", blurb: "A book. Serif throughout, almost no colour." },
-  { id: "bare", name: "Bare", blurb: "Brutalist. Black on white, system type, no radius." },
-  { id: "terminal", name: "Terminal", blurb: "CRT. Monospace, phosphor green." },
-  { id: "midnight", name: "Midnight", blurb: "Deep navy, cyan and violet, high contrast." },
+  { id: "editorial", name: "Editorial", blurb: "Bone paper, oxblood, a literary serif. The default.", kind: "palette" },
+  { id: "warm", name: "Warm", blurb: "Cream and terracotta. Same layout, sunlit.", kind: "palette" },
+  { id: "midnight", name: "Midnight", blurb: "Deep navy, cyan and violet. Same layout, after dark.", kind: "palette" },
+  { id: "paper", name: "Paper", blurb: "A manuscript. Serif everywhere, no boxes, narrow column.", kind: "theme" },
+  { id: "cards", name: "Cards", blurb: "A soft product UI — floating panels, pills, more air.", kind: "theme" },
+  { id: "bare", name: "Bare", blurb: "Brutalist. Hard boxes, bold grotesque, uppercase, no radius.", kind: "theme" },
+  { id: "terminal", name: "Terminal", blurb: "A TUI. Monospace, drawn borders, > prompts, all caps.", kind: "theme" },
 ] as const;
 
 export type SkinId = (typeof SKINS)[number]["id"];

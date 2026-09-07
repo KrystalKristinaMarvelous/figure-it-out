@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
 const button = cva(
-  "pressable inline-flex items-center justify-center gap-1.5 rounded-[var(--radius-sm)] font-medium tracking-[-0.005em] whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-40 select-none",
+  "fio-btn pressable inline-flex items-center justify-center gap-1.5 rounded-[var(--radius-sm)] font-medium tracking-[-0.005em] whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-40 select-none",
   {
     variants: {
       variant: {
