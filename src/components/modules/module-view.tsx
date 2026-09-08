@@ -23,10 +23,12 @@ interface Props {
   entries: EntryRow[];
   refOptions: RefOption[];
   moduleName: string;
+  canEdit?: boolean;
 }
 
 export function ModuleView(props: Props) {
   const { presentation } = props;
+  const canEdit = props.canEdit ?? true;
   const [editing, setEditing] = useState<EntryRow | "new" | null>(null);
   const refLabels = useMemo(
     () => new Map(props.refOptions.map((o) => [o.id, o.label])),
@@ -45,11 +47,13 @@ export function ModuleView(props: Props) {
     setEditing(null);
   }
 
-  const addButton = (
+  const addButton = canEdit ? (
     <Button variant="outline" size="sm" onClick={() => setEditing("new")}>
       <Plus size={14} /> Add {props.entries.length > 0 ? "" : "the first one"}
     </Button>
-  );
+  ) : null;
+
+  const openEdit = canEdit ? setEditing : () => {};
 
   return (
     <div className="space-y-4">
@@ -76,21 +80,24 @@ export function ModuleView(props: Props) {
         <Card className="p-9 text-center" tint="paper">
           <p className="voice-lg text-ink/70">Empty page, doing its thing.</p>
           <p className="voice mx-auto mt-1 max-w-sm text-[13.5px] text-muted">
-            This module is waiting for its first entry. It won&apos;t bite.
+            {canEdit
+              ? "This module is waiting for its first entry. It won't bite."
+              : "Nothing here yet."}
           </p>
-          <div className="mt-5 flex justify-center">{addButton}</div>
+          {addButton && <div className="mt-5 flex justify-center">{addButton}</div>}
         </Card>
       ) : presentation === "board" ? (
-        <BoardView {...props} onEdit={setEditing} refLabels={refLabels} />
+        <BoardView {...props} canEdit={canEdit} onEdit={openEdit} refLabels={refLabels} />
       ) : presentation === "table" ? (
-        <TableView {...props} onEdit={setEditing} refLabels={refLabels} />
+        <TableView {...props} canEdit={canEdit} onEdit={openEdit} refLabels={refLabels} />
       ) : presentation === "sheet" || presentation === "slots" ? (
-        <SheetView {...props} onEdit={setEditing} refLabels={refLabels} />
+        <SheetView {...props} canEdit={canEdit} onEdit={openEdit} refLabels={refLabels} />
       ) : (
         <CardsView
           {...props}
+          canEdit={canEdit}
           layout={presentation === "gallery" || presentation === "grid" ? "grid" : "list"}
-          onEdit={setEditing}
+          onEdit={openEdit}
           refLabels={refLabels}
         />
       )}
@@ -122,8 +129,17 @@ type SubProps = Props & {
   refLabels: Map<string, string>;
 };
 
-function RowActions({ e, projectId }: { e: EntryRow; projectId: string }) {
+function RowActions({
+  e,
+  projectId,
+  canEdit = true,
+}: {
+  e: EntryRow;
+  projectId: string;
+  canEdit?: boolean;
+}) {
   const [pending, start] = useTransition();
+  if (!canEdit) return null;
   return (
     <button
       className="text-muted hover:text-unresolved disabled:opacity-40"
@@ -146,6 +162,7 @@ function CardsView({
   refLabels,
   projectId,
   layout,
+  canEdit = true,
 }: SubProps & { layout: "grid" | "list" }) {
   const imageField = schema.find((f) => f.type === "image");
   return (
@@ -179,10 +196,12 @@ function CardsView({
               <h3 className="text-[13px] font-semibold leading-snug text-ink">
                 {e.title || titleFor(schema, values)}
               </h3>
-              <span className="flex shrink-0 items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                <Pencil size={12} className="text-faint" />
-                <RowActions e={e} projectId={projectId} />
-              </span>
+              {canEdit && (
+                <span className="flex shrink-0 items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                  <Pencil size={12} className="text-faint" />
+                  <RowActions e={e} projectId={projectId} canEdit={canEdit} />
+                </span>
+              )}
             </div>
             <p className="voice mt-1 line-clamp-3 text-[12.5px] leading-snug text-muted">
               {summarize(schema, values)}
@@ -194,7 +213,7 @@ function CardsView({
   );
 }
 
-function TableView({ entries, schema, onEdit, refLabels, projectId }: SubProps) {
+function TableView({ entries, schema, onEdit, refLabels, projectId, canEdit = true }: SubProps) {
   const cols = schema.slice(0, 5);
   return (
     <div className="overflow-x-auto rounded-lg border border-hairline">
@@ -224,7 +243,7 @@ function TableView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
                   </td>
                 ))}
                 <td className="px-2 py-2 text-right">
-                  <RowActions e={e} projectId={projectId} />
+                  <RowActions e={e} projectId={projectId} canEdit={canEdit} />
                 </td>
               </tr>
             );
@@ -235,7 +254,7 @@ function TableView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
   );
 }
 
-function BoardView({ entries, schema, onEdit, refLabels, projectId }: SubProps) {
+function BoardView({ entries, schema, onEdit, refLabels, projectId, canEdit = true }: SubProps) {
   const statusField =
     schema.find((f) => f.slot === "status") ??
     schema.find((f) => f.type === "select" && (f.options ?? []).length >= 2);
@@ -264,12 +283,12 @@ function BoardView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span className="font-medium text-ink">{e.title}</span>
-                    <RowActions e={e} projectId={projectId} />
+                    <RowActions e={e} projectId={projectId} canEdit={canEdit} />
                   </div>
                   <p className="mt-1 line-clamp-2 text-xs text-muted">
                     {summarize(schema, e.values as EntryValues)}
                   </p>
-                  {statusField && (
+                  {statusField && canEdit && (
                     <div className="mt-2 flex gap-1">
                       {columns
                         .filter((c) => c !== col)
@@ -305,7 +324,7 @@ function BoardView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
   );
 }
 
-function SheetView({ entries, schema, onEdit, refLabels, projectId }: SubProps) {
+function SheetView({ entries, schema, onEdit, refLabels, projectId, canEdit = true }: SubProps) {
   return (
     <div className="space-y-8">
       {entries.map((e) => {
@@ -319,10 +338,12 @@ function SheetView({ entries, schema, onEdit, refLabels, projectId }: SubProps) 
                   label="Copy"
                   text={() => entryToText(schema, values, e.title ?? "Untitled")}
                 />
-                <button onClick={() => onEdit(e)} className="text-faint hover:text-ink">
-                  <Pencil size={13} />
-                </button>
-                <RowActions e={e} projectId={projectId} />
+                {canEdit && (
+                  <button onClick={() => onEdit(e)} className="text-faint hover:text-ink">
+                    <Pencil size={13} />
+                  </button>
+                )}
+                <RowActions e={e} projectId={projectId} canEdit={canEdit} />
               </div>
             </div>
             <dl className="grid gap-x-6 gap-y-2.5 sm:grid-cols-[9rem_1fr]">

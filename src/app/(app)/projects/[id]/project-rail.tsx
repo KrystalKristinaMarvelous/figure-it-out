@@ -17,6 +17,8 @@ interface Props {
   openQuestions: number;
   moduleLinks: { href: string; label: string; icon: string }[];
   lifecycle: string;
+  isOwner: boolean;
+  role: "owner" | "editor" | "viewer" | null;
 }
 
 export function ProjectRail(props: Props) {
@@ -99,23 +101,32 @@ export function ProjectRail(props: Props) {
           )}
 
           <Group>
-            <Item base={base} href={`${base}/library`} icon="Plus" onNav={() => setOpen(false)}>
-              Add a module
-            </Item>
+            {props.role && (
+              <Item base={base} href={`${base}/team`} icon="Users" onNav={() => setOpen(false)}>
+                {props.isOwner ? "Team & sharing" : "Team"}
+              </Item>
+            )}
+            {props.isOwner && (
+              <Item base={base} href={`${base}/library`} icon="Plus" onNav={() => setOpen(false)}>
+                Add a module
+              </Item>
+            )}
             <a
               href={`${base}/export?format=md`}
               className="flex items-center gap-2.5 rounded-[var(--radius-sm)] px-3 py-1.5 text-[12.5px] text-muted hover:text-ink"
             >
               <Icon name="Download" size={14} className="text-faint" /> Export
             </a>
-            <Item
-              base={base}
-              href={`${base}/finish`}
-              icon={props.lifecycle === "finished" ? "RotateCcw" : "Flag"}
-              onNav={() => setOpen(false)}
-            >
-              {props.lifecycle === "finished" ? "Reopen" : "Finish or set aside"}
-            </Item>
+            {props.isOwner && (
+              <Item
+                base={base}
+                href={`${base}/finish`}
+                icon={props.lifecycle === "finished" ? "RotateCcw" : "Flag"}
+                onNav={() => setOpen(false)}
+              >
+                {props.lifecycle === "finished" ? "Reopen" : "Finish or set aside"}
+              </Item>
+            )}
           </Group>
         </nav>
       </aside>

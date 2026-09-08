@@ -1,4 +1,5 @@
 import { getModuleByPmId, getEntries, getAllEntries } from "@/lib/data";
+import { getProjectAccess } from "@/lib/data-collab";
 import { ModuleView } from "@/components/modules/module-view";
 import type { RefOption } from "@/components/fields/entry-form";
 import type { EntryValues } from "@/lib/schema/types";
@@ -10,7 +11,12 @@ import { ArchiveModuleButton } from "./archive-button";
 export default async function ModulePage({ params }: PageProps<"/projects/[id]/m/[pmId]">) {
   const { id, pmId } = await params;
   const mod = await getModuleByPmId(id, pmId);
-  const [entries, allEntries] = await Promise.all([getEntries(pmId), getAllEntries(id)]);
+  const [entries, allEntries, access] = await Promise.all([
+    getEntries(pmId),
+    getAllEntries(id),
+    getProjectAccess(id),
+  ]);
+  const canEdit = access.isOwner || access.editableModuleIds.has(pmId);
 
   const refOptions: RefOption[] = allEntries
     .filter((e) => e.moduleKey && e.id)
@@ -43,8 +49,18 @@ export default async function ModulePage({ params }: PageProps<"/projects/[id]/m
           </h1>
           <p className="voice measure mt-1.5 text-[13.5px] text-muted">{mod.def.intro}</p>
         </div>
-        {!mod.def.universal && <ArchiveModuleButton projectId={id} pmId={pmId} />}
+        {access.isOwner && !mod.def.universal && (
+          <ArchiveModuleButton projectId={id} pmId={pmId} />
+        )}
       </header>
+
+      {access.role && !access.isOwner && (
+        <p className="rounded-[var(--radius-sm)] border border-hairline-2 bg-raised px-3 py-2 text-[12px] text-muted">
+          {canEdit
+            ? "This module is assigned to you — your edits save for everyone."
+            : "You're viewing this module. Ask the owner to assign it to you on the checklist to make changes."}
+        </p>
+      )}
 
       {mod.pm.status === "archived" && (
         <p className="rounded-[var(--radius-sm)] border border-hairline-2 bg-raised px-3 py-2 text-[12.5px] text-muted">
@@ -64,6 +80,7 @@ export default async function ModulePage({ params }: PageProps<"/projects/[id]/m
         entries={sorted}
         refOptions={refOptions}
         moduleName={mod.name}
+        canEdit={canEdit}
       />
     </div>
   );

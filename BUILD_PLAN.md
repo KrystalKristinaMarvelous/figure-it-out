@@ -65,6 +65,18 @@
 - [~] Brainstorm prompts — core topic sets done; more per-subtype variants to add
 - [~] Chaos templates — 72 of the 100+ target
 
+## Beyond spec — collaboration & social (user-requested)
+- [x] Profiles (`/u/[handle]`, `/me`), portfolio items, show-on-profile toggle
+- [x] Follow + direct messages (`/people`, `/messages`, `/messages/[handle]`)
+- [x] Project collaboration — share a view link or an edit link (`/join/[token]`);
+      members roster + roles; assignment checklist (`project_tasks`); editors can
+      only create/edit entries in a module assigned to them (RLS: `can_view_project`
+      / `can_edit_project` / `can_edit_module`, `redeem_invite`); `/projects/[id]/team`;
+      "Shared with you" on the dashboard
+- [ ] Collaboration polish: gate the Think surfaces (questions/rants/brainstorm/chaos)
+      for non-owners — currently readable, mutations error; realtime presence; per-entry
+      assignment (only module-level today); storage-bucket policies for collaborator uploads
+
 ## Deferred (Phase 2+, per spec §20)
 Freeform Canvas (tldraw) · Tier 2 semantic AI (gaps, contradictions, Ask Project) · generated provocations · rant recurrence · custom modules · public portfolio pages · PDF/DOCX export · secondary-world calendars · offline PWA
 

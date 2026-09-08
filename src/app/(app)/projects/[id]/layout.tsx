@@ -1,4 +1,5 @@
 import { getProject, getProjectModules, getQuestionCounts } from "@/lib/data";
+import { getProjectAccess } from "@/lib/data-collab";
 import { findCategory, findSubtype } from "@/lib/schema/taxonomy";
 import { ProjectRail } from "./project-rail";
 
@@ -7,10 +8,11 @@ export default async function ProjectLayout({
   children,
 }: LayoutProps<"/projects/[id]">) {
   const { id } = await params;
-  const [project, modules, counts] = await Promise.all([
+  const [project, modules, counts, access] = await Promise.all([
     getProject(id),
     getProjectModules(id),
     getQuestionCounts(id),
+    getProjectAccess(id),
   ]);
   const cat = findCategory(project.category);
   const sub = findSubtype(project.category, project.subtype);
@@ -33,6 +35,8 @@ export default async function ProjectLayout({
         openQuestions={counts.open}
         moduleLinks={moduleLinks}
         lifecycle={project.lifecycle}
+        isOwner={access.isOwner}
+        role={access.role}
       />
       <div className="min-w-0 flex-1 px-5 py-8 sm:px-12 lg:px-16">
         <div className="max-w-[38rem] animate-rise">{children}</div>

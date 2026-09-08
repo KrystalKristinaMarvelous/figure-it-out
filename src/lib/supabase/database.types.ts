@@ -78,6 +78,38 @@ export type MessageRow = {
   created_at: Ts;
 }
 
+export type ProjectMemberRow = {
+  project_id: string;
+  user_id: string;
+  role: "editor" | "viewer";
+  added_by: string | null;
+  created_at: Ts;
+};
+
+export type ProjectInviteRow = {
+  id: string;
+  project_id: string;
+  token: string;
+  access: "view" | "edit";
+  created_by: string;
+  revoked_at: Ts | null;
+  created_at: Ts;
+};
+
+export type ProjectTaskRow = {
+  id: string;
+  project_id: string;
+  project_module_id: string | null;
+  title: string;
+  detail: string | null;
+  assignee_id: string | null;
+  state: "todo" | "doing" | "done";
+  created_by: string | null;
+  order_index: number;
+  created_at: Ts;
+  updated_at: Ts;
+};
+
 export type ProfileRow = {
   id: string;
   username: string | null;
@@ -280,6 +312,15 @@ export type Database = {
       portfolio_items: Table<PortfolioItemRow>;
       follows: Table<FollowRow>;
       messages: Table<MessageRow>;
+      project_members: Table<
+        ProjectMemberRow,
+        [FK<"project_id", "projects">, FK<"user_id", "users">]
+      >;
+      project_invites: Table<ProjectInviteRow, [FK<"project_id", "projects">]>;
+      project_tasks: Table<
+        ProjectTaskRow,
+        [FK<"project_module_id", "project_modules">, FK<"assignee_id", "users">, FK<"project_id", "projects">]
+      >;
       projects: Table<ProjectRow>;
       module_definitions: Table<ModuleDefinitionRow>;
       project_modules: Table<
@@ -307,6 +348,19 @@ export type Database = {
       project_question_counts: {
         Args: { p: string };
         Returns: { resolved: number; open: number }[];
+      };
+      redeem_invite: {
+        Args: { invite_token: string };
+        Returns: string;
+      };
+      invite_info: {
+        Args: { invite_token: string };
+        Returns: {
+          project_id: string;
+          project_title: string;
+          access: "view" | "edit";
+          owner_name: string;
+        }[];
       };
     };
     Enums: Record<string, never>;

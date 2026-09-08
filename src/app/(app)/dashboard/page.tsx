@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient, requireUser } from "@/lib/supabase/server";
+import { getSharedProjects } from "@/lib/data-collab";
 import { findCategory, findSubtype } from "@/lib/schema/taxonomy";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/card";
@@ -19,7 +20,7 @@ const VIEWS = [
 ] as const;
 
 export default async function Dashboard({ searchParams }: PageProps<"/dashboard">) {
-  await requireUser();
+  const user = await requireUser();
   const sp = await searchParams;
   const view = (typeof sp.view === "string" ? sp.view : "active") as
     | "active"
@@ -32,10 +33,13 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
   const { data } = await supabase
     .from("projects")
     .select("*")
+    .eq("user_id", user.id)
     .eq("lifecycle", lifecycle)
     .eq("is_example", false)
     .order(view === "portfolio" ? "finished_at" : "last_touched_at", { ascending: false });
   const projects = (data ?? []) as ProjectRow[];
+
+  const shared = view === "active" ? await getSharedProjects() : [];
 
   const { data: examplesData } =
     view === "active" && projects.length === 0
@@ -107,7 +111,64 @@ export default async function Dashboard({ searchParams }: PageProps<"/dashboard"
           ))}
         </div>
       )}
+
+      {shared.length > 0 && (
+        <div className="mt-12">
+          <p className="eyebrow mb-3">Shared with you</p>
+          <div className="hairline-x framed">
+            {shared.map(({ project: p, role, owner }) => (
+              <SharedRow
+                key={p.id}
+                project={p}
+                role={role}
+                ownerName={owner?.display_name || owner?.username || "Someone"}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+function SharedRow({
+  project: p,
+  role,
+  ownerName,
+}: {
+  project: ProjectRow;
+  role: "editor" | "viewer";
+  ownerName: string;
+}) {
+  const cat = findCategory(p.category);
+  const sub = findSubtype(p.category, p.subtype);
+  return (
+    <Link
+      href={`/projects/${p.id}`}
+      className="group flex items-start gap-4 py-4 transition-colors hover:bg-accent-wash/30"
+    >
+      <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-[var(--radius-sm)] bg-sunken text-muted">
+        <Icon name={cat?.icon ?? "Square"} size={15} />
+      </span>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-[13.5px] font-medium text-ink">{p.title}</h3>
+        <p className="voice mt-0.5 line-clamp-2 text-[13.5px] leading-snug text-muted">
+          {p.one_liner || <span className="text-faint">No one-line idea yet.</span>}
+        </p>
+        <div className="mono mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[10.5px] uppercase tracking-[0.05em] text-faint">
+          <span>{sub?.label ?? p.subtype}</span>
+          <span aria-hidden>·</span>
+          <span>{ownerName}</span>
+          <span aria-hidden>·</span>
+          <span className="text-accent-ink">{role === "editor" ? "you can edit" : "view only"}</span>
+        </div>
+      </div>
+      <Icon
+        name="ArrowUpRight"
+        size={15}
+        className="mt-1 shrink-0 text-faint opacity-0 transition-opacity group-hover:opacity-100"
+      />
+    </Link>
   );
 }
 

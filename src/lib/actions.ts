@@ -9,6 +9,12 @@ import { modulesForCreation } from "@/lib/schema/taxonomy";
 import { coerceValues, titleFor } from "@/lib/schema/values";
 import type { FieldDef } from "@/lib/schema/types";
 
+async function requireUserClient() {
+  const user = await requireUser();
+  const supabase = await createClient();
+  return { user, supabase };
+}
+
 async function assertOwnsProject(projectId: string) {
   const user = await requireUser();
   const supabase = await createClient();
@@ -20,6 +26,48 @@ async function assertOwnsProject(projectId: string) {
     .maybeSingle();
   if (!data) throw new Error("Not found");
   return { user, supabase };
+}
+
+/**
+ * Entry writes: allowed for the project owner, or an editor-collaborator who has
+ * a checklist task assigned on that module. RLS enforces this too — this gives a
+ * clean error and resolves the module when the caller only has an entry id.
+ */
+async function assertCanEditModule(projectId: string, pmId: string) {
+  const user = await requireUser();
+  const supabase = await createClient();
+
+  const { data: project } = await supabase
+    .from("projects")
+    .select("user_id")
+    .eq("id", projectId)
+    .maybeSingle();
+  if (!project) throw new Error("Not found");
+  if (project.user_id === user.id) return { user, supabase, isOwner: true };
+
+  const { data: task } = await supabase
+    .from("project_tasks")
+    .select("id")
+    .eq("project_module_id", pmId)
+    .eq("assignee_id", user.id)
+    .limit(1)
+    .maybeSingle();
+  if (!task) throw new Error("You can only edit modules assigned to you.");
+  return { user, supabase, isOwner: false };
+}
+
+async function pmIdForEntry(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  projectId: string,
+  entryId: string,
+) {
+  const { data } = await supabase
+    .from("entries")
+    .select("project_module_id")
+    .eq("id", entryId)
+    .eq("project_id", projectId)
+    .maybeSingle();
+  return data?.project_module_id ?? null;
 }
 
 // ── project creation (the two-axis wizard) ─────────────────────────────────
@@ -252,7 +300,7 @@ export async function createEntry(
   raw: Record<string, unknown>,
   opts?: { status?: string; derivedFromRantId?: string },
 ) {
-  const { supabase } = await assertOwnsProject(projectId);
+  const { supabase } = await assertCanEditModule(projectId, pmId);
   const { schema } = await schemaForPm(supabase, pmId);
   const values = coerceValues(schema, raw);
   const { data: last } = await supabase
@@ -298,7 +346,7 @@ export async function updateEntry(
   raw: Record<string, unknown>,
   status?: string,
 ) {
-  const { supabase } = await assertOwnsProject(projectId);
+  const { supabase } = await assertCanEditModule(projectId, pmId);
   const { schema } = await schemaForPm(supabase, pmId);
   const values = coerceValues(schema, raw);
   await supabase
@@ -314,19 +362,30 @@ export async function updateEntry(
 }
 
 export async function setEntryStatus(projectId: string, entryId: string, status: string) {
-  const { supabase } = await assertOwnsProject(projectId);
+  const { supabase } = await requireUserClient();
+  const pmId = await pmIdForEntry(supabase, projectId, entryId);
+  if (!pmId) throw new Error("Not found");
+  await assertCanEditModule(projectId, pmId);
   await supabase.from("entries").update({ status }).eq("id", entryId).eq("project_id", projectId);
   revalidatePath(`/projects/${projectId}`, "layout");
 }
 
 export async function deleteEntry(projectId: string, entryId: string) {
-  const { supabase } = await assertOwnsProject(projectId);
+  const { supabase } = await requireUserClient();
+  const pmId = await pmIdForEntry(supabase, projectId, entryId);
+  if (!pmId) throw new Error("Not found");
+  await assertCanEditModule(projectId, pmId);
   await supabase.from("entries").delete().eq("id", entryId).eq("project_id", projectId);
   revalidatePath(`/projects/${projectId}`, "layout");
 }
 
 export async function reorderEntries(projectId: string, orderedIds: string[]) {
-  const { supabase } = await assertOwnsProject(projectId);
+  const { supabase } = await requireUserClient();
+  if (orderedIds.length) {
+    const pmId = await pmIdForEntry(supabase, projectId, orderedIds[0]);
+    if (!pmId) throw new Error("Not found");
+    await assertCanEditModule(projectId, pmId);
+  }
   await Promise.all(
     orderedIds.map((id, i) =>
       supabase.from("entries").update({ order_index: i }).eq("id", id).eq("project_id", projectId),
@@ -758,6 +817,167 @@ export async function markThreadRead(otherId: string) {
     .eq("sender_id", otherId)
     .is("read_at", null);
   revalidatePath("/messages", "layout");
+}
+
+// ── collaboration ────────────────────────────────────────────────────────
+export async function createInvite(projectId: string, access: "view" | "edit") {
+  const { user, supabase } = await assertOwnsProject(projectId);
+  const { data: existing } = await supabase
+    .from("project_invites")
+    .select("*")
+    .eq("project_id", projectId)
+    .eq("access", access)
+    .is("revoked_at", null)
+    .maybeSingle();
+  if (existing) return existing.token;
+
+  const token = crypto.randomUUID().replace(/-/g, "");
+  const { data, error } = await supabase
+    .from("project_invites")
+    .insert({ project_id: projectId, access, token, created_by: user.id } as never)
+    .select("token")
+    .single();
+  if (error || !data) throw new Error(error?.message ?? "Could not create the link");
+  revalidatePath(`/projects/${projectId}/team`);
+  return data.token;
+}
+
+export async function revokeInvite(projectId: string, inviteId: string) {
+  const { supabase } = await assertOwnsProject(projectId);
+  await supabase
+    .from("project_invites")
+    .update({ revoked_at: new Date().toISOString() } as never)
+    .eq("id", inviteId)
+    .eq("project_id", projectId);
+  revalidatePath(`/projects/${projectId}/team`);
+}
+
+export async function joinProject(token: string) {
+  await requireUser();
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("redeem_invite", { invite_token: token });
+  if (error || !data) throw new Error(error?.message ?? "That link is no longer valid.");
+  revalidatePath("/dashboard");
+  redirect(`/projects/${data}`);
+}
+
+export async function removeMember(projectId: string, userId: string) {
+  const { supabase } = await assertOwnsProject(projectId);
+  await supabase
+    .from("project_members")
+    .delete()
+    .eq("project_id", projectId)
+    .eq("user_id", userId);
+  // drop that person's task assignments
+  await supabase
+    .from("project_tasks")
+    .update({ assignee_id: null } as never)
+    .eq("project_id", projectId)
+    .eq("assignee_id", userId);
+  revalidatePath(`/projects/${projectId}/team`);
+}
+
+export async function setMemberRole(
+  projectId: string,
+  userId: string,
+  role: "editor" | "viewer",
+) {
+  const { supabase } = await assertOwnsProject(projectId);
+  await supabase
+    .from("project_members")
+    .update({ role } as never)
+    .eq("project_id", projectId)
+    .eq("user_id", userId);
+  revalidatePath(`/projects/${projectId}/team`);
+}
+
+export async function leaveProject(projectId: string) {
+  const { user, supabase } = await requireUserClient();
+  await supabase
+    .from("project_members")
+    .delete()
+    .eq("project_id", projectId)
+    .eq("user_id", user.id);
+  revalidatePath("/dashboard");
+  redirect("/dashboard");
+}
+
+const TaskInput = z.object({
+  title: z.string().trim().min(1).max(200),
+  detail: z.string().trim().max(2000).optional(),
+  pmId: z.string().uuid().optional().or(z.literal("")),
+  assigneeId: z.string().uuid().optional().or(z.literal("")),
+});
+
+export async function createTask(projectId: string, input: z.input<typeof TaskInput>) {
+  const { user, supabase } = await assertOwnsProject(projectId);
+  const p = TaskInput.parse(input);
+  const { count } = await supabase
+    .from("project_tasks")
+    .select("id", { count: "exact", head: true })
+    .eq("project_id", projectId);
+  await supabase.from("project_tasks").insert({
+    project_id: projectId,
+    title: p.title,
+    detail: p.detail || null,
+    project_module_id: p.pmId || null,
+    assignee_id: p.assigneeId || null,
+    created_by: user.id,
+    order_index: count ?? 0,
+  } as never);
+  revalidatePath(`/projects/${projectId}/team`);
+}
+
+export async function updateTask(
+  projectId: string,
+  taskId: string,
+  patch: Partial<{ title: string; detail: string | null; pmId: string | null; assigneeId: string | null }>,
+) {
+  const { supabase } = await assertOwnsProject(projectId);
+  const clean: Record<string, unknown> = {};
+  if (patch.title !== undefined) clean.title = patch.title.trim();
+  if (patch.detail !== undefined) clean.detail = patch.detail || null;
+  if (patch.pmId !== undefined) clean.project_module_id = patch.pmId || null;
+  if (patch.assigneeId !== undefined) clean.assignee_id = patch.assigneeId || null;
+  await supabase
+    .from("project_tasks")
+    .update(clean as never)
+    .eq("id", taskId)
+    .eq("project_id", projectId);
+  revalidatePath(`/projects/${projectId}/team`);
+}
+
+export async function setTaskState(
+  projectId: string,
+  taskId: string,
+  state: "todo" | "doing" | "done",
+) {
+  const { user, supabase } = await requireUserClient();
+  const { data: task } = await supabase
+    .from("project_tasks")
+    .select("assignee_id, project_id, projects(user_id)")
+    .eq("id", taskId)
+    .eq("project_id", projectId)
+    .maybeSingle();
+  const row = task as
+    | { assignee_id: string | null; projects: { user_id: string | null } | null }
+    | null;
+  if (!row) throw new Error("Not found");
+  const allowed = row.projects?.user_id === user.id || row.assignee_id === user.id;
+  if (!allowed) throw new Error("That task isn't yours.");
+  await supabase
+    .from("project_tasks")
+    .update({ state } as never)
+    .eq("id", taskId)
+    .eq("project_id", projectId);
+  revalidatePath(`/projects/${projectId}/team`);
+  revalidatePath(`/projects/${projectId}`, "layout");
+}
+
+export async function deleteTask(projectId: string, taskId: string) {
+  const { supabase } = await assertOwnsProject(projectId);
+  await supabase.from("project_tasks").delete().eq("id", taskId).eq("project_id", projectId);
+  revalidatePath(`/projects/${projectId}/team`);
 }
 
 export async function saveThemePref(pref: { theme?: string; skin?: string }) {
